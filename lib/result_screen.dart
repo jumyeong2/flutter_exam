@@ -18,7 +18,7 @@ class _ResultScreenState extends State<ResultScreen> {
   final _powerCtrl = TextEditingController();
   final _valueCtrl = TextEditingController();
 
-  // [New] 에러 메시지 상태 변수 (null이면 에러 없음)
+  // 에러 메시지 상태 변수
   String? _nameError;
   String? _equityError;
   String? _financeError;
@@ -37,8 +37,7 @@ class _ResultScreenState extends State<ResultScreen> {
     super.dispose();
   }
 
-  // [핵심] 점수 유효성 검사 함수
-  // return: 에러 메시지 (정상이면 null)
+  // 점수 유효성 검사 함수
   String? _validateScore(String text, double maxScore) {
     if (text.trim().isEmpty) {
       return '값을 입력해주세요';
@@ -47,11 +46,10 @@ class _ResultScreenState extends State<ResultScreen> {
     if (value == null || value < 0 || value > maxScore) {
       return '양식에 맞게 입력해주세요 (0~${maxScore.toInt()})';
     }
-    return null; // 통과
+    return null;
   }
 
   void _addPartner() {
-    // 1. 초기화 (에러 상태 클리어)
     setState(() {
       _nameError = null;
       _equityError = null;
@@ -60,18 +58,15 @@ class _ResultScreenState extends State<ResultScreen> {
       _valueError = null;
     });
 
-    // 2. 검증 (Validation)
     String name = _nameCtrl.text.trim();
     String? nameErr;
     if (name.isEmpty) nameErr = '이름을 입력해주세요';
 
-    // 각 항목별 만점 기준: 지분30, 자금20, 권한30, 가치20
     String? equityErr = _validateScore(_equityCtrl.text, 30);
     String? financeErr = _validateScore(_financeCtrl.text, 20);
     String? powerErr = _validateScore(_powerCtrl.text, 30);
     String? valueErr = _validateScore(_valueCtrl.text, 20);
 
-    // 3. 에러가 하나라도 있으면 상태 업데이트 후 중단
     if (nameErr != null || equityErr != null || financeErr != null || powerErr != null || valueErr != null) {
       setState(() {
         _nameError = nameErr;
@@ -80,10 +75,9 @@ class _ResultScreenState extends State<ResultScreen> {
         _powerError = powerErr;
         _valueError = valueErr;
       });
-      return; // 실행 중단
+      return;
     }
 
-    // 4. 통과 시 데이터 추가
     setState(() {
       partnersList.add({
         "name": name,
@@ -96,14 +90,13 @@ class _ResultScreenState extends State<ResultScreen> {
       });
     });
 
-    // 입력창 초기화
     _nameCtrl.clear();
     _equityCtrl.clear();
     _financeCtrl.clear();
     _powerCtrl.clear();
     _valueCtrl.clear();
     
-    FocusScope.of(context).unfocus(); // 키보드 내리기
+    FocusScope.of(context).unfocus();
   }
 
   void _goToDetailAnalysis() {
@@ -128,8 +121,11 @@ class _ResultScreenState extends State<ResultScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(title: const Text("공동창업자 데이터 입력"), elevation: 0, centerTitle: true),
+      
+      // [1] 스크롤 영역 (내용물)
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
+        // 키보드가 올라왔을 때 하단 여백 확보를 위해 padding 추가
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -150,13 +146,12 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             const SizedBox(height: 15),
             
-            // 이름 입력 필드 (에러 메시지 연결)
             TextField(
               controller: _nameCtrl,
               decoration: InputDecoration(
                 labelText: "파트너 이름",
                 hintText: "예: 김철수",
-                errorText: _nameError, // 에러 발생 시 표시
+                errorText: _nameError,
                 filled: true, fillColor: Colors.grey[50],
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
                 prefixIcon: const Icon(Icons.person_add),
@@ -164,7 +159,6 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             const SizedBox(height: 15),
 
-            // 점수 입력 필드들 (에러 메시지 연결)
             _buildInputRow("지분 점수 (0~30)", _equityCtrl, Icons.pie_chart_outline, _equityError),
             _buildInputRow("자금 점수 (0~20)", _financeCtrl, Icons.attach_money, _financeError),
             _buildInputRow("권한 점수 (0~30)", _powerCtrl, Icons.gavel_outlined, _powerError),
@@ -183,7 +177,8 @@ class _ResultScreenState extends State<ResultScreen> {
 
             const SizedBox(height: 20),
 
-            if (partnersList.isNotEmpty)
+            // 추가된 파트너 칩
+            if (partnersList.isNotEmpty) ...[
               Wrap(
                 spacing: 8.0, runSpacing: 4.0,
                 children: partnersList.asMap().entries.map((entry) {
@@ -201,20 +196,39 @@ class _ResultScreenState extends State<ResultScreen> {
                   );
                 }).toList(),
               ),
-
-            const SizedBox(height: 40),
-            
-            ElevatedButton.icon(
-              onPressed: _goToDetailAnalysis,
-              icon: const Icon(Icons.analytics, color: Colors.white),
-              label: Text("총 ${partnersList.length + 1}명 비교 분석하기", style: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 60),
-                backgroundColor: Colors.black87,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
+              // 하단 버튼에 가려지지 않도록 여백 추가
+              const SizedBox(height: 80), 
+            ]
           ],
+        ),
+      ),
+
+      // [2] 하단 고정 버튼 영역 (핵심 수정 부분)
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 10,
+                offset: const Offset(0, -3), // 위쪽으로 그림자
+              ),
+            ],
+          ),
+          child: ElevatedButton.icon(
+            onPressed: _goToDetailAnalysis,
+            icon: const Icon(Icons.analytics, color: Colors.white),
+            label: Text("총 ${partnersList.length + 1}명 비교 분석하기", style: const TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold)),
+            style: ElevatedButton.styleFrom(
+              minimumSize: const Size(double.infinity, 60),
+              backgroundColor: Colors.black87,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              elevation: 0,
+            ),
+          ),
         ),
       ),
     );
@@ -245,16 +259,15 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  // [수정] 에러 메시지를 받을 수 있도록 파라미터 추가
   Widget _buildInputRow(String hint, TextEditingController ctrl, IconData icon, String? errorText) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15), // 에러 메시지 공간 확보를 위해 여백 조정
+      margin: const EdgeInsets.only(bottom: 15),
       child: TextField(
         controller: ctrl,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: hint,
-          errorText: errorText, // 여기에 에러 메시지가 들어감
+          errorText: errorText,
           prefixIcon: Icon(icon, size: 20),
           border: const OutlineInputBorder(),
           contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
