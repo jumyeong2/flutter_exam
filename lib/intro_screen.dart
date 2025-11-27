@@ -25,7 +25,7 @@ class IntroScreen extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             const Text(
-              "초기 창업팀 합의 진단 솔루션",
+              "초기 공동창업팀 합의 진단 테스트",
               style: TextStyle(color: Colors.grey),
             ),
             const SizedBox(height: 50),
