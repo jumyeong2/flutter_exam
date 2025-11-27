@@ -35,7 +35,7 @@ class ResultDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              "우리 팀은 한 방향을 보고 있을까요?",
+              "우리 팀은\n한 방향을 보고 있을까요?",
               style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
