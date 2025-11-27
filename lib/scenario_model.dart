@@ -1,7 +1,7 @@
 // [전체 덮어쓰기]
 class ConflictScenario {
   final String id;
-  final String category; // 'money', 'power', 'value'
+  final String category; // 'money', 'power', 'value', 'equity'
   final String questionText;
   final List<ScenarioOption> options;
 
@@ -17,8 +17,5 @@ class ScenarioOption {
   final String text;
   final double score;
 
-  ScenarioOption({
-    required this.text,
-    required this.score,
-  });
+  ScenarioOption({required this.text, required this.score});
 }

@@ -1,10 +1,10 @@
-// [전체 덮어쓰기]
 import 'scenario_model.dart';
 
 final List<ConflictScenario> sampleQuestions = [
-  // 💰 [MONEY] 자원 및 지분 (5문제)
+  // 👑 [EQUITY] 지분 및 소유권 (3문제) - 가장 중요!
   ConflictScenario(
-    id: "Q1", category: "money",
+    id: "Q1",
+    category: "equity",
     questionText: "공동창업자가 1년 뒤 '힘들어서 못하겠다'며 퇴사를 선언한다면?",
     options: [
       ScenarioOption(text: "지분 전량 회수 (Bad Leaver)", score: 0.0),
@@ -13,16 +13,8 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
   ConflictScenario(
-    id: "Q2", category: "money",
-    questionText: "투자금 1억이 들어왔습니다. 급여 책정은?",
-    options: [
-      ScenarioOption(text: "최저임금 미만 (헝그리 정신)", score: 0.0),
-      ScenarioOption(text: "최소 생계비 (월 250만)", score: 5.0),
-      ScenarioOption(text: "시장 연봉의 70% 수준", score: 10.0),
-    ],
-  ),
-  ConflictScenario(
-    id: "Q7", category: "money",
+    id: "Q7",
+    category: "equity",
     questionText: "대기업에서 50억 원 매각 제안이 왔습니다. 파시겠습니까?",
     options: [
       ScenarioOption(text: "당장 매각한다 (현금화)", score: 0.0),
@@ -31,7 +23,8 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
   ConflictScenario(
-    id: "Q8", category: "money",
+    id: "Q8",
+    category: "equity",
     questionText: "자금이 바닥나서 대표이사 연대보증이 필요합니다.",
     options: [
       ScenarioOption(text: "폐업한다 (빚지기 싫음)", score: 0.0),
@@ -39,8 +32,21 @@ final List<ConflictScenario> sampleQuestions = [
       ScenarioOption(text: "공동창업자 n분의 1 보증", score: 10.0),
     ],
   ),
+
+  // 💰 [FINANCE] 자금 운용 (2문제)
   ConflictScenario(
-    id: "Q9", category: "money",
+    id: "Q2",
+    category: "finance",
+    questionText: "투자금 1억이 들어왔습니다. 급여 책정은?",
+    options: [
+      ScenarioOption(text: "최저임금 미만 (헝그리 정신)", score: 0.0),
+      ScenarioOption(text: "최소 생계비 (월 250만)", score: 5.0),
+      ScenarioOption(text: "시장 연봉의 70% 수준", score: 10.0),
+    ],
+  ),
+  ConflictScenario(
+    id: "Q9",
+    category: "finance",
     questionText: "해외 출장 시 숙소와 항공편 등급은?",
     options: [
       ScenarioOption(text: "무조건 최저가", score: 0.0),
@@ -51,7 +57,8 @@ final List<ConflictScenario> sampleQuestions = [
 
   // ⚖️ [POWER] 권한 및 리더십 (3문제)
   ConflictScenario(
-    id: "Q3", category: "power",
+    id: "Q3",
+    category: "power",
     questionText: "제품 출시 여부를 두고 의견이 갈린다면?",
     options: [
       ScenarioOption(text: "CEO 독단 결정", score: 0.0),
@@ -60,7 +67,8 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
   ConflictScenario(
-    id: "Q6", category: "power",
+    id: "Q6",
+    category: "power",
     questionText: "공동창업자가 실력 부족한 지인을 팀장으로 추천했습니다.",
     options: [
       ScenarioOption(text: "절대 반대 (실력 중심)", score: 0.0),
@@ -69,7 +77,8 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
   ConflictScenario(
-    id: "Q10", category: "power",
+    id: "Q10",
+    category: "power",
     questionText: "CTO인 공동창업자의 역량이 성장에 방해가 됩니다.",
     options: [
       ScenarioOption(text: "해고하거나 내보낸다", score: 0.0),
@@ -80,7 +89,8 @@ final List<ConflictScenario> sampleQuestions = [
 
   // ❤️ [VALUE] 가치관 (2문제)
   ConflictScenario(
-    id: "Q4", category: "value",
+    id: "Q4",
+    category: "value",
     questionText: "한 명은 워라밸을 지키고, 한 명은 밤샘을 합니다.",
     options: [
       ScenarioOption(text: "용납 불가 (스타트업은 전쟁)", score: 0.0),
@@ -89,7 +99,8 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
   ConflictScenario(
-    id: "Q5", category: "value",
+    id: "Q5",
+    category: "value",
     questionText: "생활비 때문에 저녁에 투잡(알바)을 하겠다고 합니다.",
     options: [
       ScenarioOption(text: "절대 불가 (몰입 방해)", score: 0.0),
