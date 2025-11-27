@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'mock_data.dart';
 import 'result_screen.dart';
@@ -12,11 +13,17 @@ class SimulationScreen extends StatefulWidget {
 class _SimulationScreenState extends State<SimulationScreen> {
   int currentIndex = 0; // 현재 문제 번호
   int? selectedOptionIndex; // 현재 선택한 답
-  double totalScore = 0; // 누적 점수 (성향 분석용)
+
+  // [핵심] 카테고리별 점수 저장소
+  Map<String, double> scores = {
+    "money": 0,
+    "power": 0,
+    "value": 0,
+  };
 
   @override
   Widget build(BuildContext context) {
-    final scenario = sampleQuestions[currentIndex]; // 현재 문제 데이터 가져오기
+    final scenario = sampleQuestions[currentIndex];
 
     return Scaffold(
       appBar: AppBar(
@@ -34,10 +41,27 @@ class _SimulationScreenState extends State<SimulationScreen> {
                 color: Colors.blue[50],
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Text(
-                scenario.questionText,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+              child: Column(
+                children: [
+                  // 카테고리 뱃지 표시
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      _getCategoryName(scenario.category),
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ),
+                  Text(
+                    scenario.questionText,
+                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 30),
@@ -87,24 +111,38 @@ class _SimulationScreenState extends State<SimulationScreen> {
     );
   }
 
+  // 다음 질문으로 넘어가면서 점수 저장
   void _nextQuestion() {
-    // 점수 누적
-    totalScore += sampleQuestions[currentIndex].options[selectedOptionIndex!].score;
+    final currentQuestion = sampleQuestions[currentIndex];
+    final category = currentQuestion.category;
+    final addedScore = currentQuestion.options[selectedOptionIndex!].score;
+
+    // 카테고리에 점수 누적
+    scores[category] = (scores[category] ?? 0) + addedScore;
 
     if (currentIndex < sampleQuestions.length - 1) {
-      // 다음 문제로
       setState(() {
         currentIndex++;
-        selectedOptionIndex = null; // 선택 초기화
+        selectedOptionIndex = null;
       });
     } else {
-      // 결과 화면으로 이동 (점수 전달)
+      // 결과 화면으로 이동 (점수 Map 전달)
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => ResultScreen(finalScore: totalScore),
+          builder: (context) => ResultScreen(myScores: scores),
         ),
       );
+    }
+  }
+
+  // 카테고리 영문 -> 한글 변환
+  String _getCategoryName(String key) {
+    switch (key) {
+      case 'money': return "💰 자원/돈";
+      case 'power': return "⚖️ 권한/리더십";
+      case 'value': return "❤️ 가치관";
+      default: return "기타";
     }
   }
 }
