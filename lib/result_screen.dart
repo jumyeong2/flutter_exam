@@ -17,9 +17,6 @@ class _ResultScreenState extends State<ResultScreen> {
   final _powerCtrl = TextEditingController();
   final _valueCtrl = TextEditingController();
 
-  // 에러 메시지 (간소화를 위해 텍스트 필드 테두리 색상으로 표현 예정)
-  bool _hasError = false;
-
   List<Map<String, dynamic>> partnersList = [];
 
   @override
@@ -32,7 +29,7 @@ class _ResultScreenState extends State<ResultScreen> {
     super.dispose();
   }
 
-  // 간단 유효성 검사
+  // 유효성 검사
   bool _validateInputs() {
     if (_nameCtrl.text.isEmpty) return false;
     if (!_isValidScore(_equityCtrl.text, 30)) return false;
@@ -67,6 +64,7 @@ class _ResultScreenState extends State<ResultScreen> {
       });
     });
 
+    // 입력 초기화
     _nameCtrl.clear();
     _equityCtrl.clear();
     _financeCtrl.clear();
@@ -80,12 +78,19 @@ class _ResultScreenState extends State<ResultScreen> {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("파트너를 최소 1명 추가해주세요.")));
       return;
     }
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ResultDetailScreen(myScores: widget.myScores, partnersList: partnersList)));
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => ResultDetailScreen(
+          myScores: widget.myScores, 
+          partnersList: partnersList
+        )
+      )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // 키보드가 올라오면 스크롤 가능하게, 평소엔 꽉 찬 화면
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -100,24 +105,49 @@ class _ResultScreenState extends State<ResultScreen> {
           children: [
             // [1] 내 점수 요약 (슬림 버전)
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+              padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
               color: Colors.blue.shade50,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              child: Column(
                 children: [
-                  const Text("내 점수:", style: TextStyle(fontWeight: FontWeight.bold)),
-                  _slimScore("지분", widget.myScores['equity']!),
-                  _slimScore("자금", widget.myScores['finance']!),
-                  _slimScore("권한", widget.myScores['power']!),
-                  _slimScore("가치", widget.myScores['value']!),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text("내 점수:", style: TextStyle(fontWeight: FontWeight.bold)),
+                      _slimScore("지분", widget.myScores['equity']!),
+                      _slimScore("자금", widget.myScores['finance']!),
+                      _slimScore("권한", widget.myScores['power']!),
+                      _slimScore("가치", widget.myScores['value']!),
+                    ],
+                  ),
                 ],
               ),
             ),
-            const SizedBox(height: 30),
-            // [2] 메인 입력 영역 (스크롤 가능하게 감싸되 Expanded로 공간 차지)
+
+            // 🔥 [추가됨] 점수 의미 설명 멘트
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+              color: Colors.grey[200],
+              child: const Row(
+                children: [
+                  Icon(Icons.info_outline, size: 16, color: Colors.grey),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      "점수의 높고 낮음은 우열이 아닌 '성향'의 차이를 의미합니다.",
+                      style: TextStyle(fontSize: 11, color: Colors.black54),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 20),
+
+            // [2] 메인 입력 영역 (스크롤 가능)
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -134,6 +164,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               child: Text("파트너 정보 입력", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
                             ),
                             const SizedBox(height: 10),
+                            
                             // 이름 입력
                             TextField(
                               controller: _nameCtrl,
@@ -146,6 +177,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               ),
                             ),
                             const SizedBox(height: 10),
+                            
                             // 점수 입력 (2x2 그리드)
                             Row(
                               children: [
@@ -163,6 +195,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               ],
                             ),
                             const SizedBox(height: 15),
+                            
                             // 추가 버튼
                             SizedBox(
                               width: double.infinity,
@@ -210,6 +243,9 @@ class _ResultScreenState extends State<ResultScreen> {
                         );
                       }).toList(),
                     ),
+                    
+                    // 하단 여백 확보 (스크롤 시 잘림 방지)
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
@@ -241,7 +277,7 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  // 상단 내 점수 요약 위젯 (Compact)
+  // 상단 내 점수 요약 위젯
   Widget _slimScore(String label, double score) {
     return Row(
       children: [
@@ -253,7 +289,7 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  // 2x2 그리드용 입력 필드 (Compact)
+  // 2x2 그리드용 입력 필드
   Widget _compactInput(String hint, TextEditingController ctrl) {
     return TextField(
       controller: ctrl,
@@ -262,7 +298,7 @@ class _ResultScreenState extends State<ResultScreen> {
         labelText: hint,
         border: const OutlineInputBorder(),
         contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        isDense: true, // 높이 줄이기 핵심
+        isDense: true,
       ),
     );
   }
