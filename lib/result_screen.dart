@@ -19,6 +19,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
   List<Map<String, dynamic>> partnersList = [];
 
+  // 메인 컬러
+  final Color _mainColor = const Color(0xFF64B5F6);
+
   @override
   void dispose() {
     _nameCtrl.dispose();
@@ -31,7 +34,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
   // 유효성 검사
   bool _validateInputs() {
-    if (_nameCtrl.text.isEmpty) return false;
+    if (_nameCtrl.text.trim().isEmpty) return false;
     if (!_isValidScore(_equityCtrl.text, 30)) return false;
     if (!_isValidScore(_financeCtrl.text, 20)) return false;
     if (!_isValidScore(_powerCtrl.text, 30)) return false;
@@ -47,7 +50,14 @@ class _ResultScreenState extends State<ResultScreen> {
   void _addPartner() {
     if (!_validateInputs()) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("이름과 점수(범위 내)를 모두 입력해주세요."), duration: Duration(seconds: 1)),
+        SnackBar(
+          content: const Text("이름과 점수(범위 내)를 정확히 입력해주세요."),
+          backgroundColor: Colors.redAccent.withOpacity(0.8),
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.all(20),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          duration: const Duration(seconds: 1),
+        ),
       );
       return;
     }
@@ -64,7 +74,6 @@ class _ResultScreenState extends State<ResultScreen> {
       });
     });
 
-    // 입력 초기화
     _nameCtrl.clear();
     _equityCtrl.clear();
     _financeCtrl.clear();
@@ -75,7 +84,9 @@ class _ResultScreenState extends State<ResultScreen> {
 
   void _goToDetailAnalysis() {
     if (partnersList.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("파트너를 최소 1명 추가해주세요.")));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("최소 1명 이상의 파트너를 추가해주세요.")),
+      );
       return;
     }
     Navigator.push(
@@ -92,213 +103,216 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("데이터 입력"), 
         elevation: 0, 
         centerTitle: true,
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.black87,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(color: Colors.grey[200], height: 1),
+        ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // [1] 내 점수 요약 (슬림 버전)
-            Container(
-              padding: const EdgeInsets.fromLTRB(20, 15, 20, 10),
-              color: Colors.blue.shade50,
-              child: Column(
-                children: [
-                  Row(
+        child: SingleChildScrollView(
+          child: SizedBox(
+            // 화면 높이에 맞춰 꽉 차게 구성 (작은 화면은 스크롤)
+            height: MediaQuery.of(context).size.height - kToolbarHeight - MediaQuery.of(context).padding.top,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // [1] 내 점수 요약 (회색 배경)
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+                  color: Colors.grey[50], 
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("내 점수:", style: TextStyle(fontWeight: FontWeight.bold)),
-                      _slimScore("지분", widget.myScores['equity']!),
-                      _slimScore("자금", widget.myScores['finance']!),
-                      _slimScore("권한", widget.myScores['power']!),
-                      _slimScore("가치", widget.myScores['value']!),
+                      _slimScore("지분", widget.myScores['equity']!, Colors.purple[300]!),
+                      _slimScore("자금", widget.myScores['finance']!, Colors.teal[300]!),
+                      _slimScore("권한", widget.myScores['power']!, Colors.orange[300]!),
+                      _slimScore("가치", widget.myScores['value']!, Colors.pink[300]!),
                     ],
                   ),
-                ],
-              ),
-            ),
+                ),
 
-            // 🔥 [추가됨] 점수 의미 설명 멘트
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              color: Colors.grey[200],
-              child: const Row(
-                children: [
-                  Icon(Icons.info_outline, size: 16, color: Colors.grey),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      "점수의 높고 낮음은 우열이 아닌 '성향'의 차이를 의미합니다.",
-                      style: TextStyle(fontSize: 11, color: Colors.black54),
-                    ),
+                // 🔥 [수정됨] 안내 문구: 회색 박스 밖으로 빼고, 왼쪽 정렬 + 패딩
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start, // 왼쪽 정렬
+                    children: [
+                      Icon(Icons.info_outline, size: 14, color: Colors.grey[500]),
+                      const SizedBox(width: 6),
+                      Text(
+                        "점수의 높고 낮음은 우열이 아닌 '성향'의 차이를 의미합니다.",
+                        style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
 
-            const SizedBox(height: 20),
+                const Spacer(flex: 1),
 
-            // [2] 메인 입력 영역 (스크롤 가능)
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // 파트너 입력 카드
-                    Card(
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          children: [
-                            const Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text("파트너 정보 입력", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                            ),
-                            const SizedBox(height: 10),
-                            
-                            // 이름 입력
-                            TextField(
-                              controller: _nameCtrl,
-                              decoration: InputDecoration(
-                                labelText: "이름",
-                                prefixIcon: const Icon(Icons.person),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-                                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                                isDense: true,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            
-                            // 점수 입력 (2x2 그리드)
-                            Row(
-                              children: [
-                                Expanded(child: _compactInput("지분(0~30)", _equityCtrl)),
-                                const SizedBox(width: 10),
-                                Expanded(child: _compactInput("자금(0~20)", _financeCtrl)),
-                              ],
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                Expanded(child: _compactInput("권한(0~30)", _powerCtrl)),
-                                const SizedBox(width: 10),
-                                Expanded(child: _compactInput("가치(0~20)", _valueCtrl)),
-                              ],
-                            ),
-                            const SizedBox(height: 15),
-                            
-                            // 추가 버튼
-                            SizedBox(
-                              width: double.infinity,
-                              child: OutlinedButton.icon(
-                                onPressed: _addPartner,
-                                icon: const Icon(Icons.add),
-                                label: const Text("리스트에 추가"),
-                                style: OutlinedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(vertical: 12),
-                                  side: const BorderSide(color: Colors.blueAccent),
-                                ),
-                              ),
-                            ),
-                          ],
+                // [2] 파트너 입력 폼
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("파트너 정보 입력", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
+                      
+                      _compactTextField(label: "이름", hint: "예: 김철수", controller: _nameCtrl, icon: Icons.person_outline),
+                      const SizedBox(height: 10),
+                      
+                      Row(
+                        children: [
+                          Expanded(child: _compactScoreField("지분 (0~30)", _equityCtrl)),
+                          const SizedBox(width: 10),
+                          Expanded(child: _compactScoreField("자금 (0~20)", _financeCtrl)),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(child: _compactScoreField("권한 (0~30)", _powerCtrl)),
+                          const SizedBox(width: 10),
+                          Expanded(child: _compactScoreField("가치 (0~20)", _valueCtrl)),
+                        ],
+                      ),
+                      
+                      const SizedBox(height: 15),
+                      
+                      SizedBox(
+                        width: double.infinity,
+                        height: 48,
+                        child: OutlinedButton.icon(
+                          onPressed: _addPartner,
+                          icon: Icon(Icons.add, color: _mainColor),
+                          label: Text("리스트에 담기", style: TextStyle(color: _mainColor, fontWeight: FontWeight.bold)),
+                          style: OutlinedButton.styleFrom(
+                            side: BorderSide(color: _mainColor),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
+                  ),
+                ),
 
-                    const SizedBox(height: 15),
+                const Spacer(flex: 1),
 
-                    // 추가된 파트너 리스트 (Chips)
-                    if (partnersList.isNotEmpty)
-                      const Text("추가된 파트너 (탭해서 삭제)", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                    const SizedBox(height: 5),
-                    Wrap(
-                      spacing: 8.0,
-                      runSpacing: 4.0,
-                      children: partnersList.asMap().entries.map((entry) {
-                        int idx = entry.key;
-                        Map user = entry.value;
+                // [3] 대기 명단
+                if (partnersList.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    child: Text("분석 대기 (${partnersList.length}명)", style: const TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)),
+                  ),
+                  const SizedBox(height: 5),
+                  SizedBox(
+                    height: 50, 
+                    child: ListView.separated(
+                      padding: const EdgeInsets.symmetric(horizontal: 24),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: partnersList.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 8),
+                      itemBuilder: (context, index) {
                         return Chip(
                           backgroundColor: Colors.white,
-                          elevation: 1,
+                          side: BorderSide(color: Colors.grey[300]!),
                           avatar: CircleAvatar(
-                            backgroundColor: Colors.blueAccent,
-                            child: Text("${idx + 1}", style: const TextStyle(fontSize: 12, color: Colors.white)),
+                            radius: 10,
+                            backgroundColor: _mainColor.withOpacity(0.2),
+                            child: Text("${index + 1}", style: TextStyle(fontSize: 10, color: _mainColor, fontWeight: FontWeight.bold)),
                           ),
-                          label: Text(user['name']),
-                          deleteIcon: const Icon(Icons.close, size: 18),
-                          onDeleted: () {
-                            setState(() {
-                              partnersList.removeAt(idx);
-                            });
-                          },
+                          label: Text(partnersList[index]['name'], style: const TextStyle(fontSize: 12)),
+                          onDeleted: () => setState(() => partnersList.removeAt(index)),
                         );
-                      }).toList(),
+                      },
                     ),
-                    
-                    // 하단 여백 확보 (스크롤 시 잘림 방지)
-                    const SizedBox(height: 20),
-                  ],
-                ),
-              ),
-            ),
+                  ),
+                ] else ...[
+                  const SizedBox(height: 70),
+                ],
 
-            // [3] 하단 고정 분석 버튼
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5, offset: const Offset(0, -2))],
-              ),
-              child: ElevatedButton(
-                onPressed: _goToDetailAnalysis,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(double.infinity, 50),
-                  backgroundColor: Colors.black87,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                const Spacer(flex: 2),
+
+                // [4] 분석 시작 버튼
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+                  child: ElevatedButton(
+                    onPressed: _goToDetailAnalysis,
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 56),
+                      backgroundColor: Colors.black,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                      elevation: 0,
+                    ),
+                    child: Text(
+                      "총 ${partnersList.length + 1}명 분석 시작",
+                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
                 ),
-                child: Text(
-                  "총 ${partnersList.length + 1}명 분석하기",
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
-  // 상단 내 점수 요약 위젯
-  Widget _slimScore(String label, double score) {
-    return Row(
+  // 상단 내 점수 요약 (Slim)
+  Widget _slimScore(String label, double score, Color color) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
-        const SizedBox(width: 4),
-        Text(score.toInt().toString(), style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent)),
-        const SizedBox(width: 8),
+        Text(label, style: const TextStyle(fontSize: 11, color: Colors.grey)),
+        const SizedBox(height: 2),
+        Text(score.toInt().toString(), style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 15)),
       ],
     );
   }
 
-  // 2x2 그리드용 입력 필드
-  Widget _compactInput(String hint, TextEditingController ctrl) {
-    return TextField(
-      controller: ctrl,
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: hint,
-        border: const OutlineInputBorder(),
-        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        isDense: true,
+  // 컴팩트한 입력 필드
+  Widget _compactTextField({required String label, required String hint, required TextEditingController controller, required IconData icon}) {
+    return SizedBox(
+      height: 45,
+      child: TextField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: hint,
+          prefixIcon: Icon(icon, size: 18, color: Colors.grey[400]),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: Colors.grey[300]!)),
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: Colors.grey[300]!)),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: _mainColor)),
+        ),
+      ),
+    );
+  }
+
+  // 점수 입력 필드
+  Widget _compactScoreField(String hint, TextEditingController controller) {
+    return SizedBox(
+      height: 45,
+      child: TextField(
+        controller: controller,
+        keyboardType: TextInputType.number,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: const TextStyle(fontSize: 12, color: Colors.grey),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: Colors.grey[300]!)),
+          enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: Colors.grey[300]!)),
+          focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(8), borderSide: BorderSide(color: _mainColor)),
+        ),
       ),
     );
   }
