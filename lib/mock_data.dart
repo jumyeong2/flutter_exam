@@ -45,13 +45,12 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
   ConflictScenario(
-    id: "Q9",
-    category: "finance",
-    questionText: "해외 출장 시 숙소와 항공편 등급은?",
+    id: "Q9", category: "finance",
+    questionText: "업무 효율을 위해 300만 원 상당의 고성능 장비가 필요하다면?",
     options: [
-      ScenarioOption(text: "무조건 최저가", score: 0.0),
-      ScenarioOption(text: "효율성 고려 (비즈니스 호텔)", score: 5.0),
-      ScenarioOption(text: "대표 품위 유지 (5성급)", score: 10.0),
+      ScenarioOption(text: "사전 승인 필수. 비용 절감이 최우선", score: 0.0),
+      ScenarioOption(text: "일정 한도 내 자율, 초과 시 상의", score: 5.0),
+      ScenarioOption(text: "성과를 위해서라면 아낌없이 지원", score: 10.0),
     ],
   ),
 
@@ -69,17 +68,17 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q6",
     category: "power",
-    questionText: "공동창업자가 실력 부족한 지인을 팀장으로 추천했습니다.",
+    questionText: "공동창업자가 '실력은 평범하지만, 믿을 수 있는 지인'을 채용하자고 한다면?",
     options: [
       ScenarioOption(text: "절대 반대 (실력 중심)", score: 0.0),
-      ScenarioOption(text: "인턴으로 테스트 후 결정", score: 5.0),
-      ScenarioOption(text: "믿고 채용한다 (신뢰 중심)", score: 10.0),
+      ScenarioOption(text: "수습 기간을 두고 성과를 검증", score: 5.0),
+      ScenarioOption(text: "찬성. 초기엔 신뢰와 팀워크가 우선", score: 10.0),
     ],
   ),
   ConflictScenario(
     id: "Q10",
     category: "power",
-    questionText: "CTO인 공동창업자의 역량이 성장에 방해가 됩니다.",
+    questionText: "CTO인 초기 공동창업자의 역량이 성장에 방해가 됩니다.",
     options: [
       ScenarioOption(text: "해고하거나 내보낸다", score: 0.0),
       ScenarioOption(text: "C레벨 박탈 및 평직원 강등", score: 5.0),
