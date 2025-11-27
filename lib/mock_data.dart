@@ -13,21 +13,21 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
   ConflictScenario(
-    id: "Q7",
-    category: "equity",
-    questionText: "대기업에서 50억 원 매각 제안이 왔습니다. 파시겠습니까?",
+    id: "Q7", category: "equity",
+    questionText: "초기 멤버가 1년 만에 퇴사합니다. 약속했던 지분 20%는 어떻게 처리할까요?",
     options: [
-      ScenarioOption(text: "당장 매각한다 (현금화)", score: 0.0),
-      ScenarioOption(text: "조건을 보고 협상한다", score: 5.0),
-      ScenarioOption(text: "거절한다 (유니콘 목표)", score: 10.0),
+      ScenarioOption(text: "1년 기여는 짧으므로, 지분 회수하거나 최소화", score: 0.0),
+      ScenarioOption(text: "기여한 기간(1년)만큼은 인정 (Vesting)", score: 5.0),
+      ScenarioOption(text: "초기 공헌을 인정해 20% 인정", score: 10.0),
     ],
   ),
+
   ConflictScenario(
     id: "Q8",
     category: "equity",
     questionText: "자금이 바닥나서 대표이사 연대보증이 필요합니다.",
     options: [
-      ScenarioOption(text: "폐업한다 (빚지기 싫음)", score: 0.0),
+      ScenarioOption(text: "폐업 (빚지기 싫음)", score: 0.0),
       ScenarioOption(text: "대표 혼자 보증 (지분 더 받음)", score: 5.0),
       ScenarioOption(text: "공동창업자 n분의 1 보증", score: 10.0),
     ],
@@ -35,15 +35,15 @@ final List<ConflictScenario> sampleQuestions = [
 
   // 💰 [FINANCE] 자금 운용 (2문제)
   ConflictScenario(
-    id: "Q2",
-    category: "finance",
-    questionText: "투자금 1억이 들어왔습니다. 급여 책정은?",
+    id: "Q2", category: "finance",
+    questionText: "공동창업자가 개인 사정(이사, 결혼 등)으로 월급 3개월 치 선지급을 요청했습니다.",
     options: [
-      ScenarioOption(text: "최저임금 미만 (헝그리 정신)", score: 0.0),
-      ScenarioOption(text: "최소 생계비 (월 250만)", score: 5.0),
-      ScenarioOption(text: "시장 연봉의 70% 수준", score: 10.0),
+      ScenarioOption(text: "거절. 공금은 공금", score: 0.0),
+      ScenarioOption(text: "회사 자금 사정을 봐서 가능한 범위 내에서 대여", score: 5.0),
+      ScenarioOption(text: "팀원의 안정이 회사의 안정", score: 10.0),
     ],
   ),
+
   ConflictScenario(
     id: "Q9", category: "finance",
     questionText: "업무 효율을 위해 300만 원 상당의 고성능 장비가 필요하다면?",
@@ -65,6 +65,7 @@ final List<ConflictScenario> sampleQuestions = [
       ScenarioOption(text: "해당 분야 전문가 존중", score: 10.0),
     ],
   ),
+
   ConflictScenario(
     id: "Q6",
     category: "power",
@@ -78,9 +79,9 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q10",
     category: "power",
-    questionText: "CTO인 초기 공동창업자의 역량이 성장에 방해가 됩니다.",
+    questionText: "초기 멤버인 CTO가 회사의 성장 속도를 따라오지 못하고 있습니다.",
     options: [
-      ScenarioOption(text: "해고하거나 내보낸다", score: 0.0),
+      ScenarioOption(text: "해고하거나 내보냄", score: 0.0),
       ScenarioOption(text: "C레벨 박탈 및 평직원 강등", score: 5.0),
       ScenarioOption(text: "외부 시니어 영입 후 배속", score: 10.0),
     ],
@@ -88,22 +89,22 @@ final List<ConflictScenario> sampleQuestions = [
 
   // ❤️ [VALUE] 가치관 (2문제)
   ConflictScenario(
-    id: "Q4",
-    category: "value",
-    questionText: "한 명은 워라밸을 지키고, 한 명은 밤샘을 합니다.",
+    id: "Q4", category: "value",
+    questionText: "공동창업자가 큰 실수(서버 데이터 삭제 등)를 저지르고, 혼자 수습하다가 골든타임을 놓쳤다.",
     options: [
-      ScenarioOption(text: "용납 불가 (스타트업은 전쟁)", score: 0.0),
-      ScenarioOption(text: "코어타임만 지키면 OK", score: 5.0),
-      ScenarioOption(text: "성과만 내면 상관없음", score: 10.0),
+      ScenarioOption(text: "책임소재를 명확히 하고 규칙을 강화", score: 0.0),
+      ScenarioOption(text: "개인보다 프로세스 문제로 보고 체계를 개선", score: 5.0),
+      ScenarioOption(text: "왜 혼자 감당했는지 이해하고 신뢰를 다짐", score: 10.0),
     ],
   ),
+
   ConflictScenario(
     id: "Q5",
     category: "value",
     questionText: "생활비 때문에 저녁에 투잡(알바)을 하겠다고 합니다.",
     options: [
       ScenarioOption(text: "절대 불가 (몰입 방해)", score: 0.0),
-      ScenarioOption(text: "한시적 허용", score: 5.0),
+      ScenarioOption(text: "기간 내 한시적 허용", score: 5.0),
       ScenarioOption(text: "사생활 터치 안 함", score: 10.0),
     ],
   ),
