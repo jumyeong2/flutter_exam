@@ -115,10 +115,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
               if (currentIndex > 0)
                 TextButton.icon(
                   onPressed: _prevQuestion,
-                  icon: const Icon(Icons.refresh_rounded, size: 18),
+                  icon: const Icon(Icons.refresh_rounded, size: 25),
                   label: const Text("다시 선택하기"),
                   style: TextButton.styleFrom(
-                    foregroundColor: const Color(0xFFB0BEC5), // 은은한 블루그레이
+                    foregroundColor: const Color.fromARGB(255, 121, 122, 122), // 은은한 블루그레이
                     padding: const EdgeInsets.symmetric(vertical: 15),
                   ),
                 )
