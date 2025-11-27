@@ -3,22 +3,22 @@ import 'scenario_model.dart';
 final List<ConflictScenario> sampleQuestions = [
   // 👑 [EQUITY] 지분 및 소유권 (3문제) - 가장 중요!
   ConflictScenario(
-    id: "Q1",
-    category: "equity",
-    questionText: "공동창업자가 1년 뒤 '힘들어서 못하겠다'며 퇴사를 선언한다면?",
-    options: [
-      ScenarioOption(text: "지분 전량 회수 (Bad Leaver)", score: 0.0),
-      ScenarioOption(text: "근무 기간만큼 인정 (Vesting)", score: 5.0),
-      ScenarioOption(text: "설립 공로 인정 (Good Leaver)", score: 10.0),
-    ],
-  ),
+  id: "Q1", category: "equity",
+  questionText: "초기 멤버가 핵심 아이디어를 제공했지만, 실제 개발에는 거의 참여하지 않았습니다.",
+  options: [
+    ScenarioOption(text: "아이디어만으로는 지분을 주지 않음", score: 0.0),
+    ScenarioOption(text: "아이디어 기여를 고려해, 약속 지분의 일부만 인정", score: 5.0),
+    ScenarioOption(text: "초기 기여를 존중해 약속한 지분 전부를 인정", score: 10.0),
+  ],
+),
+
   ConflictScenario(
     id: "Q7", category: "equity",
-    questionText: "초기 멤버가 1년 만에 퇴사합니다. 약속했던 지분 20%는 어떻게 처리할까요?",
+    questionText: "초기 멤버가 근속 약속을 지키지 못하고 1년 만에 퇴사했습니다.",
     options: [
-      ScenarioOption(text: "1년 기여는 짧으므로, 지분 회수하거나 최소화", score: 0.0),
-      ScenarioOption(text: "기여한 기간(1년)만큼은 인정 (Vesting)", score: 5.0),
-      ScenarioOption(text: "초기 공헌을 인정해 20% 인정", score: 10.0),
+      ScenarioOption(text: "1년 기여는 짧으므로, 지분 회수하거나 최소 인정", score: 0.0),
+      ScenarioOption(text: "근속 기간(1년)만큼은 인정 (Vesting)", score: 5.0),
+      ScenarioOption(text: "약속한 지분 20% 모두 인정", score: 10.0),
     ],
   ),
 
@@ -46,7 +46,7 @@ final List<ConflictScenario> sampleQuestions = [
 
   ConflictScenario(
     id: "Q9", category: "finance",
-    questionText: "업무 효율을 위해 300만 원 상당의 고성능 장비가 필요하다면?",
+    questionText: "업무 효율을 위해 300만 원 상당의 고성능 장비가 필요합니다.",
     options: [
       ScenarioOption(text: "사전 승인 필수. 비용 절감이 최우선", score: 0.0),
       ScenarioOption(text: "일정 한도 내 자율, 초과 시 상의", score: 5.0),
@@ -58,7 +58,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q3",
     category: "power",
-    questionText: "제품 출시 여부를 두고 의견이 갈린다면?",
+    questionText: "제품 출시 여부를 두고 의견이 갈립니다.",
     options: [
       ScenarioOption(text: "CEO 독단 결정", score: 0.0),
       ScenarioOption(text: "만장일치 될 때까지 토론", score: 5.0),
@@ -69,7 +69,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q6",
     category: "power",
-    questionText: "공동창업자가 '실력은 평범하지만, 믿을 수 있는 지인'을 채용하자고 한다면?",
+    questionText: "공동창업자가 '실력은 평범하지만, 믿을 수 있는 지인'을 채용하자고 합니다.",
     options: [
       ScenarioOption(text: "절대 반대 (실력 중심)", score: 0.0),
       ScenarioOption(text: "수습 기간을 두고 성과를 검증", score: 5.0),
@@ -90,7 +90,7 @@ final List<ConflictScenario> sampleQuestions = [
   // ❤️ [VALUE] 가치관 (2문제)
   ConflictScenario(
     id: "Q4", category: "value",
-    questionText: "공동창업자가 큰 실수(서버 데이터 삭제 등)를 저지르고, 혼자 수습하다가 골든타임을 놓쳤다.",
+    questionText: "공동창업자가 큰 실수(서버 데이터 삭제 등)를 저지르고, 혼자 수습하다가 골든타임을 놓쳤습니다.",
     options: [
       ScenarioOption(text: "책임소재를 명확히 하고 규칙을 강화", score: 0.0),
       ScenarioOption(text: "개인보다 프로세스 문제로 보고 체계를 개선", score: 5.0),
