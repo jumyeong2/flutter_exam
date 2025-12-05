@@ -2,13 +2,31 @@ import 'scenario_model.dart';
 
 final List<ConflictScenario> sampleQuestions = [
   // 👑 [EQUITY] 지분 및 소유권 (3문제) - 가장 중요!
-  ConflictScenario(
-  id: "Q1", category: "equity",
-  questionText: "초기 멤버가 핵심 아이디어를 제공했지만, 실제 개발에는 거의 참여하지 않았습니다.",
+ ConflictScenario(
+  id: "Q1",
+  category: "equity",
+  questionText: "법인 설립을 앞두고 지분을 정하는 날입니다. \n"
+      "공동창업자 E는 성격도 좋고, 당신이 시키는 개발 업무는 기한 맞춰 성실하게 해옵니다. \n"
+      "하지만 딱 거기까지입니다. \n"
+      "아이디어 제안이나 문제 해결을 위한 고민은 오직 당신의 몫이고, E는 수동적으로 업무만 처리합니다. \n"
+      "E는 당연히 우리가 '공동대표'로서 5:5를 가져간다고 생각합니다. \n"
+      "창업가가 아닌 '직원' 같은 E와의 지분 설정, 어떻게 하시겠습니까?",
   options: [
-    ScenarioOption(text: "아이디어만으로는 지분을 주지 않음", score: 0.0),
-    ScenarioOption(text: "아이디어 기여를 고려해, 약속 지분의 일부만 인정", score: 5.0),
-    ScenarioOption(text: "초기 기여를 존중해 약속한 지분 전부를 인정", score: 10.0),
+    ScenarioOption(
+      // 0점: 냉정한 현실 자각 (Role adjustment)
+      text: "💼 직급 조정: '넌 창업가 성향이 아냐.' 솔직하게 말하고, 지분을 대폭 낮추는 대신 월급을 더 주는 '초기 멤버' 대우로 변경합니다.",
+      score: 0.0,
+    ),
+    ScenarioOption(
+      // 5점: 안전장치 마련 (Vesting)
+      text: "📉 성과 연동: 5:5는 인정하되, 주주간계약서에 까다로운 '성과 조건(KPI)'을 겁니다. 주도적인 성과를 못 내면 지분을 회수합니다.",
+      score: 5.0,
+    ),
+    ScenarioOption(
+      // 10점: 관계 유지 및 희망 (Investment in person)
+      text: "🤝 동반 성장: 지금은 수동적이지만, 지분과 책임감(C-level 타이틀)을 주면 주도적으로 변할 것이라 믿고 5:5로 갑니다.",
+      score: 10.0,
+    ),
   ],
 ),
 
@@ -109,3 +127,5 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
 ];
+
+

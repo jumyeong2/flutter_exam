@@ -22,26 +22,68 @@ class ResultDetailScreen extends StatelessWidget {
     int totalMembers = allMembers.length;
 
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: const Color(0xFFF4F6FB),
       appBar: AppBar(
         title: const Text("팀 성향 분포도"),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share_arrival_time_outlined),
+            tooltip: "레포트 공유",
+            onPressed: () => _showShareTip(context),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "우리 팀은\n한 방향을 보고 있을까요?",
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              "총 $totalMembers명의 생각 위치를 시각화했습니다.\n서로의 생각 차이(Gap)를 확인해보세요.",
-              style: const TextStyle(color: Colors.grey),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: Colors.indigo.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          child: const Icon(Icons.radar_outlined, color: Colors.indigo, size: 32),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "우리 팀은 한 방향을 보고 있을까요?",
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 6),
+                              Text(
+                                "총 $totalMembers명의 기준을 시각화했습니다. Gap이 큰 구간은 아이콘으로 강조해 드려요.",
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 18),
+                    Row(
+                      children: [
+                        _pill(icon: Icons.timelapse_outlined, label: "라운드 완료"),
+                        const SizedBox(width: 8),
+                        _pill(icon: Icons.diversity_3_outlined, label: "$totalMembers명 참여"),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(height: 30),
 
@@ -54,55 +96,55 @@ class ResultDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             // 인원수에 따른 범례(Legend) 텍스트 변경
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildLegendIcon(
-                  Colors.blueAccent,
-                  totalMembers == 2 ? "나" : "나 포함 그룹",
-                ),
-                const SizedBox(width: 20),
-                _buildLegendIcon(
-                  Colors.grey[700]!,
-                  totalMembers == 2 ? "파트너" : "파트너 그룹",
-                ),
-              ],
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildLegendIcon(
+                    Colors.blueAccent,
+                    totalMembers == 2 ? "나" : "나 포함 그룹",
+                  ),
+                  const SizedBox(width: 24),
+                  _buildLegendIcon(
+                    Colors.grey[700]!,
+                    totalMembers == 2 ? "파트너" : "파트너 그룹",
+                  ),
+                ],
+              ),
             ),
 
             const SizedBox(height: 40),
 
             // 하단 안내 메시지
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.blue.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.blue.shade200),
-              ),
-              child: const Column(
-                children: [
-                  Icon(
-                    Icons.assignment_turned_in_outlined,
-                    color: Colors.blueAccent,
-                    size: 30,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    "합의된 내용도, 이견이 있는 내용도\n모두 '주주간 계약서'로 명문화해야 안전합니다.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.assignment_turned_in_outlined, color: Colors.blueAccent),
+                        SizedBox(width: 8),
+                        Text(
+                          "이견도 기록될 때 힘이 됩니다",
+                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        ),
+                      ],
                     ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "초기 창업팀의 구두 약속은 상황에 따라 변하기 쉽습니다.\n지금의 합의를 법적 효력이 있는 문서로 남기세요.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.black54, fontSize: 12),
-                  ),
-                ],
+                    const SizedBox(height: 10),
+                    const Text(
+                      "합의된 내용도, 이견이 있는 내용도 '주주간 계약서'로 명문화해야 안전합니다. 초기 구두 약속은 쉽게 변질되기 때문에, 오늘의 결과를 문서로 정리하세요.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.black54, height: 1.5),
+                    ),
+                  ],
+                ),
               ),
             ),
 
@@ -176,12 +218,12 @@ class ResultDetailScreen extends StatelessWidget {
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
+            color: Colors.blueGrey.withOpacity(0.08),
+            blurRadius: 20,
+            offset: const Offset(0, 12),
           ),
         ],
         border: Border.all(
@@ -201,20 +243,26 @@ class ResultDetailScreen extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: analysis['color'].withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  analysis['status'],
-                  style: TextStyle(
-                    color: analysis['color'],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12,
+              Row(
+                children: [
+                  Icon(analysis['icon'], color: analysis['color']),
+                  const SizedBox(width: 6),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: analysis['color'].withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: Text(
+                      analysis['status'],
+                      style: TextStyle(
+                        color: analysis['color'],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
@@ -224,7 +272,7 @@ class ResultDetailScreen extends StatelessWidget {
 
           // [시각화] 라인(Line) 위로 그룹 배치
           SizedBox(
-            height: 100, // [수정됨] 60 -> 100으로 변경하여 공간 확보 (에러 해결)
+            height: 110,
             child: Stack(
               alignment: Alignment.centerLeft,
               clipBehavior: Clip.none,
@@ -239,9 +287,9 @@ class ResultDetailScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(3),
                       gradient: LinearGradient(
                         colors: [
-                          Colors.blue.shade100,
-                          Colors.purple.shade100,
-                          Colors.red.shade100,
+                          Colors.blue.shade200,
+                          Colors.purple.shade200,
+                          Colors.red.shade200,
                         ],
                       ),
                     ),
@@ -271,7 +319,7 @@ class ResultDetailScreen extends StatelessWidget {
                             child: _nameTag(member['name'], member['isMe']),
                           ),
                         ),
-                        Icon(Icons.location_on, color: pinColor, size: 30),
+                        Icon(Icons.fmd_good_rounded, color: pinColor, size: 30),
                       ],
                     ),
                   );
@@ -298,19 +346,19 @@ class ResultDetailScreen extends StatelessWidget {
           const SizedBox(height: 20),
 
           Container(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(16),
             width: double.infinity,
             decoration: BoxDecoration(
               color: analysis['color'].withOpacity(0.05),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: analysis['color'].withOpacity(0.3)),
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: analysis['color'].withOpacity(0.2)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Icon(analysis['icon'], size: 18, color: analysis['color']),
+                    Icon(analysis['icon'], size: 20, color: analysis['color']),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -476,5 +524,59 @@ class ResultDetailScreen extends StatelessWidget {
       "color": color,
       "icon": icon,
     };
+  }
+
+  Widget _pill({required IconData icon, required String label}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.indigo.withOpacity(0.08),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: Colors.indigo),
+          const SizedBox(width: 4),
+          Text(label, style: const TextStyle(fontSize: 12, color: Colors.indigo, fontWeight: FontWeight.w600)),
+        ],
+      ),
+    );
+  }
+
+  void _showShareTip(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (_) => Padding(
+        padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: const [
+                Icon(Icons.share_location_outlined),
+                SizedBox(width: 10),
+                Text("결과 공유 팁", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              ],
+            ),
+            const SizedBox(height: 16),
+            const Text("1. 화면 캡처 후 메신저에 공유해 빠르게 의견을 모아보세요."),
+            const SizedBox(height: 8),
+            const Text("2. PDF로 남길 땐 '시뮬레이션 다시 진행' 전, 현재 결과를 저장하세요."),
+            const SizedBox(height: 8),
+            const Text("3. 민감한 데이터는 팀 내에서만 활용하고 외부 공유 시 익명화가 필요합니다."),
+            const SizedBox(height: 24),
+            FilledButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("확인"),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
