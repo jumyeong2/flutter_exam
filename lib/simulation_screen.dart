@@ -96,10 +96,8 @@ class _SimulationScreenState extends State<SimulationScreen> {
               SizedBox(height: 13),
               ...List.generate(
                 scenario.options.length,
-                (index) => _buildPastelOptionCard(
-                  index,
-                  scenario.options[index].text,
-                ),
+                (index) =>
+                    _buildPastelOptionCard(index, scenario.options[index].text),
               ),
               const SizedBox(height: 12),
               if (currentIndex > 0)
@@ -294,13 +292,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
   }
 
   IconData _optionIcon(int index) {
-    const icons = [
-      Icons.balance_outlined,
-      Icons.handshake_outlined,
-      Icons.energy_savings_leaf_outlined,
-      Icons.lightbulb_outline,
-    ];
-    return icons[index % icons.length];
+    return Icons.check_circle_outline; // Minimal & Sophisticated
   }
 
   void _handleAnswer(int index) async {

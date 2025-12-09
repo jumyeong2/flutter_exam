@@ -30,7 +30,7 @@ class ResultDetailScreen extends StatelessWidget {
             icon: const Icon(Icons.share_arrival_time_outlined),
             tooltip: "레포트 공유",
             onPressed: () => _showShareTip(context),
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -52,7 +52,11 @@ class ResultDetailScreen extends StatelessWidget {
                             color: Colors.indigo.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(18),
                           ),
-                          child: const Icon(Icons.radar_outlined, color: Colors.indigo, size: 32),
+                          child: const Icon(
+                            Icons.radar_outlined,
+                            color: Colors.indigo,
+                            size: 32,
+                          ),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
@@ -61,7 +65,10 @@ class ResultDetailScreen extends StatelessWidget {
                             children: [
                               const Text(
                                 "우리 팀은 한 방향을 보고 있을까요?",
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                               const SizedBox(height: 6),
                               Text(
@@ -78,7 +85,10 @@ class ResultDetailScreen extends StatelessWidget {
                       children: [
                         _pill(icon: Icons.timelapse_outlined, label: "라운드 완료"),
                         const SizedBox(width: 8),
-                        _pill(icon: Icons.diversity_3_outlined, label: "$totalMembers명 참여"),
+                        _pill(
+                          icon: Icons.diversity_3_outlined,
+                          label: "$totalMembers명 참여",
+                        ),
                       ],
                     ),
                   ],
@@ -129,11 +139,17 @@ class ResultDetailScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
-                        Icon(Icons.assignment_turned_in_outlined, color: Colors.blueAccent),
+                        Icon(
+                          Icons.assignment_turned_in_outlined,
+                          color: Colors.blueAccent,
+                        ),
                         SizedBox(width: 8),
                         Text(
                           "이견도 기록될 때 힘이 됩니다",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ],
                     ),
@@ -248,7 +264,10 @@ class ResultDetailScreen extends StatelessWidget {
                   Icon(analysis['icon'], color: analysis['color']),
                   const SizedBox(width: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: analysis['color'].withOpacity(0.12),
                       borderRadius: BorderRadius.circular(40),
@@ -332,14 +351,8 @@ class ResultDetailScreen extends StatelessWidget {
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "구조/효율",
-                style: TextStyle(fontSize: 10, color: Colors.grey),
-              ),
-              Text(
-                "관계/신뢰",
-                style: TextStyle(fontSize: 10, color: Colors.grey),
-              ),
+              Text("구조/효율", style: TextStyle(fontSize: 10, color: Colors.grey)),
+              Text("관계/신뢰", style: TextStyle(fontSize: 10, color: Colors.grey)),
             ],
           ),
 
@@ -456,9 +469,9 @@ class ResultDetailScreen extends StatelessWidget {
         String partnerName = allMembers.firstWhere(
           (m) => m['isMe'] == false,
         )['name'];
-        headline = "두 분의 관점이 정반대입니다.";
+        headline = "두 분의 관점 차이가 분명하게 나타납니다.";
         desc =
-            "본인(나)과 '$partnerName' 님의 생각 차이가 매우 큽니다. 서로 양보 없이 진행될 경우 사사건건 충돌할 수 있습니다. 중간 지점을 찾는 타협안이 필수적입니다.";
+            "본인(나)과 '$partnerName' 님이 바라보는 기준에 차이가 있는 것으로 보입니다. 이대로 진행하면 중요한 순간마다 판단이 엇갈릴 가능성이 큽니다. 지금 조율하면 훨씬 건강한 협업을 만들 수 있습니다.";
       }
       // [CASE B] 3명 이상일 때
       else {
@@ -494,7 +507,7 @@ class ResultDetailScreen extends StatelessWidget {
             desc =
                 "다른 파트너들은 대체로 비슷한 의견을 가지고 있으나, 본인만 관점이 다릅니다. 설득 과정 없이 진행될 경우 소외감을 느끼거나 리더십에 타격을 입을 수 있습니다.";
           } else {
-            headline = "팀 내에 극단적인 의견 차이가 있습니다.";
+            headline = "팀 내에 큰 의견 차이가 있습니다.";
             desc =
                 "대다수는 동의하지만 특정 멤버 한 명이 강하게 반대하는 형국입니다. 무시하고 진행하면 해당 멤버의 이탈이나 반발을 초래할 수 있습니다.";
           }
@@ -538,7 +551,14 @@ class ResultDetailScreen extends StatelessWidget {
         children: [
           Icon(icon, size: 14, color: Colors.indigo),
           const SizedBox(width: 4),
-          Text(label, style: const TextStyle(fontSize: 12, color: Colors.indigo, fontWeight: FontWeight.w600)),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.indigo,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );
@@ -560,7 +580,10 @@ class ResultDetailScreen extends StatelessWidget {
               children: const [
                 Icon(Icons.share_location_outlined),
                 SizedBox(width: 10),
-                Text("결과 공유 팁", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                Text(
+                  "결과 공유 팁",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
               ],
             ),
             const SizedBox(height: 16),
