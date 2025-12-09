@@ -6,121 +6,154 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final featureItems = [
-      (Icons.psychology_alt_outlined, "성향 진단"),
-      (Icons.shield_moon_outlined, "리스크 감지"),
-      (Icons.auto_graph_outlined, "실시간 스코어"),
-      (Icons.description_outlined, "합의 문명화"),
-    ];
-
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFEEF2FF),
-              Color(0xFFF4F6FB),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+      backgroundColor: const Color(0xFFF8F9FD), // Light background color
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+          child: Column(
+            children: [
+              const SizedBox(height: 20),
+              // Header: Logo and text
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Image.asset('assets/coSync.png', width: 60, height: 60),
+                  const SizedBox(width: 12),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      Text(
+                        "CoSync",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF757575),
+                        ),
+                      ),
+                      Text(
+                        "코싱크",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF212121),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              const Spacer(),
+
+              // Main Card
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(24.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 20,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
+                    // Inner Box (Ticket/Folder style)
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(18),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.blueGrey.withOpacity(0.08),
-                            blurRadius: 16,
-                            offset: const Offset(0, 8),
+                        border: Border.all(color: Colors.grey[300]!),
+                        borderRadius: BorderRadius.circular(13),
+                      ),
+                      child: Row(
+                        children: [
+                          // Icon Placeholder Box
+                          Container(
+                            width: 50,
+                            height: 50,
+                            // decoration: BoxDecoration(
+                            //   border: Border.all(color: Colors.grey[400]!),
+                            //   borderRadius: BorderRadius.circular(4),
+                            // ),
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.handshake_outlined,
+                              size: 40,
+                              color: const Color.fromARGB(255, 70, 170, 232),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: const [
+                                Text(
+                                  "Co-Founding Fit Test",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF212121),
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  "우리는 같은 기준으로 움직이고 있을까?",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xFF757575),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
-                      child: Icon(Icons.handshake, size: 32, color: colorScheme.primary),
                     ),
-                    const SizedBox(width: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    const SizedBox(height: 24),
+
+                    // List Items
+                    _buildListItem("나의 협업 성향"),
+                    const SizedBox(height: 8),
+                    _buildListItem("팀 내 갈등 요인"),
+                    const SizedBox(height: 8),
+                    _buildListItem("현재 필요한 합의 목록"),
+
+                    const SizedBox(height: 24),
+
+                    // 2x2 Grid Pills
+                    Row(
                       children: [
-                        Text("CoSync", style: TextStyle(color: Colors.grey[600], fontSize: 15)),
-                        Text(
-                          "코싱크",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: colorScheme.onSurface,
-                          ),
-                        ),
+                        Expanded(child: _buildGridPill("#성향 진단")),
+                        const SizedBox(width: 12),
+                        Expanded(child: _buildGridPill("#리스크 감지")),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(child: _buildGridPill("#갭 인식")),
+                        const SizedBox(width: 12),
+                        Expanded(child: _buildGridPill("#합의 문문화")),
                       ],
                     ),
                   ],
                 ),
-                const Spacer(flex: 1),
-                Card(
-                  margin: EdgeInsets.zero,
-                  child: Padding(
-                    padding: const EdgeInsets.all(28.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          width: 64,
-                          height: 64,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                colorScheme.primary,
-                                colorScheme.primary.withOpacity(0.6),
-                              ],
-                            ),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Icon(Icons.handshake, color: Colors.white, size: 32),
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          "",
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.w800,
-                                color: colorScheme.onSurface,
-                              ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          "아이콘 위주의 감각적인 UI에서 각자의 기준을 시각화하고, 서류화가 필요한 합의를 빠르게 정리하세요.",
-                          style: TextStyle(color: Colors.grey[600], height: 1.5),
-                        ),
-                        const SizedBox(height: 24),
-                        Wrap(
-                          spacing: 10,
-                          runSpacing: 10,
-                          children: featureItems
-                              .map(
-                                (item) => _featurePill(
-                                  item.$1,
-                                  item.$2,
-                                  colorScheme,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Spacer(flex: 1),
-                FilledButton.icon(
+              ),
+
+              const Spacer(),
+
+              // Bottom Button
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -129,99 +162,84 @@ class IntroScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.handshake),
-                  label: const Text("지금 바로 진단 시작"),
-                ),
-                const SizedBox(height: 12),
-                TextButton.icon(
-                  onPressed: () => _showGuide(context),
-                  icon: Icon(Icons.workspace_premium_outlined, color: Colors.grey[600]),
-                  label: Text(
-                    "진단 전, 우리 팀의 핵심 질문은?",
-                    style: TextStyle(color: Colors.grey[700], fontWeight: FontWeight.w600),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF64B5F6), // Pastel Blue
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        "지금 바로 진단 시작",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 12),
-              ],
-            ),
+              ),
+              const SizedBox(height: 16),
+              // Footer Text
+              const Text(
+                "3분 소요 · 공동창업자(파트너)에게 결과를 공유하세요",
+                style: TextStyle(fontSize: 12, color: Color(0xFF757575)),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _featurePill(IconData icon, String label, ColorScheme colorScheme) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-      decoration: BoxDecoration(
-        color: colorScheme.primary.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(30),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 16, color: colorScheme.primary),
-          const SizedBox(width: 6),
-          Text(
-            label,
-            style: TextStyle(
-              color: colorScheme.primary,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-            ),
+  Widget _buildListItem(String text) {
+    return Row(
+      children: [
+        const SizedBox(width: 16), // Indent slightly
+        Container(
+          width: 10,
+          height: 1.5, // Thin dash
+          color: Colors.black54,
+        ),
+        const SizedBox(width: 12),
+        Text(
+          text,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            color: Color(0xFF424242),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  void _showGuide(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+  Widget _buildGridPill(String text) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFE3F2FD), // Very light blue
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: const Color(0xFFBBDEFB),
+          width: 1,
+        ), // Subtle border
       ),
-      builder: (_) {
-        return Padding(
-          padding: const EdgeInsets.fromLTRB(24, 24, 24, 32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(Icons.question_answer_outlined, color: Theme.of(context).colorScheme.primary),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    "진단 전 체크리스트",
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 18),
-              const Text("• 지분과 의사결정권에 대해 언제까지 확정할 계획인가요?"),
-              const SizedBox(height: 8),
-              const Text("• 자금 출자 방식과 리스크 공유 법적 장치는 준비되었나요?"),
-              const SizedBox(height: 8),
-              const Text("• 서로 다른 가치관을 어떻게 조정할지 합의했나요?"),
-              const SizedBox(height: 30),
-              FilledButton.icon(
-                onPressed: () => Navigator.pop(context),
-                icon: const Icon(Icons.auto_awesome),
-                label: const Text("시뮬레이션으로 답을 찾아보기"),
-              ),
-            ],
-          ),
-        );
-      },
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFF424242),
+        ),
+      ),
     );
   }
 }
