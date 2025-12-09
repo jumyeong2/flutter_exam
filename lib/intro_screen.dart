@@ -32,47 +32,53 @@ class IntroScreen extends StatelessWidget {
                             children: [
                               Image.asset(
                                 'assets/coSync.png',
-                                width: 60,
-                                height: 60,
+                                width: 50, // Slightly smaller for elegance
+                                height: 50,
                               ),
-                              const SizedBox(width: 12),
+                              const SizedBox(width: 14),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: const [
                                   Text(
                                     "CoSync",
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.bold,
-                                      color: Color(0xFF757575),
+                                      color: Color(0xFF9E9E9E), // Softer grey
+                                      letterSpacing: 0.5,
                                     ),
                                   ),
                                   Text(
                                     "코싱크",
                                     style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w700,
                                       color: Color(0xFF212121),
+                                      letterSpacing: -0.5,
                                     ),
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                          const SizedBox(height: 60),
+                          const SizedBox(height: 50),
 
                           // Main Card
                           Container(
                             width: double.infinity,
-                            padding: const EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(28.0), // More padding
                             decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(
+                                24,
+                              ), // Softer corners
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 4),
+                                  color: Colors.black.withOpacity(
+                                    0.04,
+                                  ), // Lighter shadow
+                                  blurRadius: 30, // Softer blur
+                                  offset: const Offset(0, 10),
                                 ),
                               ],
                             ),
@@ -81,32 +87,41 @@ class IntroScreen extends StatelessWidget {
                               children: [
                                 // Inner Box (Ticket/Folder style)
                                 Container(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.all(20.0),
                                   decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.grey[300]!,
-                                    ),
-                                    borderRadius: BorderRadius.circular(13),
+                                    color: const Color(
+                                      0xFFF5F7FA,
+                                    ), // Soft grey fill
+                                    borderRadius: BorderRadius.circular(18),
+                                    // Removed border for cleaner look
                                   ),
                                   child: Row(
                                     children: [
                                       // Icon Placeholder Box
                                       Container(
-                                        width: 50,
-                                        height: 50,
+                                        width: 52,
+                                        height: 52,
                                         alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(
+                                                0.03,
+                                              ),
+                                              blurRadius: 10,
+                                              offset: const Offset(0, 4),
+                                            ),
+                                          ],
+                                        ),
                                         child: Icon(
                                           Icons.handshake_outlined,
-                                          size: 40,
-                                          color: const Color.fromARGB(
-                                            255,
-                                            70,
-                                            170,
-                                            232,
-                                          ),
+                                          size: 28,
+                                          color: const Color(0xFF64B5F6),
                                         ),
                                       ),
-                                      const SizedBox(width: 16),
+                                      const SizedBox(width: 18),
                                       Expanded(
                                         child: Column(
                                           crossAxisAlignment:
@@ -118,14 +133,16 @@ class IntroScreen extends StatelessWidget {
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xFF212121),
+                                                letterSpacing: -0.3,
                                               ),
                                             ),
                                             SizedBox(height: 4),
                                             Text(
                                               "우리는 같은 기준으로 움직이고 있을까?",
                                               style: TextStyle(
-                                                fontSize: 12,
+                                                fontSize: 13,
                                                 color: Color(0xFF757575),
+                                                height: 1.3,
                                               ),
                                             ),
                                           ],
@@ -134,16 +151,25 @@ class IntroScreen extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                const SizedBox(height: 24),
+                                const SizedBox(height: 28),
 
                                 // List Items
-                                _buildListItem("나의 협업 성향"),
-                                const SizedBox(height: 8),
-                                _buildListItem("팀 내 갈등 요인"),
-                                const SizedBox(height: 8),
-                                _buildListItem("현재 필요한 합의 목록"),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 8.0,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      _buildListItem("나의 협업 성향"),
+                                      const SizedBox(height: 12),
+                                      _buildListItem("팀 내 갈등 요인"),
+                                      const SizedBox(height: 12),
+                                      _buildListItem("현재 필요한 합의 목록"),
+                                    ],
+                                  ),
+                                ),
 
-                                const SizedBox(height: 24),
+                                const SizedBox(height: 32),
 
                                 // 2x2 Grid Pills
                                 Row(
@@ -173,9 +199,21 @@ class IntroScreen extends StatelessWidget {
                       Column(
                         children: [
                           // Bottom Button
-                          SizedBox(
+                          Container(
                             width: double.infinity,
-                            height: 56,
+                            height: 60, // Taller button
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(
+                                    0xFF64B5F6,
+                                  ).withOpacity(0.3),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 8),
+                                ),
+                              ],
+                            ),
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
@@ -192,7 +230,7 @@ class IntroScreen extends StatelessWidget {
                                 ), // Pastel Blue
                                 foregroundColor: Colors.white,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(16),
                                 ),
                                 elevation: 0,
                               ),
@@ -202,21 +240,23 @@ class IntroScreen extends StatelessWidget {
                                   Text(
                                     "지금 바로 진단 시작",
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 17,
                                       fontWeight: FontWeight.bold,
+                                      letterSpacing: 0.5,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 20),
                           // Footer Text
                           const Text(
                             "3분 소요 · 공동창업자(파트너)에게 결과를 공유하세요",
                             style: TextStyle(
                               fontSize: 12,
-                              color: Color(0xFF757575),
+                              color: Color(0xFF9E9E9E),
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 20),
@@ -236,12 +276,7 @@ class IntroScreen extends StatelessWidget {
   Widget _buildListItem(String text) {
     return Row(
       children: [
-        const SizedBox(width: 16), // Indent slightly
-        Container(
-          width: 10,
-          height: 1.5, // Thin dash
-          color: Colors.black54,
-        ),
+        Icon(Icons.check_circle, size: 16, color: Colors.blueGrey[200]),
         const SizedBox(width: 12),
         Text(
           text,
@@ -249,6 +284,7 @@ class IntroScreen extends StatelessWidget {
             fontSize: 15,
             fontWeight: FontWeight.w500,
             color: Color(0xFF424242),
+            letterSpacing: -0.2,
           ),
         ),
       ],
@@ -257,14 +293,11 @@ class IntroScreen extends StatelessWidget {
 
   Widget _buildGridPill(String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 14),
       decoration: BoxDecoration(
-        color: const Color(0xFFE3F2FD), // Very light blue
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: const Color(0xFFBBDEFB),
-          width: 1,
-        ), // Subtle border
+        color: const Color(0xFFF5F5F5), // Neutral grey background
+        borderRadius: BorderRadius.circular(14),
+        // Removed border for cleaner modern look
       ),
       alignment: Alignment.center,
       child: Text(
@@ -272,7 +305,7 @@ class IntroScreen extends StatelessWidget {
         style: const TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: Color(0xFF424242),
+          color: Color(0xFF616161),
         ),
       ),
     );
