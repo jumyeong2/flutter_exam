@@ -59,7 +59,7 @@ class IntroScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 60),
 
                           // Main Card
                           Container(

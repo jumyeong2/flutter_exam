@@ -333,11 +333,11 @@ class ResultDetailScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Strict (엄격)",
+                "구조/효율",
                 style: TextStyle(fontSize: 10, color: Colors.grey),
               ),
               Text(
-                "Generous (관대)",
+                "관계/신뢰",
                 style: TextStyle(fontSize: 10, color: Colors.grey),
               ),
             ],

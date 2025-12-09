@@ -63,10 +63,10 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
 
-  // 💰 [MONEY] 돈과 생존 (finance -> money로 통일)
+  // 💰 [MONEY] 돈과 생존 finance
   ConflictScenario(
     id: "Q4",
-    category: "money",
+    category: "finance",
     questionText:
         "경쟁사들이 법적으로 애매한(규제 미비) 영역을 파고들어 급성장 중입니다. 우리만 원칙 지키다 뒤처지고 있습니다.",
     options: [
@@ -87,7 +87,7 @@ final List<ConflictScenario> sampleQuestions = [
 
   ConflictScenario(
     id: "Q5",
-    category: "money",
+    category: "finance",
     questionText:
         "런웨이(잔고)가 3개월 남았습니다. 당장 팀을 유지하려면 하던 개발을 멈추고 돈 되는 외주(SI)를 뛰어야 합니다.",
     options: [
@@ -110,14 +110,14 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q6",
     category: "power",
-    questionText: "회사가 커지면서 창업 멤버인 김 이사가 리더 역량을 못 보여주고 있습니다. 직원들의 불만이 나옵니다.",
+    questionText: "회사가 커지면서 초기 멤버가 리더 역량을 못 보여주고 있습니다. 직원들의 불만이 나옵니다.",
     options: [
       ScenarioOption(
-        text: "회사는 친목회가 아님. 능력 없으면 실무자로 내려와야 함",
+        text: "능력 없으면 실무자로 내려와야 함",
         score: 0.0,
       ), // Shark (능력 위주)
       ScenarioOption(
-        text: "창업 멤버의 상징성은 중요함. 그가 잘할 수 있는 다른 역할을 찾아줘야 함",
+        text: "그가 잘할 수 있는 다른 역할을 찾아줘야 함",
         score: 10.0,
       ), // Dolphin (사람 존중)
       ScenarioOption(
