@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'mock_data.dart';
-import 'result_screen.dart';
+import 'result_screen_intro.dart';
 import 'scenario_model.dart';
 
 class SimulationScreen extends StatefulWidget {
@@ -12,14 +12,17 @@ class SimulationScreen extends StatefulWidget {
 
 class _SimulationScreenState extends State<SimulationScreen> {
   int currentIndex = 0;
-  int? tappedIndex; 
-  bool isAnimating = false; 
+  int? tappedIndex;
+  bool isAnimating = false;
 
   // [수정됨] 메인 테마: 부드러운 파스텔 블루 (Cornflower Blue)
-  final Color _mainColor = const Color(0xFF64B5F6); 
+  final Color _mainColor = const Color(0xFF64B5F6);
 
   Map<String, double> scores = {
-    "equity": 0, "finance": 0, "power": 0, "value": 0,
+    "equity": 0,
+    "finance": 0,
+    "power": 0,
+    "value": 0,
   };
   List<int> answerHistory = [];
 
@@ -30,7 +33,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6FB),
-      
+
       appBar: AppBar(
         title: Text(
           "라운드 ${currentIndex + 1} / ${sampleQuestions.length}",
@@ -43,7 +46,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
         actions: [
           IconButton(
             onPressed: () => _showRoundTip(context),
-            icon: const Icon(Icons.tips_and_updates_outlined, color: Colors.grey),
+            icon: const Icon(
+              Icons.tips_and_updates_outlined,
+              color: Colors.grey,
+            ),
           ),
         ],
         bottom: PreferredSize(
@@ -65,8 +71,14 @@ class _SimulationScreenState extends State<SimulationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _progressPill(Icons.flag_circle_outlined, "${(progress * 100).round()}% 진단 완료"),
-                    _progressPill(Icons.group_outlined, "시나리오 ${currentIndex + 1}"),
+                    _progressPill(
+                      Icons.flag_circle_outlined,
+                      "${(progress * 100).round()}% 진단 완료",
+                    ),
+                    _progressPill(
+                      Icons.group_outlined,
+                      "시나리오 ${currentIndex + 1}",
+                    ),
                   ],
                 ),
               ],
@@ -78,46 +90,54 @@ class _SimulationScreenState extends State<SimulationScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
-          child: Column(
-            children: [
-              _questionCard(scenario),
-              const SizedBox(height: 24),
-              Expanded(
-                child: ListView(
-                  children: [
-                    ...List.generate(
-                      scenario.options.length,
-                      (index) => _buildPastelOptionCard(index, scenario.options[index].text),
-                    ),
-                    const SizedBox(height: 12),
-                    if (currentIndex > 0)
-                      OutlinedButton.icon(
-                        onPressed: _prevQuestion,
-                        icon: const Icon(Icons.u_turn_left_outlined),
-                        label: const Text("이전 시나리오 다시 선택"),
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.grey[700],
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                        ),
-                      ),
-                    if (currentIndex == 0)
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 24),
-                        alignment: Alignment.center,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(Icons.touch_app_outlined, size: 20, color: Colors.grey),
-                            SizedBox(width: 6),
-                            Text("선택지 터치 후 다음 라운드로 자동 진행", style: TextStyle(color: Colors.grey)),
-                          ],
-                        ),
-                      ),
-                  ],
+          child: Expanded(
+            child: ListView(
+              children: [
+                _questionCard(scenario),
+                SizedBox(height: 13),
+                ...List.generate(
+                  scenario.options.length,
+                  (index) => _buildPastelOptionCard(
+                    index,
+                    scenario.options[index].text,
+                  ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 12),
+                if (currentIndex > 0)
+                  OutlinedButton.icon(
+                    onPressed: _prevQuestion,
+                    icon: const Icon(Icons.u_turn_left_outlined),
+                    label: const Text("이전 시나리오 다시 선택"),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.grey[700],
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                  ),
+                if (currentIndex == 0)
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.touch_app_outlined,
+                          size: 20,
+                          color: Colors.grey,
+                        ),
+                        SizedBox(width: 6),
+                        Text(
+                          "선택지 터치 후 다음 라운드로 자동 진행",
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
@@ -131,44 +151,20 @@ class _SimulationScreenState extends State<SimulationScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: _getCategoryPastelColor(scenario.category).withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Icon(
-                    _getCategoryIcon(scenario.category),
-                    color: _getCategoryPastelColor(scenario.category),
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _getCategoryName(scenario.category),
-                      style: TextStyle(
-                        color: _getCategoryPastelColor(scenario.category),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      "질문을 읽고 우리 팀의 기준을 선택하세요.",
-                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
-                    ),
-                  ],
-                ),
-              ],
+            const SizedBox(width: 12),
+            Text(
+              _getCategoryName(scenario.category),
+              style: TextStyle(
+                color: _getCategoryPastelColor(scenario.category),
+                fontWeight: FontWeight.bold,
+              ),
             ),
+            const SizedBox(height: 4),
             const SizedBox(height: 16),
             Text(
               scenario.questionText,
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.w700,
                 height: 1.4,
               ),
@@ -190,7 +186,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
             color: Colors.black.withOpacity(0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: Row(
@@ -198,7 +194,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
         children: [
           Icon(icon, size: 16, color: _mainColor),
           const SizedBox(width: 6),
-          Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+          ),
         ],
       ),
     );
@@ -222,8 +221,8 @@ class _SimulationScreenState extends State<SimulationScreen> {
             color: isSelected ? _mainColor : Colors.white,
             borderRadius: BorderRadius.circular(24), // 더 둥글게 (부드러운 느낌)
             border: Border.all(
-              color: isSelected ? Colors.transparent : const Color(0xFFEEEEEE), 
-              width: 2
+              color: isSelected ? Colors.transparent : const Color(0xFFEEEEEE),
+              width: 2,
             ),
             boxShadow: [
               // 부드러운 그림자
@@ -232,7 +231,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                   color: Colors.grey.withOpacity(0.05),
                   blurRadius: 15,
                   offset: const Offset(0, 5),
-                )
+                ),
             ],
           ),
           child: Row(
@@ -244,7 +243,9 @@ class _SimulationScreenState extends State<SimulationScreen> {
                 height: 48,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.white.withOpacity(0.15) : const Color(0xFFF5F5F5),
+                  color: isSelected
+                      ? Colors.white.withOpacity(0.15)
+                      : const Color(0xFFF5F5F5),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
@@ -270,15 +271,23 @@ class _SimulationScreenState extends State<SimulationScreen> {
                       text,
                       style: TextStyle(
                         fontSize: 16,
-                        color: isSelected ? Colors.white : const Color(0xFF616161), // 진한 회색
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                        color: isSelected
+                            ? Colors.white
+                            : const Color(0xFF616161), // 진한 회색
+                        fontWeight: isSelected
+                            ? FontWeight.w700
+                            : FontWeight.w600,
                         height: 1.3,
                       ),
                     ),
                   ],
                 ),
               ),
-              const Icon(Icons.arrow_forward_ios_rounded, size: 16, color: Color(0xFFCFD8DC)),
+              const Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 16,
+                color: Color(0xFFCFD8DC),
+              ),
             ],
           ),
         ),
@@ -322,14 +331,16 @@ class _SimulationScreenState extends State<SimulationScreen> {
     } else {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => ResultScreen(myScores: scores)),
+        MaterialPageRoute(
+          builder: (context) => ResultScreenIntro(myScores: scores),
+        ),
       );
     }
   }
 
   void _prevQuestion() {
     if (currentIndex == 0 || answerHistory.isEmpty) return;
-    
+
     final prevIndex = currentIndex - 1;
     final prevQuestion = sampleQuestions[prevIndex];
     final prevAnswerIndex = answerHistory.removeLast();
@@ -345,32 +356,47 @@ class _SimulationScreenState extends State<SimulationScreen> {
 
   String _getCategoryName(String key) {
     switch (key) {
-      case 'equity': return "지분 & 소유권";
-      case 'finance': return "자금 운용";
-      case 'power': return "권한 & 리더십";
-      case 'value': return "가치관 & 태도";
-      default: return "";
+      case 'equity':
+        return "지분 & 소유권";
+      case 'finance':
+        return "자금 운용";
+      case 'power':
+        return "권한 & 리더십";
+      case 'value':
+        return "가치관 & 태도";
+      default:
+        return "";
     }
   }
 
   // 🎨 [수정됨] 감성적인 파스텔 컬러 팔레트
   Color _getCategoryPastelColor(String key) {
     switch (key) {
-      case 'equity': return const Color(0xFF9575CD); // 파스텔 퍼플 (Deep Purple 300)
-      case 'finance': return const Color(0xFF4DB6AC); // 파스텔 틸 (Teal 300)
-      case 'power': return const Color(0xFFFF8A65); // 파스텔 오렌지 (Deep Orange 300)
-      case 'value': return const Color(0xFFF06292); // 파스텔 핑크 (Pink 300)
-      default: return Colors.grey;
+      case 'equity':
+        return const Color(0xFF9575CD); // 파스텔 퍼플 (Deep Purple 300)
+      case 'finance':
+        return const Color(0xFF4DB6AC); // 파스텔 틸 (Teal 300)
+      case 'power':
+        return const Color(0xFFFF8A65); // 파스텔 오렌지 (Deep Orange 300)
+      case 'value':
+        return const Color(0xFFF06292); // 파스텔 핑크 (Pink 300)
+      default:
+        return Colors.grey;
     }
   }
 
   IconData _getCategoryIcon(String key) {
     switch (key) {
-      case 'equity': return Icons.workspace_premium_outlined;
-      case 'finance': return Icons.savings_outlined;
-      case 'power': return Icons.gavel_outlined;
-      case 'value': return Icons.favorite_outline;
-      default: return Icons.blur_on;
+      case 'equity':
+        return Icons.workspace_premium_outlined;
+      case 'finance':
+        return Icons.savings_outlined;
+      case 'power':
+        return Icons.gavel_outlined;
+      case 'value':
+        return Icons.favorite_outline;
+      default:
+        return Icons.blur_on;
     }
   }
 
@@ -386,9 +412,14 @@ class _SimulationScreenState extends State<SimulationScreen> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("라운드 진행 팁", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const Text(
+              "라운드 진행 팁",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
             const SizedBox(height: 10),
-            const Text("• 질문을 읽고 직관적으로 먼저 선택한 뒤, 필요하면 '이전 시나리오 다시 선택'으로 조정하세요."),
+            const Text(
+              "• 질문을 읽고 직관적으로 먼저 선택한 뒤, 필요하면 '이전 시나리오 다시 선택'으로 조정하세요.",
+            ),
             const SizedBox(height: 8),
             const Text("• 합의가 어렵다면 각 선택지의 의미를 소리 내서 읽으며 서로 감정선을 확인해보세요."),
             const SizedBox(height: 20),

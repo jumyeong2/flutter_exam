@@ -49,13 +49,13 @@ class IntroScreen extends StatelessWidget {
                       ),
                       child: Icon(Icons.handshake, size: 32, color: colorScheme.primary),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 15),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Co-Founder Coach", style: TextStyle(color: Colors.grey[600], fontSize: 12)),
+                        Text("CoSync", style: TextStyle(color: Colors.grey[600], fontSize: 15)),
                         Text(
-                          "합의 진단 키트",
+                          "코싱크",
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w700,
@@ -86,11 +86,11 @@ class IntroScreen extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const Icon(Icons.auto_fix_high_rounded, color: Colors.white, size: 32),
+                          child: const Icon(Icons.handshake, color: Colors.white, size: 32),
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          "현대적인 팀 합의 시뮬레이터",
+                          "",
                           style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                                 fontWeight: FontWeight.w800,
                                 color: colorScheme.onSurface,
@@ -129,7 +129,7 @@ class IntroScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.speed_rounded),
+                  icon: const Icon(Icons.handshake),
                   label: const Text("지금 바로 진단 시작"),
                 ),
                 const SizedBox(height: 12),

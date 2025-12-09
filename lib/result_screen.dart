@@ -376,7 +376,7 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget _scoreBadge(String label, double value, Color color, IconData icon, double max) {
     final percent = (value / max).clamp(0.0, 1.0);
     return Container(
-      width: 150,
+      width: double.infinity,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
