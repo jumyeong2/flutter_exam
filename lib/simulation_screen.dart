@@ -90,54 +90,52 @@ class _SimulationScreenState extends State<SimulationScreen> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
-          child: Expanded(
-            child: ListView(
-              children: [
-                _questionCard(scenario),
-                SizedBox(height: 13),
-                ...List.generate(
-                  scenario.options.length,
-                  (index) => _buildPastelOptionCard(
-                    index,
-                    scenario.options[index].text,
+          child: ListView(
+            children: [
+              _questionCard(scenario),
+              SizedBox(height: 13),
+              ...List.generate(
+                scenario.options.length,
+                (index) => _buildPastelOptionCard(
+                  index,
+                  scenario.options[index].text,
+                ),
+              ),
+              const SizedBox(height: 12),
+              if (currentIndex > 0)
+                OutlinedButton.icon(
+                  onPressed: _prevQuestion,
+                  icon: const Icon(Icons.u_turn_left_outlined),
+                  label: const Text("이전 시나리오 다시 선택"),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: Colors.grey[700],
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                   ),
                 ),
-                const SizedBox(height: 12),
-                if (currentIndex > 0)
-                  OutlinedButton.icon(
-                    onPressed: _prevQuestion,
-                    icon: const Icon(Icons.u_turn_left_outlined),
-                    label: const Text("이전 시나리오 다시 선택"),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: Colors.grey[700],
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14),
+              if (currentIndex == 0)
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  alignment: Alignment.center,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.touch_app_outlined,
+                        size: 20,
+                        color: Colors.grey,
                       ),
-                    ),
+                      SizedBox(width: 6),
+                      Text(
+                        "선택지 터치 후 다음 라운드로 자동 진행",
+                        style: TextStyle(color: Colors.grey),
+                      ),
+                    ],
                   ),
-                if (currentIndex == 0)
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(
-                          Icons.touch_app_outlined,
-                          size: 20,
-                          color: Colors.grey,
-                        ),
-                        SizedBox(width: 6),
-                        Text(
-                          "선택지 터치 후 다음 라운드로 자동 진행",
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),
