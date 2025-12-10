@@ -35,8 +35,10 @@ class ResultScreenIntro extends StatelessWidget {
             // 내 성향 확인하기 버튼
             SizedBox(
               width: 220,
-              height: 48,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -53,8 +55,10 @@ class ResultScreenIntro extends StatelessWidget {
             // 팀 궁합 확인하기 버튼
             SizedBox(
               width: 220,
-              height: 48,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,

@@ -24,9 +24,8 @@ class IntroScreen extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 30),
                           // Header: Logo and text
-                          SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -61,7 +60,7 @@ class IntroScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 40),
 
                           // Main Card
                           Container(
@@ -259,7 +258,7 @@ class IntroScreen extends StatelessWidget {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 60),
                         ],
                       ),
                     ],

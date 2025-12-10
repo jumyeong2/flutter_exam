@@ -33,7 +33,6 @@ class _SimulationScreenState extends State<SimulationScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6FB),
-
       appBar: AppBar(
         title: Text(
           "라운드 ${currentIndex + 1} / ${sampleQuestions.length}",
@@ -55,7 +54,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60.0),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 12),
             child: Column(
               children: [
                 ClipRRect(
@@ -89,11 +88,11 @@ class _SimulationScreenState extends State<SimulationScreen> {
 
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 20, 20, 12),
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
           child: ListView(
             children: [
               _questionCard(scenario),
-              SizedBox(height: 13),
+              SizedBox(height: 10),
               ...List.generate(
                 scenario.options.length,
                 (index) =>
@@ -143,7 +142,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Widget _questionCard(ConflictScenario scenario) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -160,7 +159,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
             Text(
               scenario.questionText,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: FontWeight.w700,
                 height: 1.4,
               ),
@@ -204,14 +203,14 @@ class _SimulationScreenState extends State<SimulationScreen> {
     bool isSelected = tappedIndex == index;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 14.0),
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: GestureDetector(
         onTap: isAnimating ? null : () => _handleAnswer(index),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutCubic,
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 24),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
           decoration: BoxDecoration(
             // 선택되면 파스텔 블루, 아니면 아주 연한 회색 배경
             color: isSelected ? _mainColor : Colors.white,
@@ -266,7 +265,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                     Text(
                       text,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 15,
                         color: isSelected
                             ? Colors.white
                             : const Color(0xFF616161), // 진한 회색
