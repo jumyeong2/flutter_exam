@@ -78,15 +78,18 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: ResponsiveLayout(
-        mobileBody: const IntroScreen(),
-        desktopBody: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 800),
-            child: const IntroScreen(),
+      builder: (context, child) {
+        return ResponsiveLayout(
+          mobileBody: child!,
+          desktopBody: Center(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: child,
+            ),
           ),
-        ),
-      ), // 앱이 켜지면 IntroScreen부터 보여줌
+        );
+      },
+      home: const IntroScreen(),
     );
   }
 }
