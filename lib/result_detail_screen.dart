@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ResultDetailScreen extends StatelessWidget {
+class ResultDetailScreen extends StatefulWidget {
   final Map<String, double> myScores;
   final List<Map<String, dynamic>> partnersList;
 
@@ -11,11 +11,40 @@ class ResultDetailScreen extends StatelessWidget {
   });
 
   @override
+  State<ResultDetailScreen> createState() => _ResultDetailScreenState();
+}
+
+class _ResultDetailScreenState extends State<ResultDetailScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    )..repeat(reverse: true); // Pulsing effect
+
+    // Reduced animation scale for subtle effect
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.02).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     // 1. 전체 멤버 리스트 생성
     List<Map<String, dynamic>> allMembers = [
-      {"name": "나", "scores": myScores, "isMe": true},
-      ...partnersList.map((p) => {...p, "isMe": false}),
+      {"name": "나", "scores": widget.myScores, "isMe": true},
+      ...widget.partnersList.map((p) => {...p, "isMe": false}),
     ];
 
     // 참여 인원 수 확인
@@ -164,17 +193,37 @@ class ResultDetailScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 20),
-            OutlinedButton(
-              onPressed: () =>
-                  Navigator.popUntil(context, (route) => route.isFirst),
-              style: OutlinedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                side: const BorderSide(color: Colors.black87),
-              ),
-              child: const Text(
-                "처음으로 돌아가기",
-                style: TextStyle(color: Colors.black87),
+            const SizedBox(height: 30),
+            // Animated CTA Button
+            ScaleTransition(
+              scale: _scaleAnimation,
+              child: SizedBox(
+                height: 56,
+                child: FilledButton(
+                  onPressed: () {
+                    // TODO: Navigate to Sample Agreement or Launch URL
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("주주간계약서 샘플 페이지로 이동합니다.")),
+                    );
+                  },
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.primary, // Match Start Analysis Button
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 4,
+                  ),
+                  child: const Text(
+                    "주주간계약서 샘플 무료보기",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 30),
