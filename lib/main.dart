@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'intro_screen.dart';
+import 'responsive_layout.dart';
 
 void main() {
   runApp(const MyApp());
@@ -77,7 +78,15 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const IntroScreen(), // 앱이 켜지면 IntroScreen부터 보여줌
+      home: ResponsiveLayout(
+        mobileBody: const IntroScreen(),
+        desktopBody: Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: const IntroScreen(),
+          ),
+        ),
+      ), // 앱이 켜지면 IntroScreen부터 보여줌
     );
   }
 }
