@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "679392800284",
+    "project_id": "cosynctest",
+    "storage_bucket": "cosynctest.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679392800284:android:a9e27317980b645d2039d9",
+        "android_client_info": {
+          "package_name": "com.example.flutter_exam"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXLQji8DzI0mvthbd0LEKKZwBfAXHgI98"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
