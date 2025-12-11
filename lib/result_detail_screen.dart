@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ResultDetailScreen extends StatefulWidget {
   final Map<String, double> myScores;
@@ -200,11 +201,20 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
               child: SizedBox(
                 height: 56,
                 child: FilledButton(
-                  onPressed: () {
-                    // TODO: Navigate to Sample Agreement or Launch URL
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("주주간계약서 샘플 페이지로 이동합니다.")),
+                  onPressed: () async {
+                    final Uri url = Uri.parse(
+                      'https://cosyncagreement.web.app',
                     );
+                    if (!await launchUrl(
+                      url,
+                      mode: LaunchMode.externalApplication,
+                    )) {
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("페이지를 열 수 없습니다.")),
+                        );
+                      }
+                    }
                   },
                   style: FilledButton.styleFrom(
                     backgroundColor: Theme.of(
