@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exam/firebase_options.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
     );
 
     return MaterialApp(
+      navigatorObservers: [
+        FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
+      ],
       debugShowCheckedModeBanner: false,
       title: '합의 시뮬레이션 Demo',
       theme: ThemeData(
@@ -28,7 +32,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFF4F6FB),
         appBarTheme: AppBarTheme(
-          color: Colors.white,
+          backgroundColor: Colors.white,
           foregroundColor: baseScheme.primary,
           surfaceTintColor: Colors.transparent,
           centerTitle: true,

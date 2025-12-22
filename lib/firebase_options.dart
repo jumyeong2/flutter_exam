@@ -48,11 +48,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyD8B4QVV1VSKZBRlbU_jZruQ2wd2BsBXCI',
-    appId: '1:679392800284:web:9a8069006e5faa782039d9',
+    appId: '1:679392800284:web:e6a411cd1ad8aa0b2039d9',
     messagingSenderId: '679392800284',
     projectId: 'cosynctest',
     authDomain: 'cosynctest.firebaseapp.com',
     storageBucket: 'cosynctest.firebasestorage.app',
+    measurementId: 'G-CTX4G0SZ4Y',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
