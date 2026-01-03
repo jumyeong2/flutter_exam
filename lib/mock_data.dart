@@ -5,7 +5,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q1",
     category: "equity",
-    questionText: "꼭 필요한 인재를 영입하려는데, 그는 우리와 똑같은 수준의 지분을 요구합니다. (우리는 이미 1년 고생함)",
+    questionText: "꼭 필요한 인재를 영입하려는데, 그는 우리와 똑같은 수준의 지분을 요구합니다.",
     options: [
       ScenarioOption(
         text: "검증이 먼저임. 베스팅(조건부)을 걸어야 납득할 수 있음",

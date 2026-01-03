@@ -137,7 +137,7 @@ class IntroScreen extends StatelessWidget {
                                             ),
                                             SizedBox(height: 4),
                                             Text(
-                                              "우리는 같은 기준으로 움직이고 있을까?",
+                                              "공동창업 파트너와 나의 궁합은?",
                                               style: TextStyle(
                                                 fontSize: 13,
                                                 color: Color(0xFF757575),
@@ -159,11 +159,11 @@ class IntroScreen extends StatelessWidget {
                                   ),
                                   child: Column(
                                     children: [
-                                      _buildListItem("나의 협업 성향"),
+                                      _buildListItem("나는 어떤 성향의 창업가일까?"),
                                       const SizedBox(height: 12),
-                                      _buildListItem("팀 내 갈등 요인"),
+                                      _buildListItem("우리 팀의 잠재적 리스크는 무엇일까?"),
                                       const SizedBox(height: 12),
-                                      _buildListItem("현재 필요한 합의 목록"),
+                                      _buildListItem("파트너와 무엇을 합의해야할까?"),
                                     ],
                                   ),
                                 ),
@@ -175,7 +175,7 @@ class IntroScreen extends StatelessWidget {
                                   children: [
                                     Expanded(child: _buildGridPill("#성향 진단")),
                                     const SizedBox(width: 12),
-                                    Expanded(child: _buildGridPill("#리스크 감지")),
+                                    Expanded(child: _buildGridPill("#리스크 진단")),
                                   ],
                                 ),
                                 const SizedBox(height: 12),
@@ -183,7 +183,7 @@ class IntroScreen extends StatelessWidget {
                                   children: [
                                     Expanded(child: _buildGridPill("#갭 인식")),
                                     const SizedBox(width: 12),
-                                    Expanded(child: _buildGridPill("#합의 문문화")),
+                                    Expanded(child: _buildGridPill("#갈등 예방")),
                                   ],
                                 ),
                               ],
