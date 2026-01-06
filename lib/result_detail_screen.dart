@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
+import 'share_utils.dart';
 
 class ResultDetailScreen extends StatefulWidget {
   final Map<String, double> myScores;
@@ -57,9 +60,14 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
         title: const Text("팀 성향 분포도"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.share_arrival_time_outlined),
-            tooltip: "레포트 공유",
-            onPressed: () => _showShareTip(context),
+            icon: const Icon(Icons.copy_outlined),
+            tooltip: "URL 복사",
+            onPressed: () => _copyUrl(context),
+          ),
+          IconButton(
+            icon: const Icon(Icons.share_outlined),
+            tooltip: "결과 공유",
+            onPressed: () => _shareResult(context),
           ),
         ],
       ),
@@ -195,16 +203,15 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
             ),
 
             const SizedBox(height: 30),
-            // Animated CTA Button
+            
+            // Primary CTA Button
             ScaleTransition(
               scale: _scaleAnimation,
               child: SizedBox(
                 height: 56,
                 child: FilledButton(
                   onPressed: () async {
-                    final Uri url = Uri.parse(
-                      'https://cosyncagreement.web.app',
-                    );
+                    final Uri url = Uri.parse('https://cosyncagreement.web.app');
                     if (!await launchUrl(
                       url,
                       mode: LaunchMode.externalApplication,
@@ -217,16 +224,14 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                     }
                   },
                   style: FilledButton.styleFrom(
-                    backgroundColor: Theme.of(
-                      context,
-                    ).colorScheme.primary, // Match Start Analysis Button
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     elevation: 4,
                   ),
                   child: const Text(
-                    "주주간계약서 샘플 무료보기",
+                    "우리 팀 합의 상태 점검하기",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -236,6 +241,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 ),
               ),
             ),
+            
             const SizedBox(height: 30),
           ],
         ),
@@ -640,25 +646,108 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 Icon(Icons.share_location_outlined),
                 SizedBox(width: 10),
                 Text(
-                  "결과 공유 팁",
+                  "결과 공유",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            const Text("1. 화면 캡처 후 메신저에 공유해 빠르게 의견을 모아보세요."),
-            const SizedBox(height: 8),
-            const Text("2. PDF로 남길 땐 '시뮬레이션 다시 진행' 전, 현재 결과를 저장하세요."),
-            const SizedBox(height: 8),
-            const Text("3. 민감한 데이터는 팀 내에서만 활용하고 외부 공유 시 익명화가 필요합니다."),
+            const Text("URL로 결과를 공유하면 팀원들이 같은 결과를 확인할 수 있습니다."),
             const SizedBox(height: 24),
-            FilledButton(
+            SizedBox(
+              width: double.infinity,
+              height: 56,
+              child: FilledButton.icon(
+                onPressed: () {
+                  Navigator.pop(context);
+                  _shareResult(context);
+                },
+                icon: const Icon(Icons.share_outlined),
+                label: const Text("URL 공유하기"),
+                style: FilledButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            const Divider(),
+            const SizedBox(height: 12),
+            const Text(
+              "다른 공유 방법",
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            const Text("• 화면 캡처 후 메신저에 공유", style: TextStyle(fontSize: 12)),
+            const SizedBox(height: 4),
+            const Text("• 민감한 데이터는 팀 내에서만 활용", style: TextStyle(fontSize: 12)),
+            const SizedBox(height: 16),
+            TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text("확인"),
+              child: const Text("닫기"),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _copyUrl(BuildContext context) async {
+    // 전체 멤버 리스트 생성
+    List<Map<String, dynamic>> allMembers = [
+      {"name": "나", "scores": widget.myScores, "isMe": true},
+      ...widget.partnersList.map((p) => {...p, "isMe": false}),
+    ];
+    
+    int totalMembers = allMembers.length;
+    
+    final shareUrl = ShareUtils.generateTeamShareUrl(
+      widget.myScores,
+      widget.partnersList,
+    );
+    
+    String shareText = '👥 우리 팀 합의 상태 점검 결과\n\n';
+    shareText += '총 ${totalMembers}명이 참여했습니다.\n\n';
+    shareText += '💬 함께 확인하고 이야기해보세요.\n\n';
+    shareText += '자세한 결과 보기:\n$shareUrl';
+    
+    await Clipboard.setData(ClipboardData(text: shareText));
+    
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('URL이 클립보드에 복사되었습니다.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  void _shareResult(BuildContext context) async {
+    // 전체 멤버 리스트 생성
+    List<Map<String, dynamic>> allMembers = [
+      {"name": "나", "scores": widget.myScores, "isMe": true},
+      ...widget.partnersList.map((p) => {...p, "isMe": false}),
+    ];
+    
+    int totalMembers = allMembers.length;
+    
+    final shareUrl = ShareUtils.generateTeamShareUrl(
+      widget.myScores,
+      widget.partnersList,
+    );
+    
+    String shareText = '👥 우리 팀 합의 상태 점검 결과\n\n';
+    shareText += '총 ${totalMembers}명이 참여했습니다.\n\n';
+    shareText += '💬 함께 확인하고 이야기해보세요.\n\n';
+    shareText += '자세한 결과 보기:\n$shareUrl';
+    
+    try {
+      await Share.share(
+        shareText,
+        subject: '팀 합의 상태 점검 결과',
+      );
+    } catch (e) {
+      // 에러 발생 시 처리
+    }
   }
 }

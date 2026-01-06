@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
+import 'share_utils.dart';
 
 // 1. 열거형 정의
 enum FounderType { shark, owl, dolphin }
@@ -31,7 +34,7 @@ final sharkProfile = FounderProfile(
   animal: "🦈",
   slogan: "생존과 효율이 최우선",
   desc:
-      "당신은 회사의 생존을 위해 감정을 배제하고 냉정한 판단을 내리는 '샤크' 유형입니다. 리스크를 관리하고 명확한 룰을 세우는 데 탁월합니다.",
+      "당신은 회사의 생존을 위해 감정을 배제하고 냉정한 판단을 내리는 '샤크' 유형입니다.\n리스크를 관리하고 명확한 룰을 세우는 데 탁월합니다.",
   pros: ["위기 상황에서의 빠른 결단력", "명확한 역할과 책임 구분", "투자자가 선호하는 리스크 관리"],
   cons: ["팀원의 감정을 놓칠 수 있음", "지나친 효율 추구로 인한 갈등", "차가워 보일 수 있음"],
 );
@@ -42,7 +45,7 @@ final owlProfile = FounderProfile(
   animal: "🦉",
   slogan: "데이터와 논리의 균형",
   desc:
-      "당신은 감정과 효율 사이에서 최적의 균형을 찾는 '올빼미' 유형입니다. 객관적인 근거와 시장 표준을 중요하게 생각하며 합리적인 중재를 이끌어냅니다.",
+      "당신은 감정과 효율 사이에서 최적의 균형을 찾는 '올빼미' 유형입니다.\n객관적인 근거와 시장 표준을 중요하게 생각하며 합리적인 중재를 이끌어냅니다.",
   pros: ["데이터 기반의 객관적 판단", "갈등 상황에서의 뛰어난 중재", "안정적인 조직 운영"],
   cons: ["결정이 다소 늦어질 수 있음", "강한 카리스마 부족", "지나친 신중함"],
 );
@@ -53,7 +56,7 @@ final dolphinProfile = FounderProfile(
   animal: "🐬",
   slogan: "사람과 비전이 먼저",
   desc:
-      "당신은 팀의 신뢰와 비전을 가장 중요하게 여기는 '돌고래' 유형입니다. 단기적 이익보다 함께하는 사람들과의 가치를 지키며 팀을 이끕니다.",
+      "당신은 팀의 신뢰와 비전을 가장 중요하게 여기는 '돌고래' 유형입니다.\n단기적 이익보다 함께하는 사람들과의 가치를 지키며 팀을 이끕니다.",
   pros: ["강력한 팀 결속력 구축", "위기를 버티게 하는 동기부여", "건강한 사내 문화 형성"],
   cons: ["수익성보다 이상을 좇을 위험", "냉정한 피드백의 어려움", "속도 저하 우려"],
 );
@@ -113,6 +116,18 @@ class ResultScreen2 extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.copy_outlined),
+            tooltip: "URL 복사",
+            onPressed: () => _copyUrl(context),
+          ),
+          IconButton(
+            icon: const Icon(Icons.share_outlined),
+            tooltip: "결과 공유",
+            onPressed: () => _shareResult(context),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
@@ -188,28 +203,109 @@ class ResultScreen2 extends StatelessWidget {
 
             const SizedBox(height: 40),
 
-            // 6. 하단 버튼 (예: 다시하기 or 공유하기) -> 여기선 그냥 닫기
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF64B5F6),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+            // 6. 하단 버튼 (확인 완료 + 테스트 다시 하기)
+            Row(
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: () => Navigator.pop(context),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF64B5F6),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        "확인 완료",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
-                child: const Text(
-                  "확인 완료",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: SizedBox(
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // 처음 페이지로 돌아가기
+                        Navigator.of(context).popUntil((route) => route.isFirst);
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: const Color(0xFF64B5F6),
+                        side: const BorderSide(color: Color(0xFF64B5F6), width: 2),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        "테스트 다시 하기",
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _copyUrl(BuildContext context) async {
+    // 유형 정보 가져오기
+    double totalScore = myScores.values.fold(0, (sum, score) => sum + score);
+    FounderProfile profile = FounderTypeCalculator.getProfileByScore(totalScore);
+    
+    final shareUrl = ShareUtils.generateProfileShareUrl(myScores);
+    final shareText = '''${profile.animal} 나의 창업가 유형: ${profile.name}
+
+${profile.slogan}
+
+${profile.desc}
+
+자세한 결과 보기:
+$shareUrl''';
+    
+    await Clipboard.setData(ClipboardData(text: shareText));
+    
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('URL이 클립보드에 복사되었습니다.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  void _shareResult(BuildContext context) async {
+    // 유형 정보 가져오기
+    double totalScore = myScores.values.fold(0, (sum, score) => sum + score);
+    FounderProfile profile = FounderTypeCalculator.getProfileByScore(totalScore);
+    
+    final shareUrl = ShareUtils.generateProfileShareUrl(myScores);
+    final shareText = '''${profile.animal} 나의 창업가 유형: ${profile.name}
+
+${profile.slogan}
+
+${profile.desc}
+
+자세한 결과 보기:
+$shareUrl''';
+    
+    try {
+      await Share.share(
+        shareText,
+        subject: '나의 창업가 유형 결과',
+      );
+    } catch (e) {
+      // 에러 발생 시 처리
+    }
   }
 
   Widget _buildInfoCard({

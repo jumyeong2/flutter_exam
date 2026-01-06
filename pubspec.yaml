@@ -37,6 +37,7 @@ dependencies:
   firebase_core: ^4.2.1
   url_launcher: ^6.3.2
   firebase_analytics: ^12.1.0
+  share_plus: ^10.1.2
 
 dev_dependencies:
   flutter_test:

@@ -1,9 +1,13 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exam/firebase_options.dart';
 import 'intro_screen.dart';
 import 'responsive_layout.dart';
+import 'result_screen2.dart';
+import 'result_detail_screen.dart';
+import 'share_utils.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +30,7 @@ class MyApp extends StatelessWidget {
         FirebaseAnalyticsObserver(analytics: FirebaseAnalytics.instance),
       ],
       debugShowCheckedModeBanner: false,
-      title: '합의 시뮬레이션 Demo',
+      title: 'CoSync_Test',
       theme: ThemeData(
         colorScheme: baseScheme,
         useMaterial3: true,
@@ -97,7 +101,59 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      home: const IntroScreen(),
+      home: _getInitialRoute(),
     );
+  }
+
+  // URL 파라미터를 확인하여 초기 라우트 결정
+  static Widget _getInitialRoute() {
+    if (kIsWeb) {
+      try {
+        final uri = Uri.base;
+        final dataParam = uri.queryParameters['data'];
+        
+        if (dataParam != null) {
+          final decodedData = ShareUtils.decodeFromUrl(uri.toString());
+          
+          if (decodedData != null) {
+            final type = decodedData['type'] as String?;
+            
+            if (type == 'profile') {
+              // 내 성향 결과 페이지
+              final scores = decodedData['scores'] as Map<String, dynamic>?;
+              if (scores != null) {
+                final myScores = scores.map((key, value) => 
+                  MapEntry(key, (value as num).toDouble())
+                );
+                return ResultScreen2(myScores: myScores);
+              }
+            } else if (type == 'team') {
+              // 팀 궁합 결과 페이지
+              final myScoresData = decodedData['myScores'] as Map<String, dynamic>?;
+              final partnersListData = decodedData['partnersList'] as List<dynamic>?;
+              
+              if (myScoresData != null && partnersListData != null) {
+                final myScores = myScoresData.map((key, value) => 
+                  MapEntry(key, (value as num).toDouble())
+                );
+                final partnersList = partnersListData.map((item) => 
+                  item as Map<String, dynamic>
+                ).toList();
+                
+                return ResultDetailScreen(
+                  myScores: myScores,
+                  partnersList: partnersList,
+                );
+              }
+            }
+          }
+        }
+      } catch (e) {
+        debugPrint('Error parsing URL parameters: $e');
+      }
+    }
+    
+    // 기본 홈 화면
+    return const IntroScreen();
   }
 }
