@@ -1,11 +1,11 @@
 {
-    "name": "CoSync_Test",
-    "short_name": "CoSync_Test",
+    "name": "CoSyncTest",
+    "short_name": "CoSyncTest",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "공동창업팀 합의 시뮬레이션 테스트",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

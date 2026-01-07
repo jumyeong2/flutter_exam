@@ -40,7 +40,7 @@ class ShareUtils {
     } catch (e) {
       debugPrint('Error encoding data: $e');
       if (kIsWeb) {
-        return '${Uri.base.origin}';
+        return Uri.base.origin;
       } else {
         return 'https://cosynctest.web.app';
       }

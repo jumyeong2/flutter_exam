@@ -1,6 +1,13 @@
 {
   "dart.flutterRunMode": "debug",
-  "dart.flutterRunAdditionalArgs": []
+  "dart.flutterRunAdditionalArgs": [],
+  "dart.showDebuggerHotReloadButton": true,
+  "dart.showDebuggerHotRestartButton": true,
+  "dart.debugExternalPackageLibraries": false,
+  "dart.debugSdkLibraries": false,
+  "dart.flutterHotReloadOnSave": "all",
+  "dart.enableSdkFormatter": true,
+  "debug.toolBarLocation": "floating"
 }
 
 

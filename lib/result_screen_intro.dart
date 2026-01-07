@@ -34,10 +34,11 @@ class ResultScreenIntro extends StatelessWidget {
 
             // 내 성향 확인하기 버튼
             SizedBox(
-              width: 220,
+              width: 280,
+              height: 56,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -47,17 +48,24 @@ class ResultScreenIntro extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text('내 성향 확인하기'),
+                child: const Text(
+                  '내 성향 확인하기',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 16),
 
             // 팀 궁합 확인하기 버튼
             SizedBox(
-              width: 220,
+              width: 280,
+              height: 56,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
                 onPressed: () {
                   Navigator.push(
@@ -67,7 +75,13 @@ class ResultScreenIntro extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Text('팀 궁합 확인하기'),
+                child: const Text(
+                  '팀 궁합 확인하기',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           ],

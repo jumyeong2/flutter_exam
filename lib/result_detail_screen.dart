@@ -212,10 +212,17 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 child: FilledButton(
                   onPressed: () async {
                     final Uri url = Uri.parse('https://cosyncagreement.web.app');
-                    if (!await launchUrl(
-                      url,
-                      mode: LaunchMode.externalApplication,
-                    )) {
+                    try {
+                      final launched = await launchUrl(
+                        url,
+                        mode: LaunchMode.platformDefault,
+                      );
+                      if (!launched && context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("페이지를 열 수 없습니다.")),
+                        );
+                      }
+                    } catch (e) {
                       if (context.mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("페이지를 열 수 없습니다.")),
@@ -510,7 +517,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     Color color = Colors.green;
     IconData icon = Icons.check_circle;
 
-    if (scores.isEmpty)
+    if (scores.isEmpty) {
       return {
         "status": status,
         "headline": headline,
@@ -518,6 +525,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
         "color": color,
         "icon": icon,
       };
+    }
 
     double minVal = scores.first;
     double maxVal = scores.last;
@@ -547,10 +555,11 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
           double s = (sMap is Map<String, double>)
               ? sMap[category]!
               : (sMap[category] as num).toDouble();
-          if (m['isMe'])
+          if (m['isMe']) {
             myScore = s;
-          else
+          } else {
             partnerScores.add(s);
+          }
         }
         partnerScores.sort();
         double partnerSpread = partnerScores.isNotEmpty
@@ -706,7 +715,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     );
     
     String shareText = '👥 우리 팀 합의 상태 점검 결과\n\n';
-    shareText += '총 ${totalMembers}명이 참여했습니다.\n\n';
+    shareText += '총 $totalMembers명이 참여했습니다.\n\n';
     shareText += '💬 함께 확인하고 이야기해보세요.\n\n';
     shareText += '자세한 결과 보기:\n$shareUrl';
     
@@ -737,7 +746,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     );
     
     String shareText = '👥 우리 팀 합의 상태 점검 결과\n\n';
-    shareText += '총 ${totalMembers}명이 참여했습니다.\n\n';
+    shareText += '총 $totalMembers명이 참여했습니다.\n\n';
     shareText += '💬 함께 확인하고 이야기해보세요.\n\n';
     shareText += '자세한 결과 보기:\n$shareUrl';
     
