@@ -203,7 +203,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
             ),
 
             const SizedBox(height: 30),
-            
+
             // Primary CTA Button
             ScaleTransition(
               scale: _scaleAnimation,
@@ -211,7 +211,9 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 height: 56,
                 child: FilledButton(
                   onPressed: () async {
-                    final Uri url = Uri.parse('https://cosyncagreement.web.app');
+                    final Uri url = Uri.parse(
+                      'https://cosyncagreement-dev.web.app',
+                    );
                     try {
                       final launched = await launchUrl(
                         url,
@@ -248,7 +250,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 ),
               ),
             ),
-            
+
             const SizedBox(height: 30),
           ],
         ),
@@ -706,21 +708,21 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       {"name": "나", "scores": widget.myScores, "isMe": true},
       ...widget.partnersList.map((p) => {...p, "isMe": false}),
     ];
-    
+
     int totalMembers = allMembers.length;
-    
+
     final shareUrl = ShareUtils.generateTeamShareUrl(
       widget.myScores,
       widget.partnersList,
     );
-    
+
     String shareText = '👥 우리 팀 합의 상태 점검 결과\n\n';
     shareText += '총 $totalMembers명이 참여했습니다.\n\n';
     shareText += '💬 함께 확인하고 이야기해보세요.\n\n';
     shareText += '자세한 결과 보기:\n$shareUrl';
-    
+
     await Clipboard.setData(ClipboardData(text: shareText));
-    
+
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -737,24 +739,21 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       {"name": "나", "scores": widget.myScores, "isMe": true},
       ...widget.partnersList.map((p) => {...p, "isMe": false}),
     ];
-    
+
     int totalMembers = allMembers.length;
-    
+
     final shareUrl = ShareUtils.generateTeamShareUrl(
       widget.myScores,
       widget.partnersList,
     );
-    
+
     String shareText = '👥 우리 팀 합의 상태 점검 결과\n\n';
     shareText += '총 $totalMembers명이 참여했습니다.\n\n';
     shareText += '💬 함께 확인하고 이야기해보세요.\n\n';
     shareText += '자세한 결과 보기:\n$shareUrl';
-    
+
     try {
-      await Share.share(
-        shareText,
-        subject: '팀 합의 상태 점검 결과',
-      );
+      await Share.share(shareText, subject: '팀 합의 상태 점검 결과');
     } catch (e) {
       // 에러 발생 시 처리
     }

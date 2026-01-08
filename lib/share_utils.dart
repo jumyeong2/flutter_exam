@@ -4,10 +4,7 @@ import 'package:flutter/foundation.dart' show debugPrint, kIsWeb;
 class ShareUtils {
   // 내 성향 결과를 URL로 변환
   static String generateProfileShareUrl(Map<String, double> myScores) {
-    final data = {
-      'type': 'profile',
-      'scores': myScores,
-    };
+    final data = {'type': 'profile', 'scores': myScores};
     return _encodeToUrl(data);
   }
 
@@ -30,7 +27,7 @@ class ShareUtils {
       final jsonString = jsonEncode(data);
       final base64String = base64Encode(utf8.encode(jsonString));
       final encodedData = Uri.encodeComponent(base64String);
-      
+
       // 웹에서는 /result 경로 사용, 앱에서는 쿼리 파라미터 사용
       if (kIsWeb) {
         return '${Uri.base.origin}/result?data=$encodedData';
@@ -63,4 +60,3 @@ class ShareUtils {
     }
   }
 }
-

@@ -26,39 +26,39 @@ class IntroScreen extends StatelessWidget {
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
+                  child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                     const SizedBox(height: kIsWeb ? 32 : 24),
-                    
+                
                     // 1. 상단: 로고
                     const Text(
-                      "CoSync",
-                      style: TextStyle(
+                                    "CoSync",
+                                    style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
-                        color: Color(0xFF212121),
-                        letterSpacing: -0.5,
-                      ),
-                    ),
+                                      color: Color(0xFF212121),
+                                      letterSpacing: -0.5,
+                                    ),
+                                  ),
                     
                     const SizedBox(height: kIsWeb ? 32 : 28),
-                    
+                
                     // 2. 메인 헤드라인
-                    Text(
+                Text(
                       "대부분의 팀은 문제가 터진 뒤에야\n기준을 맞춥니다.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
                         fontSize: kIsWeb ? 24 : 22,
-                        fontWeight: FontWeight.w800,
-                        color: const Color(0xFF212121),
-                        height: 1.3,
-                        letterSpacing: -0.5,
-                      ),
-                    ),
-                    
+                    fontWeight: FontWeight.w800,
+                    color: const Color(0xFF212121),
+                    height: 1.3,
+                    letterSpacing: -0.5,
+                  ),
+                ),
+                
                     const SizedBox(height: kIsWeb ? 32 : 28),
-                    
+                
                     // 4. 핵심 비교 카드 영역
                     _buildComparisonCardsRow(),
                     
@@ -68,21 +68,21 @@ class IntroScreen extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(kIsWeb ? 24 : 20),
-                      decoration: BoxDecoration(
+                        decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(
                           color: const Color(0xFFE0E0E0),
-                          width: 1,
-                        ),
-                      ),
-                      child: Column(
+                            width: 1,
+                          ),
+                                  ),
+                                  child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                                    children: [
                           const Text(
                             "3분 후, 남는 것",
                             textAlign: TextAlign.left,
-                            style: TextStyle(
+                                  style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: Color(0xFF212121),
@@ -97,7 +97,7 @@ class IntroScreen extends StatelessWidget {
                               color: Color(0xFF9E9E9E),
                               height: 1.4,
                             ),
-                          ),
+                            ),
                           const SizedBox(height: 16),
                           _ValueItem(
                             "4가지 핵심 카테고리로 정리된 나의 창업가 의사결정 유형",
@@ -112,51 +112,51 @@ class IntroScreen extends StatelessWidget {
                           _ValueItem(
                             "다음 논의를 어디서 시작해야 하는지에 대한 가이드",
                             highlight: "다음 논의를 어디서 시작해야 하는지",
-                          ),
+                        ),
                         ],
+                          ),
                       ),
-                    ),
-                    
+
                     const SizedBox(height: kIsWeb ? 32 : 28),
-                    
+                
                     // 보조 문장
-                    const Text(
+                const Text(
                       "결과는 '평가'가 아니라 '정리'입니다.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: Color(0xFF9E9E9E),
-                        height: 1.4,
-                      ),
-                    ),
-                    
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: Color(0xFF9E9E9E),
+                    height: 1.4,
+                  ),
+                ),
+                
                     const SizedBox(height: 12),
-                    
+                
                     // 플로팅 버튼
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                       child: FloatingActionButton.extended(
-                        onPressed: () => _startTest(context),
+                    onPressed: () => _startTest(context),
                         backgroundColor: const Color(0xFF64B5F6),
-                        foregroundColor: Colors.white,
-                        elevation: 0,
+                                foregroundColor: Colors.white,
+                                elevation: 0,
                         label: const Text(
                           "간단한 팀 시뮬레이션 해보기",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: 0.3,
-                          ),
-                        ),
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                        letterSpacing: 0.3,
                       ),
                     ),
-                    
-                    const SizedBox(height: kIsWeb ? 24 : 20),
-                  ],
+                  ),
                 ),
-              ),
-            );
-          },
+                
+                    const SizedBox(height: kIsWeb ? 24 : 20),
+                              ],
+                            ),
+                          ),
+        );
+      },
         ),
       ),
     );
@@ -165,12 +165,12 @@ class IntroScreen extends StatelessWidget {
   Widget _buildComparisonCardsRow() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+        children: [
         Expanded(
           child: _buildLeftCard(),
         ),
         const SizedBox(width: 12),
-        Expanded(
+              Expanded(
           child: _buildRightCard(),
         ),
       ],
@@ -180,18 +180,18 @@ class IntroScreen extends StatelessWidget {
   Widget _buildLeftCard() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      decoration: BoxDecoration(
+                  decoration: BoxDecoration(
         color: const Color(0xFFFFF4E6), // 따뜻한 연한 주황/베이지
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
           color: const Color(0xFFFFB74D).withOpacity(0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
+                      width: 1,
+                    ),
+                  ),
+                        child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+                          children: [
           const Text(
             "기준을 미루었을 때",
             style: TextStyle(
@@ -214,26 +214,26 @@ class IntroScreen extends StatelessWidget {
   Widget _buildRightCard() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      decoration: BoxDecoration(
+            decoration: BoxDecoration(
         color: const Color(0xFFE3F2FD), // 연한 파란/쿨톤
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
           color: const Color(0xFF64B5F6).withOpacity(0.3),
-          width: 1,
-        ),
-      ),
-      child: Column(
+                width: 1,
+              ),
+            ),
+            child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
+              children: [
+                const Text(
             "미리 확인했을 때",
-            style: TextStyle(
+                  style: TextStyle(
               fontSize: 13,
-              fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.bold,
               color: Color(0xFF64B5F6),
+              ),
             ),
-          ),
           const SizedBox(height: 12),
           _SolutionItem(Icons.search, "핵심 기준 선제 확인"),
           const SizedBox(height: 6),
@@ -299,12 +299,12 @@ class _SolutionItem extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: Text(
-            text,
-            style: const TextStyle(
+          text,
+          style: const TextStyle(
               fontSize: 13,
               color: Color(0xFF424242),
               height: 1.4,
-              fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -369,14 +369,14 @@ class _ValueItem extends StatelessWidget {
                   textAlign: TextAlign.left,
                 )
               : Text(
-                  text,
+            text,
                   textAlign: TextAlign.left,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF424242),
-                    height: 1.4,
-                  ),
-                ),
+            style: const TextStyle(
+              fontSize: 13,
+            color: Color(0xFF424242),
+              height: 1.4,
+            ),
+          ),
         ),
       ],
     );
