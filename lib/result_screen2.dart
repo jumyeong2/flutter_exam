@@ -165,7 +165,7 @@ class ResultScreen2 extends StatelessWidget {
                     profile.slogan,
                     style: const TextStyle(
                       fontSize: 16,
-                      color: Color(0xFF64B5F6), // 메인 포인트 컬러
+                      color: Color(0xFF3B82F6), // 메인 포인트 컬러
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -212,7 +212,7 @@ class ResultScreen2 extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () => Navigator.pop(context),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF64B5F6),
+                        backgroundColor: const Color(0xFF3B82F6),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
@@ -235,8 +235,8 @@ class ResultScreen2 extends StatelessWidget {
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xFF64B5F6),
-                        side: const BorderSide(color: Color(0xFF64B5F6), width: 2),
+                        foregroundColor: const Color(0xFF3B82F6),
+                        side: const BorderSide(color: Color(0xFF3B82F6), width: 2),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),

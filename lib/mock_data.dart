@@ -5,7 +5,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q1",
     category: "equity",
-    questionText: "꼭 필요한 인재를 영입하려는데, 그는 우리와 똑같은 수준의 지분을 요구합니다.",
+    questionText: "꼭 필요한 인재를 영입하려는데,\n그는 우리와 똑같은 수준의 지분을 요구합니다.",
     options: [
       ScenarioOption(
         text: "검증이 먼저임. 베스팅(조건부)을 걸어야 납득할 수 있음",
@@ -25,7 +25,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q2",
     category: "equity",
-    questionText: "가장 친한 공동창업자가 번아웃이 와서, 당분간 일을 쉬거나 줄이겠다고 합니다.",
+    questionText: "가장 친한 공동창업자가 번아웃이 와서,\n당분간 일을 쉬거나 줄이겠다고 합니다.",
     options: [
       ScenarioOption(
         text: "냉정하지만, 기여도가 줄면 지분도 회수하는 게 맞다고 봄",
@@ -46,7 +46,7 @@ final List<ConflictScenario> sampleQuestions = [
     id: "Q3",
     category: "equity",
     questionText:
-        "대기업에서 '적당한 가격'에 회사를 인수하겠다고 합니다. 대박은 아니지만, 빚 없이 안전하게 끝낼 수 있습니다.",
+        "대기업에서 '적당한 가격'에 회사를 인수하겠다고 합니다.\n대박은 아니지만, 빚 없이 안전하게 끝낼 수 있습니다.",
     options: [
       ScenarioOption(
         text: "리스크를 털고 확실한 보상을 챙기는 게 현명하다고 생각함",
@@ -68,7 +68,7 @@ final List<ConflictScenario> sampleQuestions = [
     id: "Q4",
     category: "finance",
     questionText:
-        "경쟁사들이 법적으로 애매한(규제 미비) 영역을 파고들어 급성장 중입니다. 우리만 원칙 지키다 뒤처지고 있습니다.",
+        "경쟁사들이 법적으로 애매한(규제 미비) 영역을 파고들어 급성장 중입니다.\n우리만 원칙 지키다 뒤처지고 있습니다.",
     options: [
       ScenarioOption(
         text: "일단 점유율부터 뺏어야 함. 법적 문제는 나중 일임",
@@ -89,7 +89,7 @@ final List<ConflictScenario> sampleQuestions = [
     id: "Q5",
     category: "finance",
     questionText:
-        "런웨이(잔고)가 3개월 남았습니다. 당장 팀을 유지하려면 하던 개발을 멈추고 돈 되는 외주(SI)를 뛰어야 합니다.",
+        "런웨이(잔고)가 3개월 남았습니다.\n당장 팀을 유지하려면 하던 개발을 멈추고 돈 되는 외주(SI)를 뛰어야 합니다.",
     options: [
       ScenarioOption(
         text: "외주는 본질을 흐림. 차라리 팀을 줄여서라도 제품에 집중하고 싶음",
@@ -110,7 +110,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q6",
     category: "power",
-    questionText: "회사가 커지면서 초기 멤버가 리더 역량을 못 보여주고 있습니다. 직원들의 불만이 나옵니다.",
+    questionText: "회사가 커지면서 초기 멤버가 리더 역량을 못 보여주고 있습니다.\n직원들의 불만이 나옵니다.",
     options: [
       ScenarioOption(
         text: "능력 없으면 실무자로 내려와야 함",
@@ -130,7 +130,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q7",
     category: "power",
-    questionText: "공동창업자가 '실력은 좀 평범한데, 내가 정말 믿는 지인'을 채용하자고 강력히 주장합니다.",
+    questionText: "공동창업자가 '실력은 좀 평범한데,\n내가 정말 믿는 지인'을 채용하자고 강력히 주장합니다.",
     options: [
       ScenarioOption(
         text: "공과 사는 구분해야 함. 실력 미달이면 절대 반대임",
@@ -150,7 +150,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q8",
     category: "power",
-    questionText: "투자자가 큰돈을 주겠다는데, '실적이 안 나오면 대표를 해임할 수 있다'는 조건을 걸었습니다.",
+    questionText: "투자자가 큰돈을 주겠다는데,\n'실적이 안 나오면 대표를 해임할 수 있다'는 조건을 걸었습니다.",
     options: [
       ScenarioOption(
         text: "자신 있음. 자원이 없으면 성공도 없으니 감수해야 한다고 봄",
@@ -172,7 +172,7 @@ final List<ConflictScenario> sampleQuestions = [
     id: "Q9",
     category: "value",
     questionText:
-        "자본력을 앞세운 경쟁사가 우리 핵심 기능을 똑같이 베꼈습니다. 우리는 자금이 부족해 마케팅으로 못 이깁니다.",
+        "자본력을 앞세운 경쟁사가 우리 핵심 기능을 똑같이 베꼈습니다.\n우리는 자금이 부족해 마케팅으로 못 이깁니다.",
     options: [
       ScenarioOption(
         text: "정면 승부는 진다고 봄. 틈새시장으로 타겟을 좁혀야 함",
@@ -192,7 +192,7 @@ final List<ConflictScenario> sampleQuestions = [
   ConflictScenario(
     id: "Q10",
     category: "value",
-    questionText: "공동창업자가 큰 실수(서버 데이터 삭제 등)를 저지르고, 혼자 수습하다가 골든타임을 놓쳤습니다.",
+    questionText: "공동창업자가 큰 실수(서버 데이터 삭제 등)를 저지르고,\n혼자 수습하다가 골든타임을 놓쳤습니다.",
     options: [
       ScenarioOption(
         text: "개인 탓보단 시스템 문제임. 재발 방지 프로세스부터 만들어야 함",

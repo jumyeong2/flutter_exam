@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'simulation_screen.dart';
@@ -16,8 +17,10 @@ class IntroScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FB),
+      backgroundColor: scheme.background,
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
@@ -32,47 +35,56 @@ class IntroScreen extends StatelessWidget {
                     const SizedBox(height: kIsWeb ? 32 : 24),
                 
                     // 1. 상단: 로고
-                    const Text(
-                                    "CoSync",
-                                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w800,
-                                      color: Color(0xFF212121),
-                                      letterSpacing: -0.5,
-                                    ),
-                                  ),
+                    Text(
+                      "CoSync",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w900,
+                        color: scheme.primary,
+                        letterSpacing: -0.5,
+                      ),
+                    ),
                     
                     const SizedBox(height: kIsWeb ? 32 : 28),
                 
                     // 2. 메인 헤드라인
                 Text(
-                      "대부분의 팀은 문제가 터진 뒤에야\n기준을 맞춥니다.",
+                  "창업 파트너와 내 생각, 얼마나 다를까?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                        fontSize: kIsWeb ? 24 : 22,
+                    fontSize: kIsWeb ? 24 : 22,
                     fontWeight: FontWeight.w800,
-                    color: const Color(0xFF212121),
+                    color: Color(0xFF111827),
                     height: 1.3,
                     letterSpacing: -0.5,
                   ),
                 ),
                 
-                    const SizedBox(height: kIsWeb ? 32 : 28),
-                
-                    // 4. 핵심 비교 카드 영역
-                    _buildComparisonCardsRow(),
+                    const SizedBox(height: 4),
+
+                    // 3. 핵심 비교 문구
+                    Text(
+                      "공동창업팀을 위한 테스트",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: scheme.primary,
+                        height: 1.4,
+                      ),
+                    ),
                     
-                    const SizedBox(height: 12),
+                    const SizedBox(height: kIsWeb ? 36 : 32),
                     
-                    // 5. 결과물 안내 카드
+                    // 4. 결과물 안내 카드
                     Container(
                       width: double.infinity,
                       padding: EdgeInsets.all(kIsWeb ? 24 : 20),
-                        decoration: BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.white,
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                          color: const Color(0xFFE0E0E0),
+                          color: const Color(0xFFE6ECF7),
                             width: 1,
                           ),
                                   ),
@@ -85,7 +97,7 @@ class IntroScreen extends StatelessWidget {
                                   style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
-                              color: Color(0xFF212121),
+                              color: Color(0xFF111827),
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -94,25 +106,16 @@ class IntroScreen extends StatelessWidget {
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               fontSize: 13,
-                              color: Color(0xFF9E9E9E),
+                              color: Color(0xFF6B7280),
                               height: 1.4,
                             ),
-                            ),
+                          ),
                           const SizedBox(height: 16),
-                          _ValueItem(
-                            "4가지 핵심 카테고리로 정리된 나의 창업가 의사결정 유형",
-                            highlight: "4가지 핵심 카테고리",
-                          ),
-                          const SizedBox(height: 12),
-                          _ValueItem(
-                            "같은 질문에서 드러난 파트너와의 기준 차이",
-                            highlight: "파트너와의 기준 차이",
-                          ),
-                          const SizedBox(height: 12),
-                          _ValueItem(
-                            "다음 논의를 어디서 시작해야 하는지에 대한 가이드",
-                            highlight: "다음 논의를 어디서 시작해야 하는지",
-                        ),
+
+                          // 도표(그림)로 먼저 보여주고, 문장은 아래에 설명으로 둠
+                          const _OutcomeDiagram(),
+                          const SizedBox(height: 14),
+                          const _OutcomeLegendExpander(),
                         ],
                           ),
                       ),
@@ -120,12 +123,12 @@ class IntroScreen extends StatelessWidget {
                     const SizedBox(height: kIsWeb ? 32 : 28),
                 
                     // 보조 문장
-                const Text(
+                    const Text(
                       "결과는 '평가'가 아니라 '정리'입니다.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 13,
-                    color: Color(0xFF9E9E9E),
+                    color: Color(0xFF6B7280),
                     height: 1.4,
                   ),
                 ),
@@ -137,7 +140,7 @@ class IntroScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                       child: FloatingActionButton.extended(
                     onPressed: () => _startTest(context),
-                        backgroundColor: const Color(0xFF64B5F6),
+                        backgroundColor: scheme.primary,
                                 foregroundColor: Colors.white,
                                 elevation: 0,
                         label: const Text(
@@ -162,155 +165,6 @@ class IntroScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildComparisonCardsRow() {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-        Expanded(
-          child: _buildLeftCard(),
-        ),
-        const SizedBox(width: 12),
-              Expanded(
-          child: _buildRightCard(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildLeftCard() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                  decoration: BoxDecoration(
-        color: const Color(0xFFFFF4E6), // 따뜻한 연한 주황/베이지
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(
-          color: const Color(0xFFFFB74D).withOpacity(0.3),
-                      width: 1,
-                    ),
-                  ),
-                        child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-          const Text(
-            "기준을 미루었을 때",
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFFF8A65),
-            ),
-          ),
-          const SizedBox(height: 12),
-          _ProblemItem(Icons.schedule, "중요 의사결정 지연"),
-          const SizedBox(height: 6),
-          _ProblemItem(Icons.trending_down, "소통 비용 증가 및 속도 저하"),
-          const SizedBox(height: 6),
-          _ProblemItem(Icons.warning_outlined, "해소되지 않는 잠재 갈등"),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRightCard() {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            decoration: BoxDecoration(
-        color: const Color(0xFFE3F2FD), // 연한 파란/쿨톤
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-          color: const Color(0xFF64B5F6).withOpacity(0.3),
-                width: 1,
-              ),
-            ),
-            child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-            "미리 확인했을 때",
-                  style: TextStyle(
-              fontSize: 13,
-                  fontWeight: FontWeight.bold,
-              color: Color(0xFF64B5F6),
-              ),
-            ),
-          const SizedBox(height: 12),
-          _SolutionItem(Icons.search, "핵심 기준 선제 확인"),
-          const SizedBox(height: 6),
-          _SolutionItem(Icons.checklist, "필수 합의 지점 파악"),
-          const SizedBox(height: 6),
-          _SolutionItem(Icons.shield_outlined, "리스크 사전 방지"),
-        ],
-      ),
-    );
-  }
-}
-
-// 문제 상황 아이템 위젯
-class _ProblemItem extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const _ProblemItem(this.icon, this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(
-          icon,
-          size: 18,
-          color: const Color(0xFFFF8A65),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 13,
-              color: Color(0xFF616161),
-              height: 1.4,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// 해결 상황 아이템 위젯
-class _SolutionItem extends StatelessWidget {
-  final IconData icon;
-  final String text;
-
-  const _SolutionItem(this.icon, this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Icon(
-          icon,
-          size: 18,
-          color: const Color(0xFF64B5F6),
-        ),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Text(
-          text,
-          style: const TextStyle(
-              fontSize: 13,
-              color: Color(0xFF424242),
-              height: 1.4,
-            fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 // 결과물 안내 아이템 위젯
@@ -331,7 +185,7 @@ class _ValueItem extends StatelessWidget {
         const Icon(
           Icons.check_circle_outline,
           size: 18,
-          color: Color(0xFF64B5F6),
+          color: Color(0xFF3B82F6),
         ),
         const SizedBox(width: 10),
         Flexible(
@@ -343,7 +197,7 @@ class _ValueItem extends StatelessWidget {
                         text: text.substring(0, highlightIndex),
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF424242),
+                          color: Color(0xFF1F2937),
                           height: 1.4,
                         ),
                       ),
@@ -351,7 +205,7 @@ class _ValueItem extends StatelessWidget {
                         text: highlight,
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF424242),
+                          color: Color(0xFF1F2937),
                           height: 1.4,
                           fontWeight: FontWeight.bold,
                         ),
@@ -360,7 +214,7 @@ class _ValueItem extends StatelessWidget {
                         text: text.substring(highlightIndex + highlight.length),
                         style: const TextStyle(
                           fontSize: 13,
-                          color: Color(0xFF424242),
+                          color: Color(0xFF1F2937),
                           height: 1.4,
                         ),
                       ),
@@ -373,10 +227,282 @@ class _ValueItem extends StatelessWidget {
                   textAlign: TextAlign.left,
             style: const TextStyle(
               fontSize: 13,
-            color: Color(0xFF424242),
+            color: Color(0xFF1F2937),
               height: 1.4,
             ),
           ),
+        ),
+      ],
+    );
+  }
+}
+
+class _OutcomeDiagram extends StatelessWidget {
+  const _OutcomeDiagram();
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return SizedBox(
+      width: double.infinity,
+      height: 260,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final size = Size(constraints.maxWidth, constraints.maxHeight);
+          final center = Offset(size.width / 2, size.height * 0.68);
+          final top = Offset(size.width / 2, size.height * 0.10);
+          final lineLength = (center - top).distance;
+          final dy = size.height * 0.12;
+          final dx = math.sqrt((lineLength * lineLength) - (dy * dy));
+          final left = Offset(center.dx - dx, center.dy + dy);
+          final right = Offset(center.dx + dx, center.dy + dy);
+
+          const denseSize = 44.0;
+          const centerSize = 58.0;
+
+          return Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Positioned.fill(
+                child: CustomPaint(
+                  painter: _OutcomeDiagramPainter(
+                    color: scheme.primary,
+                    center: center,
+                    top: top,
+                    left: left,
+                    right: right,
+                  ),
+                ),
+              ),
+              Positioned(
+                left: center.dx - (centerSize / 2),
+                top: center.dy - (centerSize / 2),
+                child: _DiagramNode(
+                  background: scheme.primary,
+                  foreground: Colors.white,
+                  icon: Icons.group_rounded,
+                  label: "팀 기준",
+                  dense: false,
+                ),
+              ),
+              Positioned(
+                left: top.dx - (denseSize / 2),
+                top: top.dy - (denseSize / 2),
+                child: _DiagramNode(
+                  background: Colors.white,
+                  foreground: scheme.primary,
+                  icon: Icons.category_outlined,
+                  label: "유형",
+                  dense: true,
+                  borderColor: scheme.primary.withOpacity(0.18),
+                ),
+              ),
+              Positioned(
+                left: left.dx - (denseSize / 2),
+                top: left.dy - (denseSize / 2),
+                child: _DiagramNode(
+                  background: Colors.white,
+                  foreground: scheme.primary,
+                  icon: Icons.compare_arrows_rounded,
+                  label: "차이",
+                  dense: true,
+                  borderColor: scheme.primary.withOpacity(0.18),
+                ),
+              ),
+              Positioned(
+                left: right.dx - (denseSize / 2),
+                top: right.dy - (denseSize / 2),
+                child: _DiagramNode(
+                  background: Colors.white,
+                  foreground: scheme.primary,
+                  icon: Icons.forum_outlined,
+                  label: "가이드",
+                  dense: true,
+                  borderColor: scheme.primary.withOpacity(0.18),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _DiagramNode extends StatelessWidget {
+  final Color background;
+  final Color foreground;
+  final IconData icon;
+  final String label;
+  final bool dense;
+  final Color? borderColor;
+
+  const _DiagramNode({
+    required this.background,
+    required this.foreground,
+    required this.icon,
+    required this.label,
+    required this.dense,
+    this.borderColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final double size = dense ? 44 : 58;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            color: background,
+            borderRadius: BorderRadius.circular(999),
+            border: borderColor == null ? null : Border.all(color: borderColor!, width: 1),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.04),
+                blurRadius: 10,
+                offset: const Offset(0, 6),
+              ),
+            ],
+          ),
+          child: Icon(icon, color: foreground, size: dense ? 20 : 24),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w700,
+            color: const Color(0xFF1F2937),
+            letterSpacing: -0.2,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _OutcomeDiagramPainter extends CustomPainter {
+  final Color color;
+  final Offset center;
+  final Offset top;
+  final Offset left;
+  final Offset right;
+
+  const _OutcomeDiagramPainter({
+    required this.color,
+    required this.center,
+    required this.top,
+    required this.left,
+    required this.right,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color.withOpacity(0.22)
+      ..strokeWidth = 2
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    canvas.drawLine(center, top, paint);
+    canvas.drawLine(center, left, paint);
+    canvas.drawLine(center, right, paint);
+
+    final dotPaint = Paint()..color = color.withOpacity(0.18);
+    canvas.drawCircle(center, 3, dotPaint);
+    canvas.drawCircle(top, 3, dotPaint);
+    canvas.drawCircle(left, 3, dotPaint);
+    canvas.drawCircle(right, 3, dotPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _OutcomeDiagramPainter oldDelegate) {
+    return oldDelegate.color != color ||
+        oldDelegate.center != center ||
+        oldDelegate.top != top ||
+        oldDelegate.left != left ||
+        oldDelegate.right != right;
+  }
+}
+
+class _OutcomeLegend extends StatelessWidget {
+  const _OutcomeLegend();
+
+  @override
+  Widget build(BuildContext context) {
+    // 텍스트는 "기존 문장" 그대로 유지
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        _ValueItem(
+          "4가지 핵심 카테고리로 정리된 나의 창업가 의사결정 유형",
+          highlight: "4가지 핵심 카테고리",
+        ),
+        SizedBox(height: 12),
+        _ValueItem(
+          "같은 질문에서 드러난 파트너와의 기준 차이",
+          highlight: "파트너와의 기준 차이",
+        ),
+        SizedBox(height: 12),
+        _ValueItem(
+          "다음 논의를 어디서 시작해야 하는지에 대한 가이드",
+          highlight: "다음 논의를 어디서 시작해야 하는지",
+        ),
+      ],
+    );
+  }
+}
+
+class _OutcomeLegendExpander extends StatefulWidget {
+  const _OutcomeLegendExpander();
+
+  @override
+  State<_OutcomeLegendExpander> createState() => _OutcomeLegendExpanderState();
+}
+
+class _OutcomeLegendExpanderState extends State<_OutcomeLegendExpander> {
+  bool _expanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextButton(
+          onPressed: () => setState(() => _expanded = !_expanded),
+          style: TextButton.styleFrom(
+            foregroundColor: scheme.primary,
+            padding: EdgeInsets.zero,
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(_expanded ? "접기" : "더 보기"),
+              const SizedBox(width: 6),
+              Icon(
+                _expanded ? Icons.expand_less_rounded : Icons.expand_more_rounded,
+                size: 18,
+              ),
+            ],
+          ),
+        ),
+        AnimatedCrossFade(
+          firstChild: const SizedBox.shrink(),
+          secondChild: const Padding(
+            padding: EdgeInsets.only(top: 8),
+            child: _OutcomeLegend(),
+          ),
+          crossFadeState:
+              _expanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          duration: const Duration(milliseconds: 200),
         ),
       ],
     );

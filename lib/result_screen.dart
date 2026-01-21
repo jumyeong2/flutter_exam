@@ -20,7 +20,7 @@ class _ResultScreenState extends State<ResultScreen> {
   List<Map<String, dynamic>> partnersList = [];
 
   // 메인 컬러
-  final Color _mainColor = const Color(0xFF64B5F6);
+  final Color _mainColor = const Color(0xFF3B82F6);
 
   @override
   void dispose() {
@@ -102,8 +102,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FB),
+      backgroundColor: scheme.background,
       appBar: AppBar(
         title: const Text("팀 데이터 입력"),
         actions: [
@@ -133,15 +135,16 @@ class _ResultScreenState extends State<ResultScreen> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: const Color(0xFFE6ECF7)),
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.info_outline, size: 18, color: Colors.grey[500]),
+                      Icon(Icons.info_outline, size: 18, color: scheme.primary),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
                           "점수는 '우열'이 아닌 성향의 차이입니다. 서로의 기준을 발견하면 리스크를 낮출 수 있어요.",
-                          style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                          style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
                         ),
                       ),
                     ],
@@ -164,7 +167,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: _mainColor.withOpacity(0.15),
+                                color: _mainColor.withOpacity(0.12),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Icon(Icons.group_add_outlined, color: _mainColor),
@@ -210,7 +213,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             ),
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 16),
-                              side: BorderSide(color: _mainColor),
+                              side: BorderSide(color: _mainColor.withOpacity(0.6)),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                             ),
                           ),
@@ -240,7 +243,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     itemBuilder: (context, index) {
                       return Chip(
                         backgroundColor: Colors.white,
-                        side: BorderSide(color: Colors.grey[300]!),
+                        side: BorderSide(color: const Color(0xFFE6ECF7)),
                         avatar: CircleAvatar(
                           radius: 10,
                           backgroundColor: _mainColor.withOpacity(0.2),
@@ -271,17 +274,17 @@ class _ResultScreenState extends State<ResultScreen> {
                         const SizedBox(height: 6),
                         Text(
                           "총 ${partnersList.length + 1}명의 기준을 한 번에 비교합니다.",
-                          style: const TextStyle(color: Colors.grey),
+                          style: const TextStyle(color: Color(0xFF6B7280)),
                         ),
                         const SizedBox(height: 16),
                         Row(
                           children: const [
-                            Icon(Icons.security_update_good_outlined, size: 18, color: Colors.green),
+                            Icon(Icons.security_update_good_outlined, size: 18, color: Color(0xFF10B981)),
                             SizedBox(width: 6),
                             Expanded(
                               child: Text(
                                 "데이터는 기기에만 저장되며, 상세 화면에서 바로 삭제 가능합니다.",
-                                style: TextStyle(fontSize: 12, color: Colors.grey),
+                                style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
                               ),
                             ),
                           ],
@@ -312,10 +315,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
   Widget _scoreSummaryCard() {
     final entries = <(String, double, Color, IconData, int)>[
-      ("지분", widget.myScores['equity']!, Colors.purple[300]!, Icons.workspace_premium_outlined, 30),
-      ("자금", widget.myScores['finance']!, Colors.teal[300]!, Icons.savings_outlined, 20),
-      ("권한", widget.myScores['power']!, Colors.orange[300]!, Icons.gavel_outlined, 30),
-      ("가치", widget.myScores['value']!, Colors.pink[300]!, Icons.favorite_border, 20),
+      ("지분", widget.myScores['equity']!, const Color(0xFF3B82F6), Icons.workspace_premium_outlined, 30),
+      ("자금", widget.myScores['finance']!, const Color(0xFF60A5FA), Icons.savings_outlined, 20),
+      ("권한", widget.myScores['power']!, const Color(0xFF1D4ED8), Icons.gavel_outlined, 30),
+      ("가치", widget.myScores['value']!, const Color(0xFF93C5FD), Icons.favorite_border, 20),
     ];
 
     return Card(
@@ -329,7 +332,7 @@ class _ResultScreenState extends State<ResultScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: _mainColor.withOpacity(0.15),
+                    color: _mainColor.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(18),
                   ),
                   child: Icon(Icons.equalizer_rounded, color: _mainColor),
@@ -344,10 +347,10 @@ class _ResultScreenState extends State<ResultScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.05),
+                    color: const Color(0xFFEFF4FF),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: const Text("자동 계산", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600)),
+                  child: const Text("자동 계산", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF3B82F6))),
                 ),
               ],
             ),
@@ -380,7 +383,8 @@ class _ResultScreenState extends State<ResultScreen> {
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
-        color: color.withOpacity(0.1),
+        color: color.withOpacity(0.08),
+        border: Border.all(color: color.withOpacity(0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -400,7 +404,7 @@ class _ResultScreenState extends State<ResultScreen> {
             child: LinearProgressIndicator(
               value: percent,
               minHeight: 6,
-              backgroundColor: Colors.white,
+              backgroundColor: const Color(0xFFE8EEF9),
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),
@@ -415,13 +419,7 @@ class _ResultScreenState extends State<ResultScreen> {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
-        prefixIcon: Icon(icon, size: 18, color: Colors.grey[500]),
-        filled: true,
-        fillColor: Colors.grey[50],
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.grey[200]!)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.grey[200]!)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: _mainColor)),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        prefixIcon: Icon(icon, size: 18, color: const Color(0xFF7B88A1)),
       ),
     );
   }
@@ -433,13 +431,7 @@ class _ResultScreenState extends State<ResultScreen> {
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: hint,
-        prefixIcon: Icon(icon, size: 18, color: Colors.grey[500]),
-        filled: true,
-        fillColor: Colors.grey[50],
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.grey[200]!)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: Colors.grey[200]!)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: _mainColor)),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        prefixIcon: Icon(icon, size: 18, color: const Color(0xFF7B88A1)),
       ),
     );
   }

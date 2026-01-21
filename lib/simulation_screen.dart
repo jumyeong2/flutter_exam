@@ -16,7 +16,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
   bool isAnimating = false;
 
   // [수정됨] 메인 테마: 부드러운 파스텔 블루 (Cornflower Blue)
-  final Color _mainColor = const Color(0xFF64B5F6);
+  final Color _mainColor = const Color(0xFF3B82F6);
 
   Map<String, double> scores = {
     "equity": 0,
@@ -30,24 +30,25 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Widget build(BuildContext context) {
     final scenario = sampleQuestions[currentIndex];
     double progress = (currentIndex + 1) / sampleQuestions.length;
+    final scheme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FB),
+      backgroundColor: scheme.background,
       appBar: AppBar(
         title: Text(
           "라운드 ${currentIndex + 1} / ${sampleQuestions.length}",
           style: const TextStyle(fontWeight: FontWeight.w800),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.close_rounded, color: Colors.grey),
+          icon: Icon(Icons.close_rounded, color: scheme.onSurfaceVariant),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
             onPressed: () => _showRoundTip(context),
-            icon: const Icon(
+            icon: Icon(
               Icons.tips_and_updates_outlined,
-              color: Colors.grey,
+              color: scheme.onSurfaceVariant,
             ),
           ),
         ],
@@ -62,7 +63,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: 10,
-                    backgroundColor: Colors.grey[200],
+                    backgroundColor: const Color(0xFFE8EEF9),
                     valueColor: AlwaysStoppedAnimation<Color>(_mainColor),
                   ),
                 ),
@@ -91,24 +92,27 @@ class _SimulationScreenState extends State<SimulationScreen> {
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
           child: ListView(
             children: [
-              _questionCard(scenario),
-              SizedBox(height: 10),
+              _questionCard(scenario, currentIndex),
+              const SizedBox(height: 56),
               ...List.generate(
                 scenario.options.length,
                 (index) =>
                     _buildPastelOptionCard(index, scenario.options[index].text),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 36),
               if (currentIndex > 0)
-                OutlinedButton.icon(
+                TextButton.icon(
                   onPressed: _prevQuestion,
                   icon: const Icon(Icons.u_turn_left_outlined),
                   label: const Text("이전 시나리오 다시 선택"),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.grey[700],
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+                  style: TextButton.styleFrom(
+                    foregroundColor: scheme.primary,
+                    backgroundColor: Colors.transparent,
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
                     ),
                   ),
                 ),
@@ -139,34 +143,42 @@ class _SimulationScreenState extends State<SimulationScreen> {
     );
   }
 
-  Widget _questionCard(ConflictScenario scenario) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _questionCard(ConflictScenario scenario, int questionIndex) {
+    final categoryColor = _getCategoryPastelColor(scenario.category);
+
+    return Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(width: 12),
+            Icon(
+              _getCategoryIcon(scenario.category),
+              color: categoryColor,
+              size: 26,
+            ),
+            const SizedBox(width: 8),
             Text(
               _getCategoryName(scenario.category),
               style: TextStyle(
-                color: _getCategoryPastelColor(scenario.category),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 4),
-            const SizedBox(height: 16),
-            Text(
-              scenario.questionText,
-              style: const TextStyle(
-                fontSize: 15,
+                color: categoryColor,
                 fontWeight: FontWeight.w700,
-                height: 1.4,
+                fontSize: 14,
               ),
             ),
           ],
         ),
-      ),
+        const SizedBox(height: 12),
+        Text(
+          "Q${questionIndex + 1}. ${scenario.questionText}",
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w800,
+            height: 1.5,
+            color: Color(0xFF1B1D29),
+          ),
+        ),
+      ],
     );
   }
 
@@ -178,9 +190,9 @@ class _SimulationScreenState extends State<SimulationScreen> {
         borderRadius: BorderRadius.circular(40),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: const Color(0xFF3B82F6).withOpacity(0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -210,23 +222,24 @@ class _SimulationScreenState extends State<SimulationScreen> {
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutCubic,
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 22),
           decoration: BoxDecoration(
             // 선택되면 파스텔 블루, 아니면 아주 연한 회색 배경
             color: isSelected ? _mainColor : Colors.white,
-            borderRadius: BorderRadius.circular(24), // 더 둥글게 (부드러운 느낌)
+            borderRadius: BorderRadius.circular(999),
             border: Border.all(
-              color: isSelected ? Colors.transparent : const Color(0xFFEEEEEE),
-              width: 2,
+              color: isSelected ? _mainColor.withOpacity(0.4) : const Color(0xFFE7ECF6),
+              width: 1.2,
             ),
             boxShadow: [
               // 부드러운 그림자
-              if (!isSelected)
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.05),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
-                ),
+              BoxShadow(
+                color: isSelected
+                    ? _mainColor.withOpacity(0.25)
+                    : const Color(0xFF3B82F6).withOpacity(0.08),
+                blurRadius: isSelected ? 18 : 12,
+                offset: const Offset(0, 8),
+              ),
             ],
           ),
           child: Row(
@@ -240,12 +253,12 @@ class _SimulationScreenState extends State<SimulationScreen> {
                 decoration: BoxDecoration(
                   color: isSelected
                       ? Colors.white.withOpacity(0.15)
-                      : const Color(0xFFF5F5F5),
+                      : const Color(0xFFF1F5FF),
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   _optionIcon(index),
-                  color: isSelected ? Colors.white : const Color(0xFF90A4AE),
+                  color: isSelected ? Colors.white : const Color(0xFF7BA2E8),
                 ),
               ),
               const SizedBox(width: 18),
@@ -258,7 +271,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                       "선택 ${String.fromCharCode(65 + index)}",
                       style: TextStyle(
                         fontSize: 12,
-                        color: isSelected ? Colors.white70 : Colors.grey[500],
+                        color: isSelected ? Colors.white70 : const Color(0xFF8A97AE),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -268,7 +281,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                         fontSize: 15,
                         color: isSelected
                             ? Colors.white
-                            : const Color(0xFF616161), // 진한 회색
+                            : const Color(0xFF2E3440), // 진한 회색
                         fontWeight: isSelected
                             ? FontWeight.w700
                             : FontWeight.w600,
@@ -281,7 +294,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
               const Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 16,
-                color: Color(0xFFCFD8DC),
+                color: Color(0xFFC7D2E5),
               ),
             ],
           ),
@@ -291,7 +304,16 @@ class _SimulationScreenState extends State<SimulationScreen> {
   }
 
   IconData _optionIcon(int index) {
-    return Icons.check_circle_outline; // Minimal & Sophisticated
+    switch (index % 4) {
+      case 0:
+        return Icons.lightbulb_outline;
+      case 1:
+        return Icons.handshake_outlined;
+      case 2:
+        return Icons.balance_outlined;
+      default:
+        return Icons.trending_up_outlined;
+    }
   }
 
   void _handleAnswer(int index) async {
@@ -362,13 +384,13 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Color _getCategoryPastelColor(String key) {
     switch (key) {
       case 'equity':
-        return const Color(0xFF9575CD); // 파스텔 퍼플 (Deep Purple 300)
+        return const Color(0xFFEC4899); // pink
       case 'finance':
-        return const Color(0xFF4DB6AC); // 파스텔 틸 (Teal 300)
+        return const Color(0xFFF59E0B); // yellow
       case 'power':
-        return const Color(0xFFFF8A65); // 파스텔 오렌지 (Deep Orange 300)
+        return const Color(0xFF10B981); // green
       case 'value':
-        return const Color(0xFFF06292); // 파스텔 핑크 (Pink 300)
+        return const Color(0xFF8B5CF6); // purple
       default:
         return Colors.grey;
     }
