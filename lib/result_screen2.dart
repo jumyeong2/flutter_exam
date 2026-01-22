@@ -11,6 +11,7 @@ class FounderProfile {
   final FounderType type;
   final String name; // 유형 이름
   final String animal; // 이모지
+  final String imagePath; // 이미지 경로
   final String slogan; // 한 줄 요약
   final String desc; // 상세 설명
   final List<String> pros; // 장점
@@ -20,6 +21,7 @@ class FounderProfile {
     required this.type,
     required this.name,
     required this.animal,
+    required this.imagePath,
     required this.slogan,
     required this.desc,
     required this.pros,
@@ -32,9 +34,10 @@ final sharkProfile = FounderProfile(
   type: FounderType.shark,
   name: "냉철한 승부사",
   animal: "🦈",
+  imagePath: "assets/images/shark.png",
   slogan: "생존과 효율이 최우선",
   desc:
-      "당신은 회사의 생존을 위해 감정을 배제하고 냉정한 판단을 내리는 '샤크' 유형입니다.\n리스크를 관리하고 명확한 룰을 세우는 데 탁월합니다.",
+      "당신은 회사의 생존을 위해 감정을 배제하고 냉정한 판단을 내리는 '상어' 유형입니다.\n리스크를 관리하고 명확한 룰을 세우는 데 탁월합니다.",
   pros: ["위기 상황에서의 빠른 결단력", "명확한 역할과 책임 구분", "투자자가 선호하는 리스크 관리"],
   cons: ["팀원의 감정을 놓칠 수 있음", "지나친 효율 추구로 인한 갈등", "차가워 보일 수 있음"],
 );
@@ -43,6 +46,7 @@ final owlProfile = FounderProfile(
   type: FounderType.owl,
   name: "지혜로운 조율자",
   animal: "🦉",
+  imagePath: "assets/images/owl.png",
   slogan: "데이터와 논리의 균형",
   desc:
       "당신은 감정과 효율 사이에서 최적의 균형을 찾는 '올빼미' 유형입니다.\n객관적인 근거와 시장 표준을 중요하게 생각하며 합리적인 중재를 이끌어냅니다.",
@@ -54,9 +58,10 @@ final dolphinProfile = FounderProfile(
   type: FounderType.dolphin,
   name: "진심의 리더",
   animal: "🐬",
+  imagePath: "assets/images/capybara.png",
   slogan: "사람과 비전이 먼저",
   desc:
-      "당신은 팀의 신뢰와 비전을 가장 중요하게 여기는 '돌고래' 유형입니다.\n단기적 이익보다 함께하는 사람들과의 가치를 지키며 팀을 이끕니다.",
+      "당신은 팀의 신뢰와 비전을 가장 중요하게 여기는 '카피바라' 유형입니다.\n단기적 이익보다 함께하는 사람들과의 가치를 지키며 팀을 이끕니다.",
   pros: ["강력한 팀 결속력 구축", "위기를 버티게 하는 동기부여", "건강한 사내 문화 형성"],
   cons: ["수익성보다 이상을 좇을 위험", "냉정한 피드백의 어려움", "속도 저하 우려"],
 );
@@ -139,7 +144,7 @@ class ResultScreen2 extends StatelessWidget {
             // 3. 동물 이모지와 이름 카드
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
+              padding: const EdgeInsets.only(top: 20, bottom: 40, left: 20, right: 20),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -153,7 +158,12 @@ class ResultScreen2 extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  Text(profile.animal, style: const TextStyle(fontSize: 80)),
+                  Image.asset(
+                    profile.imagePath,
+                    width: 280,
+                    height: 280,
+                    fit: BoxFit.contain,
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     profile.name,

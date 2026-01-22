@@ -212,7 +212,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 child: FilledButton(
                   onPressed: () async {
                     final Uri url = Uri.parse(
-                      'https://cosyncagreement-dev.web.app',
+                      'https://cosyncagreement.web.app/',
                     );
                     try {
                       final launched = await launchUrl(

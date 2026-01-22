@@ -243,7 +243,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     },
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 60),
               ],
 
               Padding(
@@ -259,19 +259,6 @@ class _ResultScreenState extends State<ResultScreen> {
                     Text(
                       "총 ${partnersList.length + 1}명의 기준을 한 번에 비교합니다.",
                       style: const TextStyle(color: Color(0xFF6B7280)),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: const [
-                        Icon(Icons.security_update_good_outlined, size: 18, color: Color(0xFF10B981)),
-                        SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            "데이터는 기기에만 저장되며, 상세 화면에서 바로 삭제 가능합니다.",
-                            style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
@@ -363,7 +350,7 @@ class _ResultScreenState extends State<ResultScreen> {
               mainAxisSpacing: 12,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 2.8,
+              childAspectRatio: 2.6,
               children: entries
                   .map(
                     (item) => _scoreBadge(
@@ -386,7 +373,7 @@ class _ResultScreenState extends State<ResultScreen> {
     final percent = (value / max).clamp(0.0, 1.0);
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
+      padding: const EdgeInsets.fromLTRB(10, 4, 10, 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: color.withOpacity(0.08),
@@ -396,6 +383,7 @@ class _ResultScreenState extends State<ResultScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 5),
           Row(
             children: [
               Icon(icon, color: color, size: 20),
@@ -409,17 +397,16 @@ class _ResultScreenState extends State<ResultScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 20),
           Text(
             "${value.toStringAsFixed(0)} / ${max.toStringAsFixed(0)}",
             style: TextStyle(color: color, fontSize: 11),
           ),
-          const SizedBox(height: 4),
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
               value: percent,
-              minHeight: 8,
+              minHeight: 14,
               backgroundColor: Colors.white,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),

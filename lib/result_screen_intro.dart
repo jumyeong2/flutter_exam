@@ -27,13 +27,13 @@ class ResultScreenIntro extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              '🤔',
-              style: TextStyle(
-                fontSize: 80, // 이모티콘 크게
-              ),
+            Image.asset(
+              'assets/images/thinking.png',
+              width: 400,
+              height: 400,
+              fit: BoxFit.contain,
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 8),
 
             // 내 성향 확인하기 버튼
             SizedBox(
