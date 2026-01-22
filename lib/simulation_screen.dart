@@ -62,7 +62,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                   borderRadius: BorderRadius.circular(20),
                   child: LinearProgressIndicator(
                     value: progress,
-                    minHeight: 10,
+                    minHeight: 12,
                     backgroundColor: const Color(0xFFE8EEF9),
                     valueColor: AlwaysStoppedAnimation<Color>(_mainColor),
                   ),

@@ -42,48 +42,48 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
 
-  ConflictScenario(
-    id: "Q3",
-    category: "equity",
-    questionText:
-        "대기업에서 '적당한 가격'에 회사를 인수하겠다고 합니다.\n대박은 아니지만, 빚 없이 안전하게 끝낼 수 있습니다.",
-    options: [
-      ScenarioOption(
-        text: "리스크를 털고 확실한 보상을 챙기는 게 현명하다고 생각함",
-        score: 0.0,
-      ), // Shark (실리 추구)
-      ScenarioOption(
-        text: "우리의 잠재력은 더 큼. 지금 팔기엔 비전이 아까움",
-        score: 10.0,
-      ), // Dolphin (미래 가치)
-      ScenarioOption(
-        text: "내 의견보다 팀원 전체의 투표 결과를 따르는 게 맞음",
-        score: 5.0,
-      ), // Owl (절차적 정당성)
-    ],
-  ),
+ConflictScenario(
+  id: "Q3",
+  category: "equity",
+  questionText: "도메인/상표 같은 핵심 자산이 개인 명의로 등록돼 있습니다.\n회사 명의로 이전할 때 기준을 정해야 합니다.",
+  options: [
+    ScenarioOption(
+      text: "지금 당장 이전해야 함. 비용이 들더라도 바로 정리해야 함",
+      score: 0.0,
+    ), // Shark (리스크 제거/단호)
+    ScenarioOption(
+      text: "이전하되 합의 문서부터. 비용·절차·퇴사 시 처리까지 조항으로 정리하고 진행해야 함",
+      score: 5.0,
+    ), // Owl (프로세스/문서화)
+    ScenarioOption(
+      text: "당장 급한 건 아님. 상황 안정되면 천천히 정리해도 됨",
+      score: 10.0,
+    ), // Dolphin (관계/신뢰 우선)
+  ],
+),
 
   // 💰 [MONEY] 돈과 생존 finance
   ConflictScenario(
     id: "Q4",
     category: "finance",
     questionText:
-        "경쟁사들이 법적으로 애매한(규제 미비) 영역을 파고들어 급성장 중입니다.\n우리만 원칙 지키다 뒤처지고 있습니다.",
+        "서버비/마케팅비 등 당장 결제할 돈이 부족합니다.\n한 명이 '개인 카드/대출로 막자'고 제안합니다.",
     options: [
       ScenarioOption(
-        text: "일단 점유율부터 뺏어야 함. 법적 문제는 나중 일임",
+        text: "필요하면 개인 돈으로라도 막아야 함. 일단 살고 보자는 입장임",
         score: 0.0,
-      ), // Shark (성장 우선)
+      ), // Shark (생존/즉시 실행)
       ScenarioOption(
-        text: "신뢰가 깨지면 끝임. 느리더라도 안전한 길로 가고 싶음",
-        score: 10.0,
-      ), // Dolphin (브랜드/신뢰)
-      ScenarioOption(
-        text: "최소한의 법적 방어 논리만 갖추고 조심스럽게 진입해야 함",
+        text: "가능은 하되, 한도·상환 우선순위·내부 차용증을 먼저 합의하고 진행해야 함",
         score: 5.0,
-      ), // Owl (리스크 관리)
+      ), // Owl (리스크 통제/계약화)
+      ScenarioOption(
+        text: "개인 보증/대출은 절대 반대임. 관계가 깨질 확률이 커서 다른 방법을 찾고 싶음",
+        score: 10.0,
+      ), // Dolphin (관계/안전 우선)
     ],
   ),
+
 
   ConflictScenario(
     id: "Q5",
@@ -107,23 +107,26 @@ final List<ConflictScenario> sampleQuestions = [
   ),
 
   // ⚖️ [POWER] 권한 및 리더십
+  // ⚖️ [POWER] 권한 및 리더십
+  // ✅ Q6 (power) 초기 친화 대체: 2인 50:50 교착 타이브레이커
   ConflictScenario(
     id: "Q6",
     category: "power",
-    questionText: "회사가 커지면서 초기 멤버가 리더 역량을 못 보여주고 있습니다.\n직원들의 불만이 나옵니다.",
+    questionText:
+        "중요한 결정(피벗/가격 등)에서 의견이 50:50으로 갈립니다.\n해결할 원칙을 정해야 합니다.",
     options: [
       ScenarioOption(
-        text: "능력 없으면 실무자로 내려와야 함",
+        text: "한 명에게 최종 결정권을 주는 게 현실적이라고 봄",
         score: 0.0,
-      ), // Shark (능력 위주)
+      ), // Shark (결정 속도/권한 부여)
       ScenarioOption(
-        text: "그가 잘할 수 있는 다른 역할을 찾아줘야 함",
-        score: 10.0,
-      ), // Dolphin (사람 존중)
-      ScenarioOption(
-        text: "전문가를 영입해 그 밑으로 배치하고, 보고 체계를 정리하는 게 좋음",
+        text: "사전에 범위별 룰을 정하자. 예: 투자/채용은 만장일치, 제품은 대표권 등",
         score: 5.0,
-      ), // Owl (조직 구조화)
+      ), // Owl (권한 매트릭스/규칙)
+      ScenarioOption(
+        text: "외부 멘토/자문을 끼고 중재로 풀자. 한 명이 밀어붙이는 구조는 위험하다고 봄",
+        score: 10.0,
+      ), // Dolphin (관계/중재 선호)
     ],
   ),
 
@@ -147,25 +150,27 @@ final List<ConflictScenario> sampleQuestions = [
     ],
   ),
 
-  ConflictScenario(
-    id: "Q8",
-    category: "power",
-    questionText: "투자자가 큰돈을 주겠다는데,\n'실적이 안 나오면 대표를 해임할 수 있다'는 조건을 걸었습니다.",
-    options: [
-      ScenarioOption(
-        text: "자신 있음. 자원이 없으면 성공도 없으니 감수해야 한다고 봄",
-        score: 0.0,
-      ), // Shark (자신감)
-      ScenarioOption(
-        text: "경영권이 흔들리면 비전도 없음. 다른 투자자를 찾는 게 맞음",
-        score: 10.0,
-      ), // Dolphin (주권 보호)
-      ScenarioOption(
-        text: "돈은 받되, 해임 조건(트리거)을 합리적인 수준으로 수정해야 함",
-        score: 5.0,
-      ), // Owl (협상)
-    ],
-  ),
+// ✅ Q8 (power) 중립 대체: 대외 약속/커뮤니케이션 권한(대표 편향 없음)
+ConflictScenario(
+  id: "Q8",
+  category: "power",
+  questionText:
+      "한 공동창업자가 팀과 상의 없이\n외부에 중요한 약속을 먼저 해버렸습니다.",
+  options: [
+    ScenarioOption(
+      text: "재발 방지가 우선임. 외부 커뮤니케이션/약속은 한 명만 담당",
+      score: 0.0,
+    ), // Shark (통제/속도)
+    ScenarioOption(
+      text: "기준을 룰로 만들자. 가격/일정/범위는 '사전 합의' 없이는 말할 수 없도록 함",
+      score: 5.0,
+    ), // Owl (규칙/가드레일)
+    ScenarioOption(
+      text: "통제보다, 외부에 말하기 전 '10분 확인(메신저 공유)' 같은 최소 공유 룰만 정함",
+      score: 10.0,
+    ), // Dolphin (신뢰/팀워크)
+  ],
+),
 
   // ❤️ [VALUE] 가치관
   ConflictScenario(

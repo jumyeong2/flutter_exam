@@ -406,7 +406,7 @@ class _ResultScreenState extends State<ResultScreen> {
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
               value: percent,
-              minHeight: 14,
+              minHeight: 12,
               backgroundColor: Colors.white,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),

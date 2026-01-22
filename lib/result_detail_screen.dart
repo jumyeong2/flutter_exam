@@ -212,7 +212,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 child: FilledButton(
                   onPressed: () async {
                     final Uri url = Uri.parse(
-                      'https://cosyncagreement.web.app/',
+                      'https://cosyncagreement.web.app',
                     );
                     try {
                       final launched = await launchUrl(
@@ -373,11 +373,11 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                    height: 6,
+                    height: 10,
                     width: double.infinity,
                     margin: const EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(3),
+                      borderRadius: BorderRadius.circular(5),
                       gradient: LinearGradient(
                         colors: [
                           Colors.blue.shade200,
@@ -529,8 +529,6 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       };
     }
 
-    double minVal = scores.first;
-    double maxVal = scores.last;
     int totalCount = allMembers.length;
 
     // --- 🚨 고위험 구간 ---
@@ -640,67 +638,6 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     );
   }
 
-  void _showShareTip(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-      ),
-      builder: (_) => Padding(
-        padding: const EdgeInsets.fromLTRB(24, 24, 24, 40),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: const [
-                Icon(Icons.share_location_outlined),
-                SizedBox(width: 10),
-                Text(
-                  "결과 공유",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            const Text("URL로 결과를 공유하면 팀원들이 같은 결과를 확인할 수 있습니다."),
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              height: 56,
-              child: FilledButton.icon(
-                onPressed: () {
-                  Navigator.pop(context);
-                  _shareResult(context);
-                },
-                icon: const Icon(Icons.share_outlined),
-                label: const Text("URL 공유하기"),
-                style: FilledButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            const Divider(),
-            const SizedBox(height: 12),
-            const Text(
-              "다른 공유 방법",
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            const Text("• 화면 캡처 후 메신저에 공유", style: TextStyle(fontSize: 12)),
-            const SizedBox(height: 4),
-            const Text("• 민감한 데이터는 팀 내에서만 활용", style: TextStyle(fontSize: 12)),
-            const SizedBox(height: 16),
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("닫기"),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   void _copyUrl(BuildContext context) async {
     // 전체 멤버 리스트 생성
