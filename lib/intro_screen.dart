@@ -40,7 +40,7 @@ class IntroScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
-                        color: scheme.primary,
+                        color: const Color(0xFF111827),
                         letterSpacing: -0.5,
                       ),
                     ),
@@ -69,7 +69,7 @@ class IntroScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w700,
-                        color: scheme.primary,
+                        color: scheme.primary.withOpacity(0.7),
                         height: 1.4,
                       ),
                     ),
@@ -100,7 +100,7 @@ class IntroScreen extends StatelessWidget {
                               color: Color(0xFF111827),
                             ),
                           ),
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 4),
                           const Text(
                             "이 테스트는 팀이 합의해야 할 기준을 미리 드러내기 위한 첫 단계입니다.",
                             textAlign: TextAlign.left,

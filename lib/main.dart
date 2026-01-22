@@ -50,19 +50,22 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: background,
         appBarTheme: AppBarTheme(
           backgroundColor: surface,
-          foregroundColor: baseScheme.primary,
+          foregroundColor: const Color(0xFF111827),
           surfaceTintColor: Colors.transparent,
           centerTitle: true,
           elevation: 0,
           titleTextStyle: TextStyle(
-            color: baseScheme.primary,
+            color: const Color(0xFF111827),
             fontWeight: FontWeight.w700,
             fontSize: 18,
+            fontFamily: 'NanumSquareNeo',
           ),
         ),
+        fontFamily: 'NanumSquareNeo',
         textTheme: ThemeData.light().textTheme.apply(
           bodyColor: const Color(0xFF1B1D29),
           displayColor: const Color(0xFF1B1D29),
+          fontFamily: 'NanumSquareNeo',
         ),
         cardTheme: const CardThemeData().copyWith(
           shape: RoundedRectangleBorder(
@@ -73,19 +76,19 @@ class MyApp extends StatelessWidget {
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: const Color(0xFFF8FAFF),
+          fillColor: const Color(0xFFF9FBFF),
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: const BorderSide(color: Color(0xFFE6ECF7)),
+            borderSide: BorderSide.none,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: const BorderSide(color: Color(0xFFE6ECF7)),
+            borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
-            borderSide: BorderSide(color: baseScheme.primary, width: 1.4),
+            borderSide: BorderSide(color: baseScheme.primary, width: 1.2),
           ),
           labelStyle: const TextStyle(color: Color(0xFF7B88A1)),
           hintStyle: const TextStyle(color: Color(0xFF9AA6BF)),
@@ -99,9 +102,12 @@ class MyApp extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
             ),
+            elevation: 2,
+            shadowColor: const Color(0xFF1D4ED8).withOpacity(0.25),
             textStyle: const TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 16,
+              fontFamily: 'NanumSquareNeo',
             ),
           ),
         ),
@@ -113,8 +119,12 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-            textStyle: const TextStyle(fontWeight: FontWeight.bold),
-            elevation: 0,
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontFamily: 'NanumSquareNeo',
+            ),
+            elevation: 2,
+            shadowColor: const Color(0xFF1D4ED8).withOpacity(0.25),
           ),
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -125,7 +135,10 @@ class MyApp extends StatelessWidget {
               borderRadius: BorderRadius.circular(18),
             ),
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-            textStyle: const TextStyle(fontWeight: FontWeight.w700),
+            textStyle: const TextStyle(
+              fontWeight: FontWeight.w700,
+              fontFamily: 'NanumSquareNeo',
+            ),
           ),
         ),
         chipTheme: ChipThemeData(

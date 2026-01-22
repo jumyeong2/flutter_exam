@@ -37,10 +37,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
       appBar: AppBar(
         title: Text(
           "라운드 ${currentIndex + 1} / ${sampleQuestions.length}",
-          style: const TextStyle(fontWeight: FontWeight.w800),
+          style: const TextStyle(fontWeight: FontWeight.w800, color: Color(0xFF111827)),
         ),
         leading: IconButton(
-          icon: Icon(Icons.close_rounded, color: scheme.onSurfaceVariant),
+          icon: const Icon(Icons.close_rounded, color: Color(0xFF111827)),
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
@@ -48,7 +48,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
             onPressed: () => _showRoundTip(context),
             icon: Icon(
               Icons.tips_and_updates_outlined,
-              color: scheme.onSurfaceVariant,
+              color: const Color(0xFF111827),
             ),
           ),
         ],
@@ -148,6 +148,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
 
     return Column(
       children: [
+        const SizedBox(height: 14),
         Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -222,14 +223,14 @@ class _SimulationScreenState extends State<SimulationScreen> {
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOutCubic,
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 22),
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 26),
           decoration: BoxDecoration(
             // 선택되면 파스텔 블루, 아니면 아주 연한 회색 배경
             color: isSelected ? _mainColor : Colors.white,
             borderRadius: BorderRadius.circular(999),
             border: Border.all(
               color: isSelected ? _mainColor.withOpacity(0.4) : const Color(0xFFE7ECF6),
-              width: 1.2,
+              width: 2.2,
             ),
             boxShadow: [
               // 부드러운 그림자
@@ -245,21 +246,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
           child: Row(
             children: [
               // 번호 (A, B, C)
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                width: 48,
-                height: 48,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? Colors.white.withOpacity(0.15)
-                      : const Color(0xFFF1F5FF),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  _optionIcon(index),
-                  color: isSelected ? Colors.white : const Color(0xFF7BA2E8),
-                ),
+              Icon(
+                _optionIcon(index),
+                size: 28,
+                color: isSelected ? Colors.white : const Color(0xFF7BA2E8),
               ),
               const SizedBox(width: 18),
               // 텍스트
@@ -270,8 +260,8 @@ class _SimulationScreenState extends State<SimulationScreen> {
                     Text(
                       "선택 ${String.fromCharCode(65 + index)}",
                       style: TextStyle(
-                        fontSize: 12,
-                        color: isSelected ? Colors.white70 : const Color(0xFF8A97AE),
+                        fontSize: 13,
+                        color: isSelected ? Colors.white70 : const Color(0xFF6B7280),
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -285,7 +275,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                         fontWeight: isSelected
                             ? FontWeight.w700
                             : FontWeight.w600,
-                        height: 1.3,
+                        height: 1.45,
                       ),
                     ),
                   ],
@@ -304,16 +294,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
   }
 
   IconData _optionIcon(int index) {
-    switch (index % 4) {
-      case 0:
-        return Icons.lightbulb_outline;
-      case 1:
-        return Icons.handshake_outlined;
-      case 2:
-        return Icons.balance_outlined;
-      default:
-        return Icons.trending_up_outlined;
-    }
+    return Icons.check_circle_outline;
   }
 
   void _handleAnswer(int index) async {

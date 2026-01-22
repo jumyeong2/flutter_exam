@@ -62,8 +62,7 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  assets:
-     - assets/coSync.png
+  # assets:
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -91,3 +90,19 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+  
+  fonts:
+    - family: NanumSquareNeo
+      fonts:
+        - asset: assets/fonts/NanumSquareNeo-cBd.ttf
+          weight: 400
+        - asset: assets/fonts/NanumSquareNeo-cBd.ttf
+          weight: 500
+        - asset: assets/fonts/NanumSquareNeo-cBd.ttf
+          weight: 600
+        - asset: assets/fonts/NanumSquareNeo-cBd.ttf
+          weight: 700
+        - asset: assets/fonts/NanumSquareNeo-dEb.ttf
+          weight: 800
+        - asset: assets/fonts/NanumSquareNeo-eHv.ttf
+          weight: 900

@@ -11,10 +11,13 @@ class ResultScreenIntro extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('결과 인트로'),
+        title: const Text(
+          '결과 인트로',
+          style: TextStyle(color: Color(0xFF111827), fontWeight: FontWeight.w700),
+        ),
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xFF111827)),
           onPressed: () {
             Navigator.pop(context);
           },

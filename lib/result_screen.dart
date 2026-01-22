@@ -107,11 +107,14 @@ class _ResultScreenState extends State<ResultScreen> {
     return Scaffold(
       backgroundColor: scheme.background,
       appBar: AppBar(
-        title: const Text("팀 데이터 입력"),
+        title: const Text(
+          "팀 데이터 입력",
+          style: TextStyle(color: Color(0xFF111827), fontWeight: FontWeight.w700),
+        ),
         actions: [
           IconButton(
             onPressed: () => _showInputGuide(context),
-            icon: const Icon(Icons.download_done_outlined),
+            icon: const Icon(Icons.download_done_outlined, color: Color(0xFF111827)),
             tooltip: "입력 가이드",
           )
         ],
@@ -127,36 +130,16 @@ class _ResultScreenState extends State<ResultScreen> {
                 child: _scoreSummaryCard(),
               ),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
+
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Container(
-                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: const Color(0xFFE6ECF7)),
                   ),
-                  child: Row(
-                    children: [
-                      Icon(Icons.info_outline, size: 18, color: scheme.primary),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Text(
-                          "점수는 '우열'이 아닌 성향의 차이입니다. 서로의 기준을 발견하면 리스크를 낮출 수 있어요.",
-                          style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Card(
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
@@ -165,12 +148,16 @@ class _ResultScreenState extends State<ResultScreen> {
                         Row(
                           children: [
                             Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                color: _mainColor.withOpacity(0.12),
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: Icon(Icons.group_add_outlined, color: _mainColor),
+                              child: const Icon(Icons.group_add_outlined, color: Colors.white),
                             ),
                             const SizedBox(width: 12),
                             const Column(
@@ -212,7 +199,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               style: TextStyle(color: _mainColor, fontWeight: FontWeight.bold),
                             ),
                             style: OutlinedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
+                              padding: const EdgeInsets.symmetric(vertical: 20),
                               side: BorderSide(color: _mainColor.withOpacity(0.6)),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                             ),
@@ -261,37 +248,32 @@ class _ResultScreenState extends State<ResultScreen> {
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "최종 분석 준비 완료",
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          "총 ${partnersList.length + 1}명의 기준을 한 번에 비교합니다.",
-                          style: const TextStyle(color: Color(0xFF6B7280)),
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: const [
-                            Icon(Icons.security_update_good_outlined, size: 18, color: Color(0xFF10B981)),
-                            SizedBox(width: 6),
-                            Expanded(
-                              child: Text(
-                                "데이터는 기기에만 저장되며, 상세 화면에서 바로 삭제 가능합니다.",
-                                style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
-                              ),
-                            ),
-                          ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "최종 분석 준비 완료",
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      "총 ${partnersList.length + 1}명의 기준을 한 번에 비교합니다.",
+                      style: const TextStyle(color: Color(0xFF6B7280)),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: const [
+                        Icon(Icons.security_update_good_outlined, size: 18, color: Color(0xFF10B981)),
+                        SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            "데이터는 기기에만 저장되며, 상세 화면에서 바로 삭제 가능합니다.",
+                            style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                          ),
                         ),
                       ],
                     ),
-                  ),
+                  ],
                 ),
               ),
 
@@ -302,6 +284,9 @@ class _ResultScreenState extends State<ResultScreen> {
                   onPressed: _goToDetailAnalysis,
                   icon: const Icon(Icons.auto_graph_rounded),
                   label: Text("총 ${partnersList.length + 1}명 분석 시작"),
+                  style: FilledButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 60),
+                  ),
                 ),
               ),
               
@@ -315,10 +300,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
   Widget _scoreSummaryCard() {
     final entries = <(String, double, Color, IconData, int)>[
-      ("지분", widget.myScores['equity']!, const Color(0xFF3B82F6), Icons.workspace_premium_outlined, 30),
-      ("자금", widget.myScores['finance']!, const Color(0xFF60A5FA), Icons.savings_outlined, 20),
-      ("권한", widget.myScores['power']!, const Color(0xFF1D4ED8), Icons.gavel_outlined, 30),
-      ("가치", widget.myScores['value']!, const Color(0xFF93C5FD), Icons.favorite_border, 20),
+      ("지분", widget.myScores['equity']!, const Color(0xFFEC4899), Icons.workspace_premium_outlined, 30),
+      ("자금", widget.myScores['finance']!, const Color(0xFFF59E0B), Icons.savings_outlined, 20),
+      ("권한", widget.myScores['power']!, const Color(0xFF10B981), Icons.gavel_outlined, 30),
+      ("가치", widget.myScores['value']!, const Color(0xFF8B5CF6), Icons.favorite_border, 20),
     ];
 
     return Card(
@@ -332,16 +317,30 @@ class _ResultScreenState extends State<ResultScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: _mainColor.withOpacity(0.12),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  child: Icon(Icons.equalizer_rounded, color: _mainColor),
+                  child: const Icon(Icons.equalizer_rounded, color: Colors.white),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(
-                  child: Text(
-                    "나의 성향 스냅샷",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "나의 성향 스냅샷",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        "점수는 '우열'이 아닌 성향의 차이입니다. 서로의 기준을 발견하면 리스크를 낮출 수 있어요.",
+                        style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                      ),
+                    ],
                   ),
                 ),
                 Container(
@@ -350,14 +349,21 @@ class _ResultScreenState extends State<ResultScreen> {
                     color: const Color(0xFFEFF4FF),
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: const Text("자동 계산", style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF3B82F6))),
+                  child: const Text(
+                    "자동 계산",
+                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF3B82F6)),
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 20),
-            Wrap(
-              spacing: 12,
-              runSpacing: 12,
+            GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              childAspectRatio: 2.8,
               children: entries
                   .map(
                     (item) => _scoreBadge(
@@ -380,31 +386,41 @@ class _ResultScreenState extends State<ResultScreen> {
     final percent = (value / max).clamp(0.0, 1.0);
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.fromLTRB(10, 4, 10, 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(18),
         color: color.withOpacity(0.08),
         border: Border.all(color: color.withOpacity(0.2)),
       ),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Icon(icon, color: color),
+              Icon(icon, color: color, size: 20),
               const SizedBox(width: 6),
-              Text(label, style: TextStyle(fontWeight: FontWeight.bold, color: color)),
+              Flexible(
+                child: Text(
+                  label,
+                  style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 13),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ],
           ),
-          const SizedBox(height: 6),
-          Text("${value.toStringAsFixed(0)} / ${max.toStringAsFixed(0)}", style: TextStyle(color: color)),
-          const SizedBox(height: 6),
+          const SizedBox(height: 4),
+          Text(
+            "${value.toStringAsFixed(0)} / ${max.toStringAsFixed(0)}",
+            style: TextStyle(color: color, fontSize: 11),
+          ),
+          const SizedBox(height: 4),
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
               value: percent,
-              minHeight: 6,
-              backgroundColor: const Color(0xFFE8EEF9),
+              minHeight: 8,
+              backgroundColor: Colors.white,
               valueColor: AlwaysStoppedAnimation<Color>(color),
             ),
           ),

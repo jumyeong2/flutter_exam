@@ -111,19 +111,22 @@ class ResultScreen2 extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6FB), // 연한 배경색
       appBar: AppBar(
-        title: const Text("나의 창업가 유형"),
+        title: const Text(
+          "나의 창업가 유형",
+          style: TextStyle(color: Color(0xFF111827), fontWeight: FontWeight.w700),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.black,
         actions: [
           IconButton(
-            icon: const Icon(Icons.copy_outlined),
+            icon: const Icon(Icons.copy_outlined, color: Color(0xFF111827)),
             tooltip: "URL 복사",
             onPressed: () => _copyUrl(context),
           ),
           IconButton(
-            icon: const Icon(Icons.share_outlined),
+            icon: const Icon(Icons.share_outlined, color: Color(0xFF111827)),
             tooltip: "결과 공유",
             onPressed: () => _shareResult(context),
           ),
