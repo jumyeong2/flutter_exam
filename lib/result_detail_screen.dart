@@ -22,6 +22,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     with SingleTickerProviderStateMixin {
   static const Color _accentBlue = Color(0xFF6B8AFF);
   static const Color _accentMint = Color(0xFF6ED3C1);
+  static const Color _accentGray = Color(0xFF5A5A5A);
   static const Color _cardBorder = Color(0xFFD8E0FF);
   static const Color _softBlueBg = Colors.white;
 
@@ -36,7 +37,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       duration: const Duration(seconds: 1),
     )..repeat(reverse: true); // Pulsing effect
 
-    // Reduced animation scale for subtle effect
+    // Subtle animation scale for button
     _scaleAnimation = Tween<double>(begin: 1.0, end: 1.02).animate(
       CurvedAnimation(parent: _animationController, curve: Curves.easeInOut),
     );
@@ -98,12 +99,26 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                         Container(
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
-                            color: _accentBlue.withOpacity(0.12),
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                _accentBlue.withOpacity(0.9),
+                                _accentBlue,
+                              ],
+                            ),
                             borderRadius: BorderRadius.circular(18),
+                            boxShadow: [
+                              BoxShadow(
+                                color: _accentBlue.withOpacity(0.3),
+                                blurRadius: 12,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
                           ),
                           child: const Icon(
-                            Icons.radar_outlined,
-                            color: _accentBlue,
+                            Icons.explore,
+                            color: Colors.white,
                             size: 32,
                           ),
                         ),
@@ -121,7 +136,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                "총 $totalMembers명의 기준을 시각화했습니다. Gap이 큰 구간은 아이콘으로 강조해 드려요.",
+                                "총 $totalMembers명의 기준을 시각화했습니다. 관점 차이가 큰 부분은 합의를 통해 정리하세요.",
                                 style: const TextStyle(color: Colors.grey),
                               ),
                             ],
@@ -132,12 +147,14 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                     const SizedBox(height: 18),
                     Row(
                       children: [
-                        _pill(icon: Icons.timelapse_outlined, label: "라운드 완료"),
-                        const SizedBox(width: 8),
                         _pill(
                           icon: Icons.diversity_3_outlined,
                           label: "$totalMembers명 참여",
                         ),
+                        const Spacer(),
+                        _buildLegendIcon(_accentBlue, "나"),
+                        const SizedBox(width: 16),
+                        _buildLegendIcon(Colors.grey[700]!, "파트너"),
                       ],
                     ),
                   ],
@@ -152,32 +169,6 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
             _buildDistributionCard("⚖️ 권한(리더십)", "power", 30, allMembers),
             _buildDistributionCard("❤️ 가치(태도)", "value", 20, allMembers),
 
-            const SizedBox(height: 20),
-
-            // 인원수에 따른 범례(Legend) 텍스트 변경
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: _cardBorder, width: 1.5),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _buildLegendIcon(
-                    Colors.blueAccent,
-                    totalMembers == 2 ? "나" : "나 포함 그룹",
-                  ),
-                  const SizedBox(width: 24),
-                  _buildLegendIcon(
-                    Colors.grey[700]!,
-                    totalMembers == 2 ? "파트너" : "파트너 그룹",
-                  ),
-                ],
-              ),
-            ),
-
             const SizedBox(height: 40),
 
             // 하단 안내 메시지
@@ -189,31 +180,60 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 side: const BorderSide(color: _cardBorder, width: 1.5),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(24.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Icon(
-                          Icons.assignment_turned_in_outlined,
-                          color: _accentBlue,
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                _accentBlue.withOpacity(0.9),
+                                _accentBlue,
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                color: _accentBlue.withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: const Icon(
+                            Icons.description_outlined,
+                            color: Colors.white,
+                            size: 22,
+                          ),
                         ),
-                        SizedBox(width: 8),
-                        Text(
+                        const SizedBox(width: 12),
+                        const Text(
                           "이견도 기록될 때 힘이 됩니다",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 17,
+                            color: Color(0xFF1B1D29),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 16),
                     const Text(
-                      "합의된 내용도, 이견이 있는 내용도 '주주간 계약서'로 명문화해야 안전합니다. 초기 구두 약속은 쉽게 변질되기 때문에, 오늘의 결과를 문서로 정리하세요.",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black54, height: 1.5),
+                      "합의된 내용도, 이견이 있는 내용도 명문화해야 안전합니다.\n초기 구두 약속은 쉽게 변질되기 때문에, 오늘의 결과를 문서로 정리하세요.",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Colors.black54, 
+                        height: 1.6,
+                        fontSize: 14,
+                      ),
                     ),
                   ],
                 ),
@@ -286,6 +306,31 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     );
   }
 
+  Widget _pill({required IconData icon, required String label}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.grey[700]!.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: Colors.grey[700]),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey[700],
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDistributionCard(
     String title,
     String category,
@@ -342,41 +387,12 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-              Row(
-                children: [
-                  Icon(analysis['icon'], color: analysis['color']),
-                  const SizedBox(width: 6),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 6,
-                    ),
-                    decoration: BoxDecoration(
-                      color: analysis['color'].withOpacity(0.12),
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: Text(
-                      analysis['status'],
-                      style: TextStyle(
-                        color: analysis['color'],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
 
           // 이름표가 쌓일 공간 확보를 위해 상단 여백 (오버플로우 방지)
@@ -523,25 +539,36 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       children: [
         const Divider(height: 1, color: Color(0xFFE0E0E0)),
         const SizedBox(height: 18),
-          // 헤더 - 팀 회의 아이콘 (왼쪽 정렬)
+          // 헤더 - 숫자 배지 + 타이틀
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.all(8),
+                width: 28,
+                height: 28,
                 decoration: BoxDecoration(
-                  color: accent.withOpacity(0.12),
+                  color: _accentBlue.withOpacity(0.12),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.groups_rounded, color: accent, size: 20),
+                child: const Center(
+                  child: Text(
+                    "1",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w800,
+                      color: _accentBlue,
+                    ),
+                  ),
+                ),
               ),
               const SizedBox(width: 10),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: _accentBlue,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF1B1D29),
                 ),
               ),
             ],
@@ -558,7 +585,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                   String question = entry.value;
                   bool isLeft = index % 2 == 0;
 
-                  Color avatarColor = isLeft ? _accentBlue : _accentMint;
+                  Color avatarColor = isLeft ? _accentBlue : _accentGray;
 
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16),
@@ -705,22 +732,32 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
 
             // 행동 가이드 헤더
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: 34,
-                  height: 34,
+                  width: 28,
+                  height: 28,
                   decoration: BoxDecoration(
-                    color: _accentBlue.withOpacity(0.08),
+                    color: _accentBlue.withOpacity(0.12),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.lightbulb_outline, size: 18, color: _accentBlue),
+                  child: const Center(
+                    child: Text(
+                      "2",
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w800,
+                        color: _accentBlue,
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 10),
                 const Text(
                   "행동 가이드",
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
                     color: Color(0xFF1B1D29),
                   ),
                 ),
@@ -810,8 +847,8 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
   ) {
     // 기본값 (안전)
     String status = "✅ 안정적";
-    String headline = "팀원들의 생각이 잘 맞습니다.";
-    String desc = "현재 합의를 문서로 정리해보세요.";
+    String headline = "팀원들의 생각이 비슷해요.";
+    String desc = "비슷한 생각을 문서로 기록해 두면, 향후 혼란을 예방할 수 있어요.";
     Color color = Colors.green;
     IconData icon = Icons.check_circle;
 
@@ -841,51 +878,22 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       color = Colors.redAccent;
       icon = Icons.warning_amber_rounded;
 
-      // [CASE A] 2명일 때
-      if (totalCount == 2) {
-        String partnerName = allMembers.firstWhere(
-          (m) => m['isMe'] == false,
-        )['name'];
+      // 카테고리별 맞춤 메시지
+      if (category == "equity") {
+        headline = "지분 배분에 대한 생각 차이가 큽니다.";
+        desc = "이견을 조율하지 않으면 향후 분쟁의 원인이 될 수 있어요. 지금 명확히 정리하세요.";
+      } else if (category == "finance") {
+        headline = "자금 운용 방식에 대한 이견이 있습니다.";
+        desc = "재무 결정은 신뢰의 핵심입니다. 투명한 기준을 함께 만들어보세요.";
+      } else if (category == "power") {
+        headline = "의사결정 권한에 대한 관점이 다릅니다.";
+        desc = "권한 분배가 불명확하면 갈등이 생기기 쉬워요. 역할과 책임을 구체화하세요.";
+      } else if (category == "value") {
+        headline = "팀 운영 가치관에 차이가 있습니다.";
+        desc = "일하는 방식과 우선순위가 다르면 협업이 어려워요. 공통 원칙을 세워보세요.";
+      } else {
         headline = "관점의 차이가 발견되었습니다.";
-        desc = "아래 주제로 함께 논의해보세요.";
-      }
-      // [CASE B] 3명 이상일 때
-      else {
-        List<double> partnerScores = [];
-        double myScore = 0;
-        for (var m in allMembers) {
-          var sMap = m['scores'];
-          double s = (sMap is Map<String, double>)
-              ? sMap[category]!
-              : (sMap[category] as num).toDouble();
-          if (m['isMe']) {
-            myScore = s;
-          } else {
-            partnerScores.add(s);
-          }
-        }
-        partnerScores.sort();
-        double partnerSpread = partnerScores.isNotEmpty
-            ? partnerScores.last - partnerScores.first
-            : 0;
-        double partnerSpreadPercent = (partnerSpread / maxScore) * 100;
-
-        if (partnerSpreadPercent >= 30) {
-          headline = "관점의 차이가 발견되었습니다.";
-          desc = "아래 주제로 함께 논의해보세요.";
-        } else {
-          double avgPartnerScore =
-              partnerScores.reduce((a, b) => a + b) / partnerScores.length;
-          double distFromMe = (myScore - avgPartnerScore).abs();
-
-          if (distFromMe > partnerSpread) {
-            headline = "관점의 차이가 발견되었습니다.";
-            desc = "아래 주제로 함께 논의해보세요.";
-          } else {
-            headline = "관점의 차이가 발견되었습니다.";
-            desc = "아래 주제로 함께 논의해보세요.";
-          }
-        }
+        desc = "아래 주제로 함께 논의하고, 명확한 합의를 만들어보세요.";
       }
     }
     // --- ⚠️ 주의 구간 ---
@@ -894,8 +902,40 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       color = Colors.orange;
       icon = Icons.info_outline;
 
-      headline = "조율이 필요한 부분이 있습니다.";
-      desc = "함께 정리해보세요.";
+      // 카테고리별 맞춤 메시지
+      if (category == "equity") {
+        headline = "지분 배분에 대해 한 번 더 점검이 필요해요.";
+        desc = "나중에 분쟁이 생기기 전에 지금 정리가 필요합니다.";
+      } else if (category == "finance") {
+        headline = "자금 관리 방식을 함께 확인해보세요.";
+        desc = "나중에 재무 이슈가 생기기 전에 지금 정리가 필요합니다.";
+      } else if (category == "power") {
+        headline = "의사결정 방식을 명확히 할 필요가 있어요.";
+        desc = "나중에 권한 갈등이 생기기 전에 지금 정리가 필요합니다.";
+      } else if (category == "value") {
+        headline = "협업 방식에 대해 이야기 나눠보세요.";
+        desc = "나중에 협업 문제가 생기기 전에 지금 정리가 필요합니다.";
+      } else {
+        headline = "조율이 필요한 부분이 있습니다.";
+        desc = "나중에 이슈가 생기기 전에 지금 정리가 필요합니다.";
+      }
+    }
+    // --- ✅ 안전 구간 ---
+    else {
+      // 카테고리별 맞춤 메시지
+      if (category == "equity") {
+        headline = "지분 배분에 대한 생각이 비슷해요.";
+        desc = "비슷한 생각을 계약서에 명시하면, 향후 분쟁을 예방할 수 있어요.";
+      } else if (category == "finance") {
+        headline = "자금 운용에 대한 생각이 비슷해요.";
+        desc = "재무 투명성 확보를 위해 지금의 기준을 문서화해 두세요.";
+      } else if (category == "power") {
+        headline = "의사결정 방식에 대한 생각이 비슷해요.";
+        desc = "권한과 책임을 명확히 문서화하면 업무가 더 효율적이에요.";
+      } else if (category == "value") {
+        headline = "팀 운영에 대한 가치관이 비슷해요.";
+        desc = "좋은 팀 문화를 유지하려면 공통 가치를 정리해 두세요.";
+      }
     }
 
     return {
@@ -1067,32 +1107,6 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
 
     return guides;
   }
-
-  Widget _pill({required IconData icon, required String label}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: _accentBlue.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 14, color: _accentBlue),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 12,
-              color: _accentBlue,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
 
   void _copyUrl(BuildContext context) async {
     // 전체 멤버 리스트 생성
