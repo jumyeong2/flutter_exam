@@ -124,7 +124,55 @@ class _ResultScreenState extends State<ResultScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
+              
+              // 전체 목적 설명 카드
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                              ),
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            child: const Icon(Icons.map_outlined, color: Colors.white, size: 24),
+                          ),
+                          const SizedBox(width: 12),
+                          const Text(
+                            "3단계로 팀 궁합을 확인하세요",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF111827),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      _buildStepItem("1", "내 점수 확인", "테스트로 계산된 나의 성향"),
+                      const SizedBox(height: 10),
+                      _buildStepItem("2", "파트너 점수 입력", "함께 할 팀원의 점수 추가"),
+                      const SizedBox(height: 10),
+                      _buildStepItem("3", "궁합 분석 시작", "누구와 맞고, 어디서 부딪힐지 확인"),
+                    ],
+                  ),
+                ),
+                ),
+              ),
+              
+              const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: _scoreSummaryCard(),
@@ -160,13 +208,23 @@ class _ResultScreenState extends State<ResultScreen> {
                               child: const Icon(Icons.group_add_outlined, color: Colors.white),
                             ),
                             const SizedBox(width: 12),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("파트너 정보 입력", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-                                SizedBox(height: 4),
-                                Text("각 영역의 최고 점수를 참고해 주세요.", style: TextStyle(fontSize: 12, color: Colors.grey)),
-                              ],
+                            const Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("파트너 정보 입력", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "파트너도 같은 테스트를 했나요?",
+                                    style: TextStyle(fontSize: 13, color: Color(0xFF111827), fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(height: 2),
+                                  Text(
+                                    "있으면 그대로 입력 | 없으면 추측해서 입력",
+                                    style: TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
@@ -324,21 +382,15 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        "점수는 '우열'이 아닌 성향의 차이입니다. 서로의 기준을 발견하면 리스크를 낮출 수 있어요.",
-                        style: TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
+                        "내가 중요하게 생각하는 영역을 확인하세요",
+                        style: TextStyle(fontSize: 13, color: Color(0xFF111827), fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(height: 2),
+                      Text(
+                        "높은 점수 = 관계/신뢰 중시 | 낮은 점수 = 구조/효율 중시",
+                        style: TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
                       ),
                     ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFEFF4FF),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Text(
-                    "자동 계산",
-                    style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: Color(0xFF3B82F6)),
                   ),
                 ),
               ],
@@ -391,7 +443,7 @@ class _ResultScreenState extends State<ResultScreen> {
               Flexible(
                 child: Text(
                   label,
-                  style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 13),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 15),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -400,7 +452,7 @@ class _ResultScreenState extends State<ResultScreen> {
           const SizedBox(height: 20),
           Text(
             "${value.toStringAsFixed(0)} / ${max.toStringAsFixed(0)}",
-            style: TextStyle(color: color, fontSize: 11),
+            style: TextStyle(color: color, fontSize: 13),
           ),
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
@@ -472,6 +524,56 @@ class _ResultScreenState extends State<ResultScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildStepItem(String number, String title, String description) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 28,
+          height: 28,
+          decoration: BoxDecoration(
+            color: _mainColor.withOpacity(0.12),
+            shape: BoxShape.circle,
+          ),
+          child: Center(
+            child: Text(
+              number,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w800,
+                color: _mainColor,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF111827),
+                ),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                description,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFF6B7280),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
