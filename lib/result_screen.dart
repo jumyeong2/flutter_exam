@@ -55,7 +55,9 @@ class _ResultScreenState extends State<ResultScreen> {
           backgroundColor: Colors.redAccent.withOpacity(0.8),
           behavior: SnackBarBehavior.floating,
           margin: const EdgeInsets.all(20),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           duration: const Duration(seconds: 1),
         ),
       );
@@ -70,7 +72,7 @@ class _ResultScreenState extends State<ResultScreen> {
           "finance": double.parse(_financeCtrl.text),
           "power": double.parse(_powerCtrl.text),
           "value": double.parse(_valueCtrl.text),
-        }
+        },
       });
     });
 
@@ -84,19 +86,19 @@ class _ResultScreenState extends State<ResultScreen> {
 
   void _goToDetailAnalysis() {
     if (partnersList.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("최소 1명 이상의 파트너를 추가해주세요.")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("최소 1명 이상의 파트너를 추가해주세요.")));
       return;
     }
     Navigator.push(
-      context, 
+      context,
       MaterialPageRoute(
         builder: (context) => ResultDetailScreen(
-          myScores: widget.myScores, 
-          partnersList: partnersList
-        )
-      )
+          myScores: widget.myScores,
+          partnersList: partnersList,
+        ),
+      ),
     );
   }
 
@@ -109,14 +111,20 @@ class _ResultScreenState extends State<ResultScreen> {
       appBar: AppBar(
         title: const Text(
           "팀 데이터 입력",
-          style: TextStyle(color: Color(0xFF111827), fontWeight: FontWeight.w700),
+          style: TextStyle(
+            color: Color(0xFF111827),
+            fontWeight: FontWeight.w700,
+          ),
         ),
         actions: [
           IconButton(
             onPressed: () => _showInputGuide(context),
-            icon: const Icon(Icons.download_done_outlined, color: Color(0xFF111827)),
+            icon: const Icon(
+              Icons.download_done_outlined,
+              color: Color(0xFF111827),
+            ),
             tooltip: "입력 가이드",
-          )
+          ),
         ],
       ),
       body: SafeArea(
@@ -125,7 +133,7 @@ class _ResultScreenState extends State<ResultScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 20),
-              
+
               // 전체 목적 설명 카드
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -133,45 +141,52 @@ class _ResultScreenState extends State<ResultScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              gradient: const LinearGradient(
-                                colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF3B82F6),
+                                    Color(0xFF60A5FA),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(18),
                               ),
-                              borderRadius: BorderRadius.circular(18),
+                              child: const Icon(
+                                Icons.map_outlined,
+                                color: Colors.white,
+                                size: 24,
+                              ),
                             ),
-                            child: const Icon(Icons.map_outlined, color: Colors.white, size: 24),
-                          ),
-                          const SizedBox(width: 12),
-                          const Text(
-                            "3단계로 팀 궁합을 확인하세요",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF111827),
+                            const SizedBox(width: 12),
+                            const Text(
+                              "3단계로 팀 궁합을 확인하세요",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFF111827),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      _buildStepItem("1", "내 점수 확인", "테스트로 계산된 나의 성향"),
-                      const SizedBox(height: 10),
-                      _buildStepItem("2", "파트너 점수 입력", "함께 할 팀원의 점수 추가"),
-                      const SizedBox(height: 10),
-                      _buildStepItem("3", "궁합 분석 시작", "누구와 맞고, 어디서 부딪힐지 확인"),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        _buildStepItem("1", "내 점수 확인", "테스트로 계산된 나의 성향"),
+                        const SizedBox(height: 10),
+                        _buildStepItem("2", "파트너 점수 입력", "함께 할 팀원의 점수 추가"),
+                        const SizedBox(height: 10),
+                        _buildStepItem("3", "궁합 분석 시작", "누구와 맞고, 어디서 부딪힐지 확인"),
+                      ],
+                    ),
                   ),
                 ),
-                ),
               ),
-              
+
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -199,29 +214,48 @@ class _ResultScreenState extends State<ResultScreen> {
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 gradient: const LinearGradient(
-                                  colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
+                                  colors: [
+                                    Color(0xFF3B82F6),
+                                    Color(0xFF60A5FA),
+                                  ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),
                                 borderRadius: BorderRadius.circular(16),
                               ),
-                              child: const Icon(Icons.group_add_outlined, color: Colors.white),
+                              child: const Icon(
+                                Icons.group_add_outlined,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(width: 12),
                             const Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("파트너 정보 입력", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+                                  Text(
+                                    "파트너 정보 입력",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                   SizedBox(height: 4),
                                   Text(
                                     "파트너도 같은 테스트를 했나요?",
-                                    style: TextStyle(fontSize: 13, color: Color(0xFF111827), fontWeight: FontWeight.w600),
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Color(0xFF111827),
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                   SizedBox(height: 2),
                                   Text(
                                     "있으면 그대로 입력 | 없으면 추측해서 입력",
-                                    style: TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: Color(0xFF6B7280),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -229,21 +263,50 @@ class _ResultScreenState extends State<ResultScreen> {
                           ],
                         ),
                         const SizedBox(height: 16),
-                        _compactTextField(label: "파트너 이름", hint: "예: 김철수", controller: _nameCtrl, icon: Icons.person_outline),
+                        _compactTextField(
+                          label: "파트너 이름",
+                          hint: "예: 김철수",
+                          controller: _nameCtrl,
+                          icon: Icons.person_outline,
+                        ),
                         const SizedBox(height: 12),
                         Row(
                           children: [
-                            Expanded(child: _compactScoreField("지분 (0~30)", _equityCtrl, Icons.workspace_premium_outlined)),
+                            Expanded(
+                              child: _compactScoreField(
+                                "지분 (0~30)",
+                                _equityCtrl,
+                                Icons.workspace_premium_outlined,
+                              ),
+                            ),
                             const SizedBox(width: 10),
-                            Expanded(child: _compactScoreField("자금 (0~20)", _financeCtrl, Icons.savings_outlined)),
+                            Expanded(
+                              child: _compactScoreField(
+                                "자금 (0~20)",
+                                _financeCtrl,
+                                Icons.savings_outlined,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            Expanded(child: _compactScoreField("권한 (0~30)", _powerCtrl, Icons.gavel_outlined)),
+                            Expanded(
+                              child: _compactScoreField(
+                                "권한 (0~30)",
+                                _powerCtrl,
+                                Icons.gavel_outlined,
+                              ),
+                            ),
                             const SizedBox(width: 10),
-                            Expanded(child: _compactScoreField("가치 (0~20)", _valueCtrl, Icons.favorite_border)),
+                            Expanded(
+                              child: _compactScoreField(
+                                "가치 (0~20)",
+                                _valueCtrl,
+                                Icons.favorite_border,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 18),
@@ -251,15 +314,25 @@ class _ResultScreenState extends State<ResultScreen> {
                           width: double.infinity,
                           child: OutlinedButton.icon(
                             onPressed: _addPartner,
-                            icon: Icon(Icons.add_circle_outline, color: _mainColor),
+                            icon: Icon(
+                              Icons.add_circle_outline,
+                              color: _mainColor,
+                            ),
                             label: Text(
                               "리스트에 담기",
-                              style: TextStyle(color: _mainColor, fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                color: _mainColor,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             style: OutlinedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 20),
-                              side: BorderSide(color: _mainColor.withOpacity(0.6)),
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                              side: BorderSide(
+                                color: _mainColor.withOpacity(0.6),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
                             ),
                           ),
                         ),
@@ -275,11 +348,18 @@ class _ResultScreenState extends State<ResultScreen> {
               if (partnersList.isNotEmpty) ...[
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
-                  child: Text("분석 대기 (${partnersList.length}명)", style: const TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.bold)),
+                  child: Text(
+                    "분석 대기 (${partnersList.length}명)",
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 5),
                 SizedBox(
-                  height: 40, 
+                  height: 40,
                   child: ListView.separated(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
                     scrollDirection: Axis.horizontal,
@@ -292,10 +372,21 @@ class _ResultScreenState extends State<ResultScreen> {
                         avatar: CircleAvatar(
                           radius: 10,
                           backgroundColor: _mainColor.withOpacity(0.2),
-                          child: Text("${index + 1}", style: TextStyle(fontSize: 10, color: _mainColor, fontWeight: FontWeight.bold)),
+                          child: Text(
+                            "${index + 1}",
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: _mainColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                        label: Text(partnersList[index]['name'], style: const TextStyle(fontSize: 12)),
-                        onDeleted: () => setState(() => partnersList.removeAt(index)),
+                        label: Text(
+                          partnersList[index]['name'],
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        onDeleted: () =>
+                            setState(() => partnersList.removeAt(index)),
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       );
                     },
@@ -311,7 +402,10 @@ class _ResultScreenState extends State<ResultScreen> {
                   children: [
                     const Text(
                       "최종 분석 준비 완료",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 6),
                     Text(
@@ -334,7 +428,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ),
               ),
-              
+
               const SizedBox(height: 40),
             ],
           ),
@@ -345,10 +439,34 @@ class _ResultScreenState extends State<ResultScreen> {
 
   Widget _scoreSummaryCard() {
     final entries = <(String, double, Color, IconData, int)>[
-      ("지분", widget.myScores['equity']!, const Color(0xFFEC4899), Icons.workspace_premium_outlined, 30),
-      ("자금", widget.myScores['finance']!, const Color(0xFFF59E0B), Icons.savings_outlined, 20),
-      ("권한", widget.myScores['power']!, const Color(0xFF10B981), Icons.gavel_outlined, 30),
-      ("가치", widget.myScores['value']!, const Color(0xFF8B5CF6), Icons.favorite_border, 20),
+      (
+        "지분",
+        widget.myScores['equity']!,
+        const Color(0xFFEC4899),
+        Icons.workspace_premium_outlined,
+        30,
+      ),
+      (
+        "자금",
+        widget.myScores['finance']!,
+        const Color(0xFFF59E0B),
+        Icons.savings_outlined,
+        20,
+      ),
+      (
+        "권한",
+        widget.myScores['power']!,
+        const Color(0xFF10B981),
+        Icons.gavel_outlined,
+        30,
+      ),
+      (
+        "가치",
+        widget.myScores['value']!,
+        const Color(0xFF8B5CF6),
+        Icons.favorite_border,
+        20,
+      ),
     ];
 
     return Card(
@@ -369,7 +487,10 @@ class _ResultScreenState extends State<ResultScreen> {
                     ),
                     borderRadius: BorderRadius.circular(18),
                   ),
-                  child: const Icon(Icons.equalizer_rounded, color: Colors.white),
+                  child: const Icon(
+                    Icons.equalizer_rounded,
+                    color: Colors.white,
+                  ),
                 ),
                 const SizedBox(width: 12),
                 const Expanded(
@@ -378,17 +499,27 @@ class _ResultScreenState extends State<ResultScreen> {
                     children: [
                       Text(
                         "나의 성향 스냅샷",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                       SizedBox(height: 4),
                       Text(
                         "내가 중요하게 생각하는 영역을 확인하세요",
-                        style: TextStyle(fontSize: 13, color: Color(0xFF111827), fontWeight: FontWeight.w600),
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Color(0xFF111827),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       SizedBox(height: 2),
                       Text(
                         "높은 점수 = 관계/신뢰 중시 | 낮은 점수 = 구조/효율 중시",
-                        style: TextStyle(fontSize: 11, color: Color(0xFF6B7280)),
+                        style: TextStyle(
+                          fontSize: 11,
+                          color: Color(0xFF6B7280),
+                        ),
                       ),
                     ],
                   ),
@@ -402,7 +533,7 @@ class _ResultScreenState extends State<ResultScreen> {
               mainAxisSpacing: 12,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              childAspectRatio: 2.6,
+              childAspectRatio: 2.2,
               children: entries
                   .map(
                     (item) => _scoreBadge(
@@ -421,7 +552,13 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  Widget _scoreBadge(String label, double value, Color color, IconData icon, double max) {
+  Widget _scoreBadge(
+    String label,
+    double value,
+    Color color,
+    IconData icon,
+    double max,
+  ) {
     final percent = (value / max).clamp(0.0, 1.0);
     return Container(
       width: double.infinity,
@@ -443,13 +580,17 @@ class _ResultScreenState extends State<ResultScreen> {
               Flexible(
                 child: Text(
                   label,
-                  style: TextStyle(fontWeight: FontWeight.bold, color: color, fontSize: 15),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                    fontSize: 15,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 8),
           Text(
             "${value.toStringAsFixed(0)} / ${max.toStringAsFixed(0)}",
             style: TextStyle(color: color, fontSize: 13),
@@ -468,7 +609,12 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  Widget _compactTextField({required String label, required String hint, required TextEditingController controller, required IconData icon}) {
+  Widget _compactTextField({
+    required String label,
+    required String hint,
+    required TextEditingController controller,
+    required IconData icon,
+  }) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
@@ -480,7 +626,11 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   // 점수 입력 필드
-  Widget _compactScoreField(String hint, TextEditingController controller, IconData icon) {
+  Widget _compactScoreField(
+    String hint,
+    TextEditingController controller,
+    IconData icon,
+  ) {
     return TextField(
       controller: controller,
       keyboardType: TextInputType.number,
@@ -565,10 +715,7 @@ class _ResultScreenState extends State<ResultScreen> {
               const SizedBox(height: 2),
               Text(
                 description,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF6B7280),
-                ),
+                style: const TextStyle(fontSize: 12, color: Color(0xFF6B7280)),
               ),
             ],
           ),
