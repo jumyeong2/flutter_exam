@@ -136,15 +136,15 @@ ConflictScenario(
     questionText: "공동창업자가 '실력은 좀 평범한데,\n내가 정말 믿는 지인'을 채용하자고 강력히 주장합니다.",
     options: [
       ScenarioOption(
-        text: "공과 사는 구분해야 함. 실력 미달이면 절대 반대임",
+        text: "공과 사는 구분해야 함. 실력 미달이면 절대 반대",
         score: 0.0,
       ), // Shark (채용 원칙)
       ScenarioOption(
-        text: "초기엔 '믿을 수 있는 동료'가 스펙보다 중요하다고 봄. 찬성함",
+        text: "초기엔 '믿을 수 있는 동료'가 스펙보다 중요하다고 봄. 찬성",
         score: 10.0,
       ), // Dolphin (팀워크/태도)
       ScenarioOption(
-        text: "수습 기간과 명확한 목표(KPI)를 거는 조건으로만 찬성함",
+        text: "수습 기간과 명확한 목표(KPI)를 거는 조건으로만 찬성",
         score: 5.0,
       ), // Owl (검증 시스템)
     ],
@@ -155,7 +155,7 @@ ConflictScenario(
   id: "Q8",
   category: "power",
   questionText:
-      "한 공동창업자가 팀과 상의 없이\n외부에 중요한 약속을 먼저 해버렸습니다.",
+      "한 공동창업자가 팀과 상의 없이\n공급·제휴 파트너에게 중요한 약속을 먼저 해버렸습니다.",
   options: [
     ScenarioOption(
       text: "재발 방지가 우선임. 외부 커뮤니케이션/약속은 한 명만 담당",
@@ -194,23 +194,24 @@ ConflictScenario(
     ],
   ),
 
-  ConflictScenario(
-    id: "Q10",
-    category: "value",
-    questionText: "공동창업자가 큰 실수(서버 데이터 삭제 등)를 저지르고,\n혼자 수습하다가 골든타임을 놓쳤습니다.",
-    options: [
-      ScenarioOption(
-        text: "개인 탓보단 시스템 문제임. 재발 방지 프로세스부터 만들어야 함",
-        score: 5.0,
-      ), // Owl (시스템/이성)
-      ScenarioOption(
-        text: "실수보다 '숨긴 것'이 더 치명적임. 책임을 확실히 물어야 함",
-        score: 0.0,
-      ), // Shark (규율/원칙)
-      ScenarioOption(
-        text: "질책하면 앞으로 더 숨길 거임. 위축되지 않게 감싸주는 게 먼저임",
-        score: 10.0,
-      ), // Dolphin (문화/포용)
-    ],
-  ),
+ConflictScenario(
+  id: "Q10",
+  category: "value",
+  questionText:
+      "첫 출시를 앞두고 버그/UX가 불안합니다.\n일주일 뒤 데모가 잡혀 있어 일정과 완성도 사이에서 고민 중입니다.",
+  options: [
+    ScenarioOption(
+      text: "범위를 줄여서 일단 출시하고, 빠르게 고침",
+      score: 0.0,
+    ), // Shark (속도/학습)
+    ScenarioOption(
+      text: "최소 기준(치명 버그/핵심 플로우)을 정하고, 기준 충족 시에만 출시",
+      score: 5.0,
+    ), // Owl (기준/통제)
+    ScenarioOption(
+      text: "공개 출시는 미루고, 제한 베타로만 먼저 엶",
+      score: 10.0,
+    ), // Dolphin (신뢰/첫인상)
+  ],
+),
 ];

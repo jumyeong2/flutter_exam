@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'simulation_screen.dart';
@@ -91,31 +90,29 @@ class IntroScreen extends StatelessWidget {
                                   child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              'assets/images/intro_image.png',
+                              width: double.infinity,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+
+                          // 3분 후 남는 것 제목
                           const Text(
-                            "3분 후, 남는 것",
-                            textAlign: TextAlign.left,
-                                  style: TextStyle(
-                              fontSize: 16,
+                            "3분 후 남는 것",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15,
                               fontWeight: FontWeight.w700,
                               color: Color(0xFF111827),
                             ),
                           ),
-                          const SizedBox(height: 4),
-                          const Text(
-                            "이 테스트는 팀이 합의해야 할 기준을 미리 드러내기 위한 첫 단계입니다.",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Color(0xFF6B7280),
-                              height: 1.4,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-
-                          // 도표(그림)로 먼저 보여주고, 문장은 아래에 설명으로 둠
-                          const _OutcomeDiagram(),
-                          const SizedBox(height: 14),
-                          const _OutcomeLegendExpander(),
+                          const SizedBox(height: 12),
+                          // 결과물 설명
+                          const _OutcomeLegend(),
                         ],
                           ),
                       ),
@@ -237,198 +234,6 @@ class _ValueItem extends StatelessWidget {
   }
 }
 
-class _OutcomeDiagram extends StatelessWidget {
-  const _OutcomeDiagram();
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-
-    return SizedBox(
-      width: double.infinity,
-      height: 260,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final size = Size(constraints.maxWidth, constraints.maxHeight);
-          final center = Offset(size.width / 2, size.height * 0.68);
-          final top = Offset(size.width / 2, size.height * 0.10);
-          final lineLength = (center - top).distance;
-          final dy = size.height * 0.12;
-          final dx = math.sqrt((lineLength * lineLength) - (dy * dy));
-          final left = Offset(center.dx - dx, center.dy + dy);
-          final right = Offset(center.dx + dx, center.dy + dy);
-
-          const denseSize = 44.0;
-          const centerSize = 58.0;
-
-          return Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Positioned.fill(
-                child: CustomPaint(
-                  painter: _OutcomeDiagramPainter(
-                    color: scheme.primary,
-                    center: center,
-                    top: top,
-                    left: left,
-                    right: right,
-                  ),
-                ),
-              ),
-              Positioned(
-                left: center.dx - (centerSize / 2),
-                top: center.dy - (centerSize / 2),
-                child: _DiagramNode(
-                  background: scheme.primary,
-                  foreground: Colors.white,
-                  icon: Icons.group_rounded,
-                  label: "팀 기준",
-                  dense: false,
-                ),
-              ),
-              Positioned(
-                left: top.dx - (denseSize / 2),
-                top: top.dy - (denseSize / 2),
-                child: _DiagramNode(
-                  background: Colors.white,
-                  foreground: scheme.primary,
-                  icon: Icons.category_outlined,
-                  label: "유형",
-                  dense: true,
-                  borderColor: scheme.primary.withOpacity(0.18),
-                ),
-              ),
-              Positioned(
-                left: left.dx - (denseSize / 2),
-                top: left.dy - (denseSize / 2),
-                child: _DiagramNode(
-                  background: Colors.white,
-                  foreground: scheme.primary,
-                  icon: Icons.compare_arrows_rounded,
-                  label: "차이",
-                  dense: true,
-                  borderColor: scheme.primary.withOpacity(0.18),
-                ),
-              ),
-              Positioned(
-                left: right.dx - (denseSize / 2),
-                top: right.dy - (denseSize / 2),
-                child: _DiagramNode(
-                  background: Colors.white,
-                  foreground: scheme.primary,
-                  icon: Icons.forum_outlined,
-                  label: "가이드",
-                  dense: true,
-                  borderColor: scheme.primary.withOpacity(0.18),
-                ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _DiagramNode extends StatelessWidget {
-  final Color background;
-  final Color foreground;
-  final IconData icon;
-  final String label;
-  final bool dense;
-  final Color? borderColor;
-
-  const _DiagramNode({
-    required this.background,
-    required this.foreground,
-    required this.icon,
-    required this.label,
-    required this.dense,
-    this.borderColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final double size = dense ? 44 : 58;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          width: size,
-          height: size,
-          decoration: BoxDecoration(
-            color: background,
-            borderRadius: BorderRadius.circular(999),
-            border: borderColor == null ? null : Border.all(color: borderColor!, width: 1),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.04),
-                blurRadius: 10,
-                offset: const Offset(0, 6),
-              ),
-            ],
-          ),
-          child: Icon(icon, color: foreground, size: dense ? 20 : 24),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w700,
-            color: const Color(0xFF1F2937),
-            letterSpacing: -0.2,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class _OutcomeDiagramPainter extends CustomPainter {
-  final Color color;
-  final Offset center;
-  final Offset top;
-  final Offset left;
-  final Offset right;
-
-  const _OutcomeDiagramPainter({
-    required this.color,
-    required this.center,
-    required this.top,
-    required this.left,
-    required this.right,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color.withOpacity(0.22)
-      ..strokeWidth = 2
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
-
-    canvas.drawLine(center, top, paint);
-    canvas.drawLine(center, left, paint);
-    canvas.drawLine(center, right, paint);
-
-    final dotPaint = Paint()..color = color.withOpacity(0.18);
-    canvas.drawCircle(center, 3, dotPaint);
-    canvas.drawCircle(top, 3, dotPaint);
-    canvas.drawCircle(left, 3, dotPaint);
-    canvas.drawCircle(right, 3, dotPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant _OutcomeDiagramPainter oldDelegate) {
-    return oldDelegate.color != color ||
-        oldDelegate.center != center ||
-        oldDelegate.top != top ||
-        oldDelegate.left != left ||
-        oldDelegate.right != right;
-  }
-}
-
 class _OutcomeLegend extends StatelessWidget {
   const _OutcomeLegend();
 
@@ -436,7 +241,7 @@ class _OutcomeLegend extends StatelessWidget {
   Widget build(BuildContext context) {
     // 텍스트는 "기존 문장" 그대로 유지
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: const [
         _ValueItem(
           "4가지 핵심 카테고리로 정리된 나의 창업가 의사결정 유형",

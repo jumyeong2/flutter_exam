@@ -37,7 +37,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
       appBar: AppBar(
         title: Text(
           "라운드 ${currentIndex + 1} / ${sampleQuestions.length}",
-          style: const TextStyle(fontWeight: FontWeight.w800, color: Color(0xFF111827)),
+          style: const TextStyle(
+            fontWeight: FontWeight.w800,
+            color: Color(0xFF111827),
+          ),
         ),
         leading: IconButton(
           icon: const Icon(Icons.close_rounded, color: Color(0xFF111827)),
@@ -173,7 +176,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
           "Q${questionIndex + 1}. ${scenario.questionText}",
           textAlign: TextAlign.center,
           style: const TextStyle(
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: FontWeight.w800,
             height: 1.5,
             color: Color(0xFF1B1D29),
@@ -229,7 +232,9 @@ class _SimulationScreenState extends State<SimulationScreen> {
             color: isSelected ? _mainColor : Colors.white,
             borderRadius: BorderRadius.circular(999),
             border: Border.all(
-              color: isSelected ? _mainColor.withOpacity(0.4) : const Color(0xFFE7ECF6),
+              color: isSelected
+                  ? _mainColor.withOpacity(0.4)
+                  : const Color(0xFFE7ECF6),
               width: 2.2,
             ),
             boxShadow: [
@@ -261,14 +266,16 @@ class _SimulationScreenState extends State<SimulationScreen> {
                       "선택 ${String.fromCharCode(65 + index)}",
                       style: TextStyle(
                         fontSize: 13,
-                        color: isSelected ? Colors.white70 : const Color(0xFF6B7280),
+                        color: isSelected
+                            ? Colors.white70
+                            : const Color(0xFF6B7280),
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       text,
                       style: TextStyle(
-                        fontSize: 15,
+                        fontSize: 13,
                         color: isSelected
                             ? Colors.white
                             : const Color(0xFF2E3440), // 진한 회색

@@ -13,7 +13,10 @@ class ResultScreenIntro extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           '결과 인트로',
-          style: TextStyle(color: Color(0xFF111827), fontWeight: FontWeight.w700),
+          style: TextStyle(
+            color: Color(0xFF111827),
+            fontWeight: FontWeight.w700,
+          ),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -27,13 +30,16 @@ class ResultScreenIntro extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(
-              'assets/images/thinking.png',
-              width: 400,
-              height: 400,
-              fit: BoxFit.contain,
+            const SizedBox(height: 40),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: Image.asset(
+                'assets/images/think.png',
+                width: MediaQuery.of(context).size.width * 0.8,
+                fit: BoxFit.contain,
+              ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 65),
 
             // 내 성향 확인하기 버튼
             SizedBox(
@@ -53,10 +59,7 @@ class ResultScreenIntro extends StatelessWidget {
                 },
                 child: const Text(
                   '내 성향 확인하기',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -80,13 +83,11 @@ class ResultScreenIntro extends StatelessWidget {
                 },
                 child: const Text(
                   '팀 궁합 확인하기',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
+            const SizedBox(height: 50),
           ],
         ),
       ),

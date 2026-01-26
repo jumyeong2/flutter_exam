@@ -230,7 +230,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                       "합의된 내용도, 이견이 있는 내용도 명문화해야 안전합니다.\n초기 구두 약속은 쉽게 변질되기 때문에, 오늘의 결과를 문서로 정리하세요.",
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                        color: Colors.black54, 
+                        color: Colors.black54,
                         height: 1.6,
                         fontSize: 14,
                       ),
@@ -389,10 +389,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
         children: [
           Text(
             title,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
 
           // 이름표가 쌓일 공간 확보를 위해 상단 여백 (오버플로우 방지)
@@ -432,8 +429,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                   bool containsMe = membersAtScore.any(
                     (m) => m['isMe'] == true,
                   );
-                  Color pinColor =
-                      containsMe ? _accentBlue : Colors.grey[600]!;
+                  Color pinColor = containsMe ? _accentBlue : Colors.grey[600]!;
 
                   return Align(
                     alignment: Alignment((alignPercent * 2) - 1, 1.0),
@@ -539,9 +535,207 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       children: [
         const Divider(height: 1, color: Color(0xFFE0E0E0)),
         const SizedBox(height: 18),
-          // 헤더 - 숫자 배지 + 타이틀
+        // 헤더 - 숫자 배지 + 타이틀
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 28,
+              height: 28,
+              decoration: BoxDecoration(
+                color: _accentBlue.withOpacity(0.12),
+                shape: BoxShape.circle,
+              ),
+              child: const Center(
+                child: Text(
+                  "1",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                    color: _accentBlue,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF1B1D29),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+
+        // 메신저 스타일 카드들 - 중앙 정렬
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 500),
+            child: Column(
+              children: questions.asMap().entries.map((entry) {
+                int index = entry.key;
+                String question = entry.value;
+                bool isLeft = index % 2 == 0;
+
+                Color avatarColor = isLeft ? _accentBlue : _accentGray;
+
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // 왼쪽 메시지
+                      if (isLeft) ...[
+                        // 사람 아바타
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                avatarColor.withOpacity(0.8),
+                                avatarColor,
+                              ],
+                            ),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: avatarColor.withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        // 말풍선
+                        Container(
+                          constraints: const BoxConstraints(maxWidth: 300),
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(18),
+                              topRight: Radius.circular(18),
+                              bottomRight: Radius.circular(18),
+                              bottomLeft: Radius.circular(4),
+                            ),
+                            border: Border.all(
+                              color: avatarColor.withOpacity(0.25),
+                              width: 1.2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: avatarColor.withOpacity(0.1),
+                                blurRadius: 6,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            question,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              height: 1.5,
+                              color: Color(0xFF1B1D29),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+
+                      // 오른쪽 메시지
+                      if (!isLeft) ...[
+                        Container(
+                          constraints: const BoxConstraints(maxWidth: 300),
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(18),
+                              topRight: Radius.circular(18),
+                              bottomLeft: Radius.circular(18),
+                              bottomRight: Radius.circular(4),
+                            ),
+                            border: Border.all(
+                              color: avatarColor.withOpacity(0.25),
+                              width: 1.2,
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: avatarColor.withOpacity(0.1),
+                                blurRadius: 6,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            question,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              height: 1.5,
+                              color: Color(0xFF1B1D29),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                avatarColor.withOpacity(0.8),
+                                avatarColor,
+                              ],
+                            ),
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: avatarColor.withOpacity(0.3),
+                                blurRadius: 8,
+                                offset: const Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+
+        // 행동 가이드 섹션
+        if (actionGuides.isNotEmpty) ...[
+          const SizedBox(height: 24),
+          const Divider(height: 1, color: Color(0xFFE0E0E0)),
+          const SizedBox(height: 20),
+
+          // 행동 가이드 헤더
           Row(
-            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -553,7 +747,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 ),
                 child: const Center(
                   child: Text(
-                    "1",
+                    "2",
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
@@ -563,234 +757,89 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
                 ),
               ),
               const SizedBox(width: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
+              const Text(
+                "행동 가이드",
+                style: TextStyle(
                   fontWeight: FontWeight.w700,
+                  fontSize: 16,
                   color: Color(0xFF1B1D29),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 12),
 
-          // 메신저 스타일 카드들 - 중앙 정렬
-          Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 500),
-              child: Column(
-                children: questions.asMap().entries.map((entry) {
-                  int index = entry.key;
-                  String question = entry.value;
-                  bool isLeft = index % 2 == 0;
-
-                  Color avatarColor = isLeft ? _accentBlue : _accentGray;
-
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // 왼쪽 메시지
-                        if (isLeft) ...[
-                          // 사람 아바타
-                          Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  avatarColor.withOpacity(0.8),
-                                  avatarColor,
-                                ],
-                              ),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: avatarColor.withOpacity(0.3),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Icon(Icons.person, color: Colors.white, size: 20),
+          // 행동 가이드 칩들
+          Column(
+            children: List.generate((actionGuides.length / 2).ceil(), (index) {
+              final int firstIndex = index * 2;
+              final int secondIndex = firstIndex + 1;
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: _accentBlue.withOpacity(0.06),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: _accentBlue.withOpacity(0.4),
+                            width: 1,
                           ),
-                          const SizedBox(width: 10),
-                          // 말풍선
-                          Container(
-                            constraints: const BoxConstraints(maxWidth: 300),
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(18),
-                                topRight: Radius.circular(18),
-                                bottomRight: Radius.circular(18),
-                                bottomLeft: Radius.circular(4),
-                              ),
-                              border: Border.all(
-                                color: avatarColor.withOpacity(0.25),
-                                width: 1.2,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: avatarColor.withOpacity(0.1),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              question,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                height: 1.5,
-                                color: Color(0xFF1B1D29),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                        ),
+                        child: Text(
+                          actionGuides[firstIndex],
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Color(0xFF1B1D29),
+                            fontWeight: FontWeight.w500,
                           ),
-                        ],
-
-                        // 오른쪽 메시지
-                        if (!isLeft) ...[
-                          Container(
-                            constraints: const BoxConstraints(maxWidth: 300),
-                            padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(18),
-                                topRight: Radius.circular(18),
-                                bottomLeft: Radius.circular(18),
-                                bottomRight: Radius.circular(4),
-                              ),
-                              border: Border.all(
-                                color: avatarColor.withOpacity(0.25),
-                                width: 1.2,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: avatarColor.withOpacity(0.1),
-                                  blurRadius: 6,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              question,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                height: 1.5,
-                                color: Color(0xFF1B1D29),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [
-                                  avatarColor.withOpacity(0.8),
-                                  avatarColor,
-                                ],
-                              ),
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: avatarColor.withOpacity(0.3),
-                                  blurRadius: 8,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: Icon(Icons.person, color: Colors.white, size: 20),
-                          ),
-                        ],
-                      ],
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-
-          // 행동 가이드 섹션
-          if (actionGuides.isNotEmpty) ...[
-            const SizedBox(height: 24),
-            const Divider(height: 1, color: Color(0xFFE0E0E0)),
-            const SizedBox(height: 20),
-
-            // 행동 가이드 헤더
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    color: _accentBlue.withOpacity(0.12),
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "2",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w800,
-                        color: _accentBlue,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                const Text(
-                  "행동 가이드",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
-                    color: Color(0xFF1B1D29),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-
-            // 행동 가이드 칩들
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: actionGuides
-                  .map(
-                    (text) => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: _accentBlue.withOpacity(0.06),
-                        borderRadius: BorderRadius.circular(999),
-                        border: Border.all(color: _accentBlue.withOpacity(0.4), width: 1),
-                      ),
-                      child: Text(
-                        text,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Color(0xFF1B1D29),
                         ),
                       ),
                     ),
-                  )
-                  .toList(),
-            ),
-            const SizedBox(height: 16),
-          ],
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: secondIndex < actionGuides.length
+                          ? Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: _accentBlue.withOpacity(0.06),
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: _accentBlue.withOpacity(0.4),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Text(
+                                actionGuides[secondIndex],
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: Color(0xFF1B1D29),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )
+                          : const SizedBox(),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
+          const SizedBox(height: 16),
+        ],
       ],
     );
 
@@ -855,10 +904,16 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     int totalCount = allMembers.length;
 
     // 논의 주제와 행동 가이드 생성
-    List<String> discussionTopics =
-        _generateDiscussionTopics(category, riskPercent, totalCount);
-    List<String> actionGuides =
-        _generateActionGuides(category, riskPercent, totalCount);
+    List<String> discussionTopics = _generateDiscussionTopics(
+      category,
+      riskPercent,
+      totalCount,
+    );
+    List<String> actionGuides = _generateActionGuides(
+      category,
+      riskPercent,
+      totalCount,
+    );
 
     if (scores.isEmpty) {
       return {
@@ -960,59 +1015,28 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     if (riskPercent >= 50) {
       // 고위험 구간
       if (category == "equity") {
-        topics = [
-          "지분 배분의 기준과 원칙",
-          "향후 추가 투자 시 지분 희석 방안",
-          "지분 이전 및 매각 조건",
-        ];
+        topics = ["지분 배분의 기준과 원칙", "향후 추가 투자 시 지분 희석 방안", "지분 이전 및 매각 조건"];
       } else if (category == "finance") {
-        topics = [
-          "자금 조달 방식과 우선순위",
-          "예산 배분 및 지출 승인 프로세스",
-          "재무 투명성 확보 방안",
-        ];
+        topics = ["자금 조달 방식과 우선순위", "예산 배분 및 지출 승인 프로세스", "재무 투명성 확보 방안"];
       } else if (category == "power") {
-        topics = [
-          "의사결정 권한과 책임 범위",
-          "리더십 역할 분담",
-          "갈등 상황 시 해결 절차",
-        ];
+        topics = ["의사결정 권한과 책임 범위", "리더십 역할 분담", "갈등 상황 시 해결 절차"];
       } else if (category == "value") {
-        topics = [
-          "팀의 핵심 가치와 원칙",
-          "협업 방식과 커뮤니케이션 스타일",
-          "서로의 기대치와 우선순위",
-        ];
+        topics = ["팀의 핵심 가치와 원칙", "협업 방식과 커뮤니케이션 스타일", "서로의 기대치와 우선순위"];
       }
     } else if (riskPercent >= 20) {
       // 주의 구간
       if (category == "equity") {
-        topics = [
-          "지분 관련 세부 조건 명확화",
-          "향후 지분 변동 시나리오",
-        ];
+        topics = ["지분 관련 세부 조건 명확화", "향후 지분 변동 시나리오"];
       } else if (category == "finance") {
-        topics = [
-          "자금 운용 원칙 재확인",
-          "예산 관리 프로세스 점검",
-        ];
+        topics = ["자금 운용 원칙 재확인", "예산 관리 프로세스 점검"];
       } else if (category == "power") {
-        topics = [
-          "의사결정 프로세스 개선",
-          "역할과 책임 재정의",
-        ];
+        topics = ["의사결정 프로세스 개선", "역할과 책임 재정의"];
       } else if (category == "value") {
-        topics = [
-          "팀 문화와 가치관 정리",
-          "협업 방식 개선 방안",
-        ];
+        topics = ["팀 문화와 가치관 정리", "협업 방식 개선 방안"];
       }
     } else {
       // 안정 구간
-      topics = [
-        "현재 합의사항 문서화",
-        "향후 변경 시 고려사항",
-      ];
+      topics = ["현재 합의사항 문서화", "향후 변경 시 고려사항"];
     }
 
     return topics;
@@ -1060,48 +1084,24 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     } else if (riskPercent >= 20) {
       // 주의 구간
       if (category == "equity") {
-        guides = [
-          "지분 관련 세부 조건을 문서로 정리하세요",
-          "향후 지분 변동 가능성을 함께 검토하세요",
-        ];
+        guides = ["지분 관련 세부 조건을 문서로 정리하세요", "향후 지분 변동 가능성을 함께 검토하세요"];
       } else if (category == "finance") {
-        guides = [
-          "자금 운용 원칙을 재확인하고 문서화하세요",
-          "예산 관리 프로세스를 점검하고 개선하세요",
-        ];
+        guides = ["자금 운용 원칙을 재확인하고 문서화하세요", "예산 관리 프로세스를 점검하고 개선하세요"];
       } else if (category == "power") {
-        guides = [
-          "의사결정 프로세스를 개선하고 명확히 하세요",
-          "역할과 책임을 재정의하고 공유하세요",
-        ];
+        guides = ["의사결정 프로세스를 개선하고 명확히 하세요", "역할과 책임을 재정의하고 공유하세요"];
       } else if (category == "value") {
-        guides = [
-          "팀 문화와 가치관을 정리하고 공유하세요",
-          "협업 방식을 점검하고 개선 방안을 모색하세요",
-        ];
+        guides = ["팀 문화와 가치관을 정리하고 공유하세요", "협업 방식을 점검하고 개선 방안을 모색하세요"];
       }
     } else {
       // 안정 구간
       if (category == "equity") {
-        guides = [
-          "현재 지분 합의사항을 계약서에 명확히 기록하세요",
-          "정기적으로 지분 관련 사항을 점검하세요",
-        ];
+        guides = ["현재 지분 합의사항을 계약서에 명확히 기록하세요", "정기적으로 지분 관련 사항을 점검하세요"];
       } else if (category == "finance") {
-        guides = [
-          "자금 운용 합의사항을 문서로 정리하세요",
-          "재무 현황을 정기적으로 공유하세요",
-        ];
+        guides = ["자금 운용 합의사항을 문서로 정리하세요", "재무 현황을 정기적으로 공유하세요"];
       } else if (category == "power") {
-        guides = [
-          "의사결정 구조를 계약서에 명시하세요",
-          "역할 분담을 정기적으로 점검하세요",
-        ];
+        guides = ["의사결정 구조를 계약서에 명시하세요", "역할 분담을 정기적으로 점검하세요"];
       } else if (category == "value") {
-        guides = [
-          "팀의 가치관과 원칙을 문서화하세요",
-          "협업 방식을 정기적으로 점검하세요",
-        ];
+        guides = ["팀의 가치관과 원칙을 문서화하세요", "협업 방식을 정기적으로 점검하세요"];
       }
     }
 
