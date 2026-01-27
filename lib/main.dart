@@ -9,14 +9,42 @@ import 'result_screen2.dart';
 import 'result_detail_screen.dart';
 import 'share_utils.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+
+  bool isDev = false;
+
+  // Developer Mode Logic
+  try {
+    final prefs = await SharedPreferences.getInstance();
+
+    // 1. 체크: URL 파라미터로 개발자 모드 활성화 (?dev=true)
+    if (kIsWeb && Uri.base.toString().contains('dev=true')) {
+      await prefs.setBool('is_dev', true);
+      isDev = true;
+    }
+
+    // 2. 체크: 이전에 설정된 값이 있는지 확인
+    isDev = isDev || (prefs.getBool('is_dev') ?? false);
+
+    if (isDev) {
+      await FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(false);
+      debugPrint('🚫 Analytics Disabled (Developer Mode Active)');
+    }
+  } catch (e) {
+    debugPrint('Error initializing dev mode: $e');
+  }
+
+  runApp(MyApp(isDev: isDev));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isDev;
+
+  const MyApp({super.key, this.isDev = false});
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +54,18 @@ class MyApp extends StatelessWidget {
     const surface = Color(0xFFFFFFFF);
     const background = Color(0xFFF5F8FF);
 
-    final baseScheme = ColorScheme.fromSeed(
-      seedColor: primary,
-      brightness: Brightness.light,
-    ).copyWith(
-      primary: primary,
-      secondary: secondary,
-      tertiary: tertiary,
-      surface: surface,
-      background: background,
-      surfaceTint: primary,
-    );
+    final baseScheme =
+        ColorScheme.fromSeed(
+          seedColor: primary,
+          brightness: Brightness.light,
+        ).copyWith(
+          primary: primary,
+          secondary: secondary,
+          tertiary: tertiary,
+          surface: surface,
+          background: background,
+          surfaceTint: primary,
+        );
 
     return MaterialApp(
       navigatorObservers: [
@@ -77,7 +106,10 @@ class MyApp extends StatelessWidget {
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: const Color(0xFFF9FBFF),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 14,
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide: BorderSide.none,
@@ -130,7 +162,10 @@ class MyApp extends StatelessWidget {
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: OutlinedButton.styleFrom(
             foregroundColor: baseScheme.primary,
-            side: BorderSide(color: baseScheme.primary.withOpacity(0.35), width: 1.2),
+            side: BorderSide(
+              color: baseScheme.primary.withOpacity(0.35),
+              width: 1.2,
+            ),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(18),
             ),
@@ -145,7 +180,9 @@ class MyApp extends StatelessWidget {
           backgroundColor: surface,
           selectedColor: baseScheme.primary.withOpacity(0.12),
           side: const BorderSide(color: Color(0xFFE6ECF7)),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
           labelStyle: const TextStyle(color: Color(0xFF1B1D29)),
         ),
         snackBarTheme: SnackBarThemeData(
@@ -156,14 +193,46 @@ class MyApp extends StatelessWidget {
         ),
       ),
       builder: (context, child) {
-        return ResponsiveLayout(
-          mobileBody: child!,
-          desktopBody: Center(
-            child: Container(
-              constraints: const BoxConstraints(maxWidth: 800),
-              child: child,
+        return Stack(
+          children: [
+            ResponsiveLayout(
+              mobileBody: child!,
+              desktopBody: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: child,
+                ),
+              ),
             ),
-          ),
+            if (isDev)
+              Positioned(
+                bottom: 20,
+                left: 20,
+                child: IgnorePointer(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.redAccent.withOpacity(0.8),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: const Text(
+                        "DEV MODE (Analytics OFF)",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         );
       },
       home: _getInitialRoute(),
@@ -176,35 +245,37 @@ class MyApp extends StatelessWidget {
       try {
         final uri = Uri.base;
         final dataParam = uri.queryParameters['data'];
-        
+
         if (dataParam != null) {
           final decodedData = ShareUtils.decodeFromUrl(uri.toString());
-          
+
           if (decodedData != null) {
             final type = decodedData['type'] as String?;
-            
+
             if (type == 'profile') {
               // 내 성향 결과 페이지
               final scores = decodedData['scores'] as Map<String, dynamic>?;
               if (scores != null) {
-                final myScores = scores.map((key, value) => 
-                  MapEntry(key, (value as num).toDouble())
+                final myScores = scores.map(
+                  (key, value) => MapEntry(key, (value as num).toDouble()),
                 );
                 return ResultScreen2(myScores: myScores);
               }
             } else if (type == 'team') {
               // 팀 궁합 결과 페이지
-              final myScoresData = decodedData['myScores'] as Map<String, dynamic>?;
-              final partnersListData = decodedData['partnersList'] as List<dynamic>?;
-              
+              final myScoresData =
+                  decodedData['myScores'] as Map<String, dynamic>?;
+              final partnersListData =
+                  decodedData['partnersList'] as List<dynamic>?;
+
               if (myScoresData != null && partnersListData != null) {
-                final myScores = myScoresData.map((key, value) => 
-                  MapEntry(key, (value as num).toDouble())
+                final myScores = myScoresData.map(
+                  (key, value) => MapEntry(key, (value as num).toDouble()),
                 );
-                final partnersList = partnersListData.map((item) => 
-                  item as Map<String, dynamic>
-                ).toList();
-                
+                final partnersList = partnersListData
+                    .map((item) => item as Map<String, dynamic>)
+                    .toList();
+
                 return ResultDetailScreen(
                   myScores: myScores,
                   partnersList: partnersList,
@@ -217,7 +288,7 @@ class MyApp extends StatelessWidget {
         debugPrint('Error parsing URL parameters: $e');
       }
     }
-    
+
     // 기본 홈 화면
     return const IntroScreen();
   }
