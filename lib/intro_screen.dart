@@ -48,7 +48,7 @@ class IntroScreen extends StatelessWidget {
                 
                     // 2. 메인 헤드라인
                 Text(
-                  "창업 파트너와 내 생각, 얼마나 다를까?",
+                  "창업 파트너와 내 생각,\n얼마나 다를까?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: kIsWeb ? 24 : 22,

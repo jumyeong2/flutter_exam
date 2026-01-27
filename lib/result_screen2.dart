@@ -118,7 +118,10 @@ class ResultScreen2 extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           "나의 창업가 유형",
-          style: TextStyle(color: Color(0xFF111827), fontWeight: FontWeight.w700),
+          style: TextStyle(
+            color: Color(0xFF111827),
+            fontWeight: FontWeight.w700,
+          ),
         ),
         centerTitle: true,
         elevation: 0,
@@ -144,7 +147,12 @@ class ResultScreen2 extends StatelessWidget {
             // 3. 동물 이모지와 이름 카드
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 20, bottom: 40, left: 20, right: 20),
+              padding: const EdgeInsets.only(
+                top: 20,
+                bottom: 40,
+                left: 20,
+                right: 20,
+              ),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
@@ -232,7 +240,10 @@ class ResultScreen2 extends StatelessWidget {
                       ),
                       child: const Text(
                         "확인 완료",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -244,19 +255,27 @@ class ResultScreen2 extends StatelessWidget {
                     child: ElevatedButton(
                       onPressed: () {
                         // 처음 페이지로 돌아가기
-                        Navigator.of(context).popUntil((route) => route.isFirst);
+                        Navigator.of(
+                          context,
+                        ).popUntil((route) => route.isFirst);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: const Color(0xFF3B82F6),
-                        side: const BorderSide(color: Color(0xFF3B82F6), width: 2),
+                        side: const BorderSide(
+                          color: Color(0xFF3B82F6),
+                          width: 2,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16),
                         ),
                       ),
                       child: const Text(
                         "테스트 다시 하기",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
@@ -272,10 +291,13 @@ class ResultScreen2 extends StatelessWidget {
   void _copyUrl(BuildContext context) async {
     // 유형 정보 가져오기
     double totalScore = myScores.values.fold(0, (sum, score) => sum + score);
-    FounderProfile profile = FounderTypeCalculator.getProfileByScore(totalScore);
-    
+    FounderProfile profile = FounderTypeCalculator.getProfileByScore(
+      totalScore,
+    );
+
     final shareUrl = ShareUtils.generateProfileShareUrl(myScores);
-    final shareText = '''${profile.animal} 나의 창업가 유형: ${profile.name}
+    final shareText =
+        '''${profile.animal} 나의 창업가 유형: ${profile.name}
 
 ${profile.slogan}
 
@@ -283,9 +305,9 @@ ${profile.desc}
 
 자세한 결과 보기:
 $shareUrl''';
-    
+
     await Clipboard.setData(ClipboardData(text: shareText));
-    
+
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -299,10 +321,13 @@ $shareUrl''';
   void _shareResult(BuildContext context) async {
     // 유형 정보 가져오기
     double totalScore = myScores.values.fold(0, (sum, score) => sum + score);
-    FounderProfile profile = FounderTypeCalculator.getProfileByScore(totalScore);
-    
+    FounderProfile profile = FounderTypeCalculator.getProfileByScore(
+      totalScore,
+    );
+
     final shareUrl = ShareUtils.generateProfileShareUrl(myScores);
-    final shareText = '''${profile.animal} 나의 창업가 유형: ${profile.name}
+    final shareText =
+        '''${profile.animal} 나의 창업가 유형: ${profile.name}
 
 ${profile.slogan}
 
@@ -310,12 +335,9 @@ ${profile.desc}
 
 자세한 결과 보기:
 $shareUrl''';
-    
+
     try {
-      await Share.share(
-        shareText,
-        subject: '나의 창업가 유형 결과',
-      );
+      await Share.share(shareText, subject: '나의 창업가 유형 결과');
     } catch (e) {
       // 에러 발생 시 처리
     }

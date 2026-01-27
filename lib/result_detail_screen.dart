@@ -1004,7 +1004,7 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     };
   }
 
-  // 함께 논의해볼 주제 생성
+  // 함께 논의해볼 주제 생성 (Speech Bubbles - Insightful Topics)
   List<String> _generateDiscussionTopics(
     String category,
     double riskPercent,
@@ -1015,34 +1015,50 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
     if (riskPercent >= 50) {
       // 고위험 구간
       if (category == "equity") {
-        topics = ["지분 배분의 기준과 원칙", "향후 추가 투자 시 지분 희석 방안", "지분 이전 및 매각 조건"];
+        topics = [
+          "기여도 변화에 따른 지분 조정 장치",
+          "이탈 시 잔여 지분 처분(Call option) 기준",
+          "추가 투자 유치 시 희석 방어 전략",
+        ];
       } else if (category == "finance") {
-        topics = ["자금 조달 방식과 우선순위", "예산 배분 및 지출 승인 프로세스", "재무 투명성 확보 방안"];
+        topics = [
+          "개인 자금 투입 시 상환/전환 기준",
+          "데스밸리(Runway) 대비 긴축 운영 시점",
+          "자금 집행의 투명성 확보 원칙",
+        ];
       } else if (category == "power") {
-        topics = ["의사결정 권한과 책임 범위", "리더십 역할 분담", "갈등 상황 시 해결 절차"];
+        topics = [
+          "의견 대립 시 최종 의사결정권(Tie-breaker)",
+          "경영권 방어를 위한 의결권 비중 설계",
+          "리더십 위임과 회수 조건",
+        ];
       } else if (category == "value") {
-        topics = ["팀의 핵심 가치와 원칙", "협업 방식과 커뮤니케이션 스타일", "서로의 기대치와 우선순위"];
+        topics = [
+          "업무 몰입도와 워킹 타임(Working Time) 동기화",
+          "건강한 충돌을 위한 피드백 프로토콜",
+          "팀의 성공 정의와 우선순위 정렬",
+        ];
       }
     } else if (riskPercent >= 20) {
       // 주의 구간
       if (category == "equity") {
-        topics = ["지분 관련 세부 조건 명확화", "향후 지분 변동 시나리오"];
+        topics = ["지분 희석 시나리오 점검", "스톡옵션 풀(Pool) 규모와 부여 기준"];
       } else if (category == "finance") {
-        topics = ["자금 운용 원칙 재확인", "예산 관리 프로세스 점검"];
+        topics = ["월간 자금 소진율(Burn Rate) 관리", "비용 집행의 전결 규정"];
       } else if (category == "power") {
-        topics = ["의사결정 프로세스 개선", "역할과 책임 재정의"];
+        topics = ["C-Level 역할 정의(R&R) 미세 조정", "위임할 권한과 직접 챙길 권한의 구분"];
       } else if (category == "value") {
-        topics = ["팀 문화와 가치관 정리", "협업 방식 개선 방안"];
+        topics = ["비동기 커뮤니케이션 룰 세팅", "상호 피드백 주기와 방식"];
       }
     } else {
       // 안정 구간
-      topics = ["현재 합의사항 문서화", "향후 변경 시 고려사항"];
+      topics = ["현재의 합의 내용을 SHA(주주간계약서)에 반영", "정기적인 지분/권한 재점검 주기 설정"];
     }
 
     return topics;
   }
 
-  // 행동 가이드 생성
+  // 행동 가이드 생성 (Action Guides - Concrete Tools)
   List<String> _generateActionGuides(
     String category,
     double riskPercent,
@@ -1054,54 +1070,50 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
       // 고위험 구간
       if (category == "equity") {
         guides = [
-          "지분 배분 기준을 명확히 문서화하세요",
-          "향후 지분 변동 시나리오를 미리 정해두세요",
-          "법률 자문을 받아 계약서에 반영하세요",
-          "지분 이전 및 매각 조건을 구체화하세요",
+          "4년 베스팅(Vesting) 및 클리프(Cliff) 설정",
+          "주주간 계약서(SHA) 필수 작성",
+          "태그얼롱(Tag-along) 및 드래그얼롱(Drag-along) 조항 검토",
         ];
       } else if (category == "finance") {
         guides = [
-          "자금 조달 및 운용 원칙을 명확히 정하세요",
-          "예산 승인 프로세스를 문서로 정립하세요",
-          "재무 투명성을 위한 정기 보고 체계를 구축하세요",
-          "비상 자금 운용 방안을 사전에 합의하세요",
+          "법인 카드 사용 및 지출 결재 규정 수립",
+          "월간 현금 흐름표(Cash Flow) 공유 정례화",
+          "가수금/대여금 처리 원칙 문서화",
         ];
       } else if (category == "power") {
         guides = [
-          "의사결정 권한과 책임 범위를 명확히 하세요",
-          "갈등 해결 절차를 문서로 정립하세요",
-          "리더십 역할을 구체적으로 분담하세요",
-          "중재 메커니즘을 사전에 마련하세요",
+          "C-Level 역할 정의(R&R) 및 위임전결 규정",
+          "이사회 구성 및 의결 정족수 합의",
+          "교착 상태 해결(Deadlock) 조항 마련",
         ];
       } else if (category == "value") {
         guides = [
-          "팀의 핵심 가치를 함께 정의하고 문서화하세요",
-          "서로의 기대치와 우선순위를 명확히 공유하세요",
-          "협업 방식과 커뮤니케이션 스타일을 정하세요",
-          "가치관 차이를 존중하는 방법을 찾으세요",
+          "그라운드 룰(Ground Rule) 및 코어 타임 설정",
+          "정기 회고(Retrospective) 및 1on1 미팅",
+          "갈등 해결을 위한 중재자(Advisor) 선임",
         ];
       }
     } else if (riskPercent >= 20) {
       // 주의 구간
       if (category == "equity") {
-        guides = ["지분 관련 세부 조건을 문서로 정리하세요", "향후 지분 변동 가능성을 함께 검토하세요"];
+        guides = ["표준 주주간 계약서 검토 및 날인", "스톡옵션 운영 규정 초안 작성"];
       } else if (category == "finance") {
-        guides = ["자금 운용 원칙을 재확인하고 문서화하세요", "예산 관리 프로세스를 점검하고 개선하세요"];
+        guides = ["지출 품의서 및 영수증 증빙 룰셋팅", "분기별 예산 계획 수립"];
       } else if (category == "power") {
-        guides = ["의사결정 프로세스를 개선하고 명확히 하세요", "역할과 책임을 재정의하고 공유하세요"];
+        guides = ["주간 업무 보고 및 의사결정 미팅 체계화", "직무 기술서(JD) 기반 R&R 명문화"];
       } else if (category == "value") {
-        guides = ["팀 문화와 가치관을 정리하고 공유하세요", "협업 방식을 점검하고 개선 방안을 모색하세요"];
+        guides = ["팀 컬처덱(Culture Deck) v1.0 작성", "커뮤니케이션 가이드라인 공유"];
       }
     } else {
       // 안정 구간
       if (category == "equity") {
-        guides = ["현재 지분 합의사항을 계약서에 명확히 기록하세요", "정기적으로 지분 관련 사항을 점검하세요"];
+        guides = ["주주명부 현행화 및 관리", "투자 유치 대비 Cap Table 시뮬레이션"];
       } else if (category == "finance") {
-        guides = ["자금 운용 합의사항을 문서로 정리하세요", "재무 현황을 정기적으로 공유하세요"];
+        guides = ["재무/회계 관리 대시보드 구축", "정기 재무 리포팅 체계 유지"];
       } else if (category == "power") {
-        guides = ["의사결정 구조를 계약서에 명시하세요", "역할 분담을 정기적으로 점검하세요"];
+        guides = ["경영진 위임전결 규정 고도화", "성과 기반 보상 및 승진 체계 구상"];
       } else if (category == "value") {
-        guides = ["팀의 가치관과 원칙을 문서화하세요", "협업 방식을 정기적으로 점검하세요"];
+        guides = ["온보딩 프로세스에 핵심 가치 반영", "조직 문화 만족도 정기 조사"];
       }
     }
 
