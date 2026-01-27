@@ -776,64 +776,67 @@ class _ResultDetailScreenState extends State<ResultDetailScreen>
               final int secondIndex = firstIndex + 1;
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          color: _accentBlue.withOpacity(0.06),
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: _accentBlue.withOpacity(0.4),
-                            width: 1,
+                child: IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 8,
                           ),
-                        ),
-                        child: Text(
-                          actionGuides[firstIndex],
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF1B1D29),
-                            fontWeight: FontWeight.w500,
+                          decoration: BoxDecoration(
+                            color: _accentBlue.withOpacity(0.06),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: _accentBlue.withOpacity(0.4),
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(
+                            actionGuides[firstIndex],
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Color(0xFF1B1D29),
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: secondIndex < actionGuides.length
-                          ? Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color: _accentBlue.withOpacity(0.06),
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: _accentBlue.withOpacity(0.4),
-                                  width: 1,
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: secondIndex < actionGuides.length
+                            ? Container(
+                                alignment: Alignment.center,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 8,
                                 ),
-                              ),
-                              child: Text(
-                                actionGuides[secondIndex],
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                  color: Color(0xFF1B1D29),
-                                  fontWeight: FontWeight.w500,
+                                decoration: BoxDecoration(
+                                  color: _accentBlue.withOpacity(0.06),
+                                  borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color: _accentBlue.withOpacity(0.4),
+                                    width: 1,
+                                  ),
                                 ),
-                              ),
-                            )
-                          : const SizedBox(),
-                    ),
-                  ],
+                                child: Text(
+                                  actionGuides[secondIndex],
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Color(0xFF1B1D29),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }),
